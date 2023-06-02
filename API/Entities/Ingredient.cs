@@ -4,6 +4,6 @@ namespace API.Entities
    {
       public int Id { get; set; }
       public string Name { get; set; }
-      public int Portion { get; set; }
+      public string Portion { get; set; }
    }
 }
