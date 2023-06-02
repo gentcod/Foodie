@@ -1,5 +1,6 @@
 using API.Data;
 using API.Middleware;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<RecipesContext>(opt =>
+{
+    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 builder.Services.AddCors();
 
 var app = builder.Build();
@@ -38,7 +43,8 @@ var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
 try
 {
-
+    context.Database.Migrate();
+    DbInitializer.Initialize(context);
 } 
 catch (Exception ex)
 {
