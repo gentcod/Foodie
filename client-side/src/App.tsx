@@ -6,6 +6,7 @@ function App() {
   return (
     <div className="App">
       <h1>Welcome!!! This is the frontend</h1>
+      <p>Folder Resolution</p>
     </div>
   );
 }
