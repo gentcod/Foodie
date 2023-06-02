@@ -6,5 +6,6 @@ namespace API.Entities
       public string Name { get; set; }
       public List<Ingredient> ingredients { get; set; }
       public string Description { get; set; }
+      public string Origin { get; set; }
    }
 }
