@@ -1,5 +1,7 @@
 using API.Data;
+using API.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -11,9 +13,10 @@ namespace API.Controllers
          _context = context;
       }
       [HttpGet]
-      public ActionResult GetRecipes()
+      public async Task<ActionResult<Recipe>> GetRecipes()
       {
-        var recipes = _context.Recipes;
+        var recipes = await _context.Recipes.ToListAsync();
+
         return Ok(recipes);
       }
    }

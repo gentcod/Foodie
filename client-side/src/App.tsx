@@ -1,25 +1,17 @@
-import { useSelector } from "react-redux/es/exports";
-import { selectRecipes } from "./store/recipe/recipe.selector";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import {Routes, Route} from 'react-router-dom';
 
 import "./App.css";
-import { fetchRecipesStart } from "./store/recipe/recipe.action";
+import Navigation from "./routes/navigation/navigation.component";
+import Home from "./routes/home/home.component";
 
 function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchRecipesStart());
-  }, [dispatch])
-
-  const data = useSelector(selectRecipes);
-  console.log(data);
-  const {} = data;
-
   return (
     <div className="App">
-      <h1>Welcome!!! This is the frontend</h1>
-      <p>Folder Resolution</p>
+      <Routes>
+        <Route element={<Navigation/>}>
+          <Route path="/" index element={<Home/>}/>
+        </Route>
+      </Routes>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeLatest } from "typed-redux-saga/macro";
 // import { takeLatest, all, call, put } from 'typed-redux-saga/macro';
 import messenger from '../../app/messenger';
 import { fetchRecipesFailed, fetchRecipesSuccess } from "./recipe.action";
@@ -15,19 +15,19 @@ export const fetchRecipesFromApi = async () => {
    return response;
 }
 
-export function* fetchRecipesAsync(action) {
+export function* fetchRecipesAsync() {
    try {
-      const recipes = yield call(fetchRecipesFromApi, 'recipes');
-      yield put(fetchRecipesSuccess(recipes));
+      const recipes = yield* call(fetchRecipesFromApi);
+      yield* put(fetchRecipesSuccess(recipes));
    } catch (error) {
-      yield put(fetchRecipesFailed(error));
+      yield* put(fetchRecipesFailed(error as Error));
    }
 }
 
 export function* onFetchRecipes() {
-   yield takeLatest(RECIPES_ACTION_TYPES.FETCH_RECIPE_START, fetchRecipesAsync)
+   yield* takeLatest(RECIPES_ACTION_TYPES.FETCH_RECIPE_START, fetchRecipesAsync)
 }
 
 export function* recipesSaga() {
-   yield all([call(onFetchRecipes)]);
+   yield* all([call(onFetchRecipes)]);
 }
