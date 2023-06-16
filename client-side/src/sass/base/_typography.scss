@@ -1,0 +1,24 @@
+body {
+   font-family: 'Lato', sans-serif;
+   font-size: 16px;
+   color: $color-typography;
+}
+
+.margin-big {
+   margin-left: 10rem;
+   margin-bottom: 5rem;
+
+   @include respond(tab-port) {
+      margin-left: 0;
+      text-align: center;
+   }
+}
+
+a {
+   text-decoration: none;
+   color: $color-typography;
+
+   // &:active {
+   //    color: red;
+   // }
+}
