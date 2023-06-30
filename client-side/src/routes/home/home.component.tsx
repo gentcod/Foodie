@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRecipesStart } from "../../store/recipe/recipe.action";
 import { selectRecipes } from "../../store/recipe/recipe.selector";
+
+import Map from "../../components/map/map.component";
+
 import { FeaturedContainer, FeaturedImage, FeaturedTitle, HomeContainer } from "./home.style";
 
 
@@ -20,6 +23,7 @@ const Home = () => {
           <FeaturedTitle>Featured recipe</FeaturedTitle>
           <FeaturedImage src="images/board-veg.jpg"/>
         </FeaturedContainer>
+        <Map/>
       </HomeContainer>
    )
 }
