@@ -50,8 +50,21 @@ namespace API.Data
                 }
             };
 
+            if (context.Users.Any()) return;
+
+            var users = new List<User>
+            {
+                new User
+                {
+                    Name = "Oyefule",
+                    Password = "Pa$$w0rd",
+                    Email = "oyefule@gmail.com",
+                }
+            };
+
             context.Recipes.AddRange(recipes);
             context.Restaurants.AddRange(restaurants);
+            context.Users.AddRange(users);
             context.SaveChanges();
        }
     }
