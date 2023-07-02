@@ -3,7 +3,7 @@ import { SearchBar, SearchBarContainer } from './search.style';
 const Search = () => {
    return (
       <SearchBarContainer>
-         <SearchBar/>
+         <SearchBar placeholder='Enter keyword'/>
       </SearchBarContainer>
    )
 }

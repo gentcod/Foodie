@@ -4,6 +4,7 @@ import "./App.css";
 // import "./sass/main.scss";
 import Navigation from "./routes/navigation/navigation.component";
 import Home from "./routes/home/home.component";
+import Recipes from './routes/recipes/recipes.component';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route element={<Navigation/>}>
           <Route path="/" index element={<Home/>}/>
+          <Route path='recipes' element={<Recipes/>}/>
         </Route>
       </Routes>
     </div>

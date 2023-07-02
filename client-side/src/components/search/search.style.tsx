@@ -16,4 +16,14 @@ export const SearchBar = styled.input`
    border-radius: 1.2rem;
    padding: 1rem;
    background-color: #eee;
+   color: #888;
+
+   &:focus {
+      border-bottom: 3px solid #333;
+
+      ::placeholder {
+         color: #333;
+         font-weight: 700;
+      }
+   }
 `

@@ -7,14 +7,15 @@ const Map = () => {
   return (
     <Container>
       <MapContainer
-        center={{ lat: 	7.28799533, lng: 	5.147500194 }}
+        center={[7.287995329999998, 5.1475001939999998]}
         zoom={13}
-        scrollWheelZoom={false}>
+        scrollWheelZoom={false}
+        style={{height: '35rem', width: '100%'}}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={[51.505, -0.09]}>
+      <Marker position={[7.287995329999998, 5.1475001939999998]}>
         <Popup>
           A pretty CSS3 popup. <br /> Easily customizable.
         </Popup>
