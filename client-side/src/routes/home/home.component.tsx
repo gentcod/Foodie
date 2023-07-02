@@ -6,6 +6,7 @@ import { selectRecipes } from "../../store/recipe/recipe.selector";
 import Map from "../../components/map/map.component";
 
 import { FeaturedContainer, FeaturedImage, FeaturedTitle, HomeContainer } from "./home.style";
+import RecipeCategoryContainer from "../../components/recipe-category-container/recipe-category-container.component";
 
 
 const Home = () => {
@@ -23,6 +24,7 @@ const Home = () => {
           <FeaturedTitle>Featured recipe</FeaturedTitle>
           <FeaturedImage src="images/board-veg.jpg"/>
         </FeaturedContainer>
+        <RecipeCategoryContainer/>
         <Map/>
       </HomeContainer>
    )

@@ -5,6 +5,9 @@ export const NavigationContainer = styled.div`
    width: 100%;
    background-color: #222;
    display: flex;
+   position: fixed;
+
+   z-index: 100;
 `
 
 export const NavigationItemsContainer = styled.div`
