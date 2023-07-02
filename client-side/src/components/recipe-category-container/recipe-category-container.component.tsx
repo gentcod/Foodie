@@ -14,7 +14,7 @@ const data: RecipeDataProps = [
       id: 0,
       name: 'Foreign Recipes',
       description: 'A compilation of various recipes from different parts of the world',
-      imgSrc: 'images/foreign.jpg',
+      imgSrc: 'https://i.ibb.co/CQHW8Bn/foreign.jpg',
       link: '',
    },
 
@@ -22,7 +22,7 @@ const data: RecipeDataProps = [
       id: 1,
       name: 'Pastry Recipes',
       description: 'A compilation of various pastries and bakes',
-      imgSrc: 'images/pastries.jpg',
+      imgSrc: 'https://i.ibb.co/rt7gm6L/pastries.jpg',
       link: '',
    },
 
@@ -30,7 +30,7 @@ const data: RecipeDataProps = [
       id: 2,
       name: 'Vegetarian Recipes',
       description: 'A compilation of various vegetarian diets',
-      imgSrc: 'images/vegetarian.jpg',
+      imgSrc: 'https://i.ibb.co/HzG8Gf9/vegetarian.jpg',
       link: '',
    },
 
@@ -38,7 +38,7 @@ const data: RecipeDataProps = [
       id: 3,
       name: 'Fast Recipes',
       description: 'A compilation of various easily made delicacies',
-      imgSrc: 'images/tacos.jpg',
+      imgSrc: 'https://i.ibb.co/TqnwP5p/tacos.jpg',
       link: '',
    },
    
@@ -46,7 +46,7 @@ const data: RecipeDataProps = [
       id: 4,
       name: 'African Recipes',
       description: 'A compilation of various african Dishes',
-      imgSrc: 'images/featured.jpg',
+      imgSrc: 'https://i.ibb.co/MDf4CtV/featured.jpg',
       link: '',
    },
 ]
