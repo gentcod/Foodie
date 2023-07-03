@@ -34,7 +34,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build-styles": "node-sass ./sass/main.scss ./index.css"
+    "compile-sass": "node-sass ./src/sass/main.scss ./src/index.css -w"
   },
   "eslintConfig": {
     "extends": [
