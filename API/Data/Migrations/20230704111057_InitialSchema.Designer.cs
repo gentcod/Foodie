@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(FoodieContext))]
-    [Migration("20230701130719_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230704111057_InitialSchema")]
+    partial class InitialSchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,7 +32,13 @@ namespace API.Data.Migrations
                     b.Property<double>("Longitude")
                         .HasColumnType("REAL");
 
+                    b.Property<int>("RestaurantId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId")
+                        .IsUnique();
 
                     b.ToTable("Bearing");
                 });
@@ -167,9 +173,6 @@ namespace API.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("GeolocationId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Location")
                         .HasColumnType("TEXT");
 
@@ -180,8 +183,6 @@ namespace API.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GeolocationId");
 
                     b.HasIndex("RatingRestaurantId");
 
@@ -230,6 +231,15 @@ namespace API.Data.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("API.Entities.Bearing", b =>
+                {
+                    b.HasOne("API.Entities.Restaurant", null)
+                        .WithOne("Geolocation")
+                        .HasForeignKey("API.Entities.Bearing", "RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("API.Entities.Recipe", b =>
                 {
                     b.HasOne("API.Entities.Rating", "RatingRecipe")
@@ -256,15 +266,9 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Restaurant", b =>
                 {
-                    b.HasOne("API.Entities.Bearing", "Geolocation")
-                        .WithMany()
-                        .HasForeignKey("GeolocationId");
-
                     b.HasOne("API.Entities.Rating", "RatingRestaurant")
                         .WithMany()
                         .HasForeignKey("RatingRestaurantId");
-
-                    b.Navigation("Geolocation");
 
                     b.Navigation("RatingRestaurant");
                 });
@@ -294,6 +298,11 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.RatedRestaurant", b =>
                 {
                     b.Navigation("Restaurants");
+                });
+
+            modelBuilder.Entity("API.Entities.Restaurant", b =>
+                {
+                    b.Navigation("Geolocation");
                 });
 #pragma warning restore 612, 618
         }

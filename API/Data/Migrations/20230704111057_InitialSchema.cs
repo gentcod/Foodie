@@ -6,25 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialSchema : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Bearing",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Latitude = table.Column<double>(type: "REAL", nullable: false),
-                    Longitude = table.Column<double>(type: "REAL", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Bearing", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Bookmarks",
                 columns: table => new
@@ -185,23 +171,44 @@ namespace API.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     Location = table.Column<string>(type: "TEXT", nullable: true),
-                    GeolocationId = table.Column<int>(type: "INTEGER", nullable: true),
                     RatingRestaurantId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Restaurants", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Restaurants_Bearing_GeolocationId",
-                        column: x => x.GeolocationId,
-                        principalTable: "Bearing",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_Restaurants_Rating_RatingRestaurantId",
                         column: x => x.RatingRestaurantId,
                         principalTable: "Rating",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Bearing",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    RestaurantId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Latitude = table.Column<double>(type: "REAL", nullable: false),
+                    Longitude = table.Column<double>(type: "REAL", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bearing", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bearing_Restaurants_RestaurantId",
+                        column: x => x.RestaurantId,
+                        principalTable: "Restaurants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bearing_RestaurantId",
+                table: "Bearing",
+                column: "RestaurantId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RecipeRef_BookmarksId",
@@ -229,11 +236,6 @@ namespace API.Data.Migrations
                 column: "RatedRestaurantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Restaurants_GeolocationId",
-                table: "Restaurants",
-                column: "GeolocationId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Restaurants_RatingRestaurantId",
                 table: "Restaurants",
                 column: "RatingRestaurantId");
@@ -242,6 +244,9 @@ namespace API.Data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Bearing");
+
             migrationBuilder.DropTable(
                 name: "RecipeRef");
 
@@ -252,10 +257,10 @@ namespace API.Data.Migrations
                 name: "RestaurantRef");
 
             migrationBuilder.DropTable(
-                name: "Restaurants");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Restaurants");
 
             migrationBuilder.DropTable(
                 name: "Bookmarks");
@@ -268,9 +273,6 @@ namespace API.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "RatedRestaurants");
-
-            migrationBuilder.DropTable(
-                name: "Bearing");
 
             migrationBuilder.DropTable(
                 name: "Rating");
