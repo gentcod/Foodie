@@ -1,0 +1,11 @@
+{
+  "name": "foodie-user-api",
+  "version": "1.0.0",
+  "description": "API for foodie web application, focused on integrating Firebase",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Oyefule Oluwatayo",
+  "license": "ISC"
+}
