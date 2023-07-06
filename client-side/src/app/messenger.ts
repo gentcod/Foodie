@@ -49,8 +49,13 @@ const Recipes = {
    list: (params?: URLSearchParams) => request.get('recipe',params)
 }
 
+const Restaurant = {
+   list: (params?: URLSearchParams) => request.get('restaurant',params)
+}
+
 const messenger = {
-   Recipes
+   Recipes,
+   Restaurant,
 }
 
 export default messenger;

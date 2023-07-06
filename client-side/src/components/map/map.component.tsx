@@ -1,13 +1,35 @@
+import { useDispatch, useSelector } from "react-redux";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import L from 'leaflet';
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
-import { Container } from "./map.style";
+import { Container, RestaurantLocation, RestaurantName } from "./map.style";
+import { useEffect } from "react";
+import { fetchRestaurantsStart } from "../../store/restaurant/restaurant.action";
+import { selectRestaurants } from "../../store/restaurant/restaurant.selector";
+
+let DefaultIcon = L.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
 
 const Map = () => {
+
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchRestaurantsStart());
+  }, [dispatch]);
+
+  const data = useSelector(selectRestaurants);
 
   return (
     <Container>
       <MapContainer
-        center={[7.287995329999998, 5.1475001939999998]}
+        center={[6.5244, 3.3792]}
         zoom={13}
         scrollWheelZoom={false}
         style={{height: '35rem', width: '100%'}}>
@@ -15,11 +37,14 @@ const Map = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={[7.287995329999998, 5.1475001939999998]}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker>
+      {data.map(restaurant => 
+        <Marker key={restaurant.id} position={[restaurant.geolocation.latitude, restaurant.geolocation.longitude]}>
+          <Popup>
+            <RestaurantName>{restaurant.name}</RestaurantName>
+            <RestaurantLocation>{restaurant.location}</RestaurantLocation>
+          </Popup>
+        </Marker>
+      )}
     </MapContainer>
     </Container>
   );

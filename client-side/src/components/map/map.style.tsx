@@ -9,3 +9,13 @@ export const Container = styled.div`
    margin: 0 auto;
    margin-top: 3rem;
 `
+
+export const RestaurantName = styled.h6`
+   font-weight: 700;
+   font-size: 1.4rem;
+`
+
+export const RestaurantLocation = styled.p`
+   font-weight: 300;
+   font-size: 1.2rem;
+`
