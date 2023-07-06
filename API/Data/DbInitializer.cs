@@ -40,12 +40,22 @@ namespace API.Data
             {
                 new Restaurant
                 {
-                    Name = "Asunde",
-                    Location = "Akure",
+                    Name = "Lounge 38",
+                    Location = "67 Bode Thomas St, Surulere 101241, Lagos.",
                     Geolocation = new Bearing
                     {
-                        Latitude = 7.287995329999998,
-                        Longitude = 5.1475001939999998,
+                        Latitude = 6.4902,
+                        Longitude = 3.3552,
+                    }
+                },
+                new Restaurant
+                {
+                    Name = "Ofada Boy",
+                    Location = "1 Mba St, Surulere, Lagos, Suru Lere, Lagos.",
+                    Geolocation = new Bearing
+                    {
+                        Latitude = 6.4969,
+                        Longitude = 3.3567,
                     }
                 }
             };
