@@ -1,5 +1,3 @@
-using API.HelperFunctions;
-
 namespace API.Entities
 {
    public class User

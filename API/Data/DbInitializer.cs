@@ -16,6 +16,7 @@ namespace API.Data
                     Name = "Jollof Rice",
                     Ingredients = "Pepper, Rice, Bulliion Cubes",
                     Description = "A very delicious meal",
+                    CookTime = 55,
                     Origin = "Yoruba"
                 },
                 new Recipe
@@ -23,6 +24,7 @@ namespace API.Data
                     Name = "Fried Rice",
                     Ingredients = "Pepper, Rice, Bulliion Cubes, Curry",
                     Description = "A meal with delicate veggies",
+                    CookTime = 40,
                     Origin = "Yoruba"
                 },
                 new Recipe
@@ -30,6 +32,7 @@ namespace API.Data
                     Name = "Efo Riro",
                     Ingredients = "Pepper, Spinnach, Bulliion Cubes, Palm Oil",
                     Description = "Goes well with swallows",
+                    CookTime = 50,
                     Origin = "Yoruba"
                 }
             };

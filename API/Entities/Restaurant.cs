@@ -10,5 +10,3 @@ namespace API.Entities
 
     }
 }
-
-//Restaurant: name, location, geolocation, ratingRestauranant

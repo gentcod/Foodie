@@ -107,6 +107,12 @@ namespace API.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("CookTime")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
@@ -121,9 +127,6 @@ namespace API.Data.Migrations
 
                     b.Property<int?>("RatingRecipeId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("cookTime")
-                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

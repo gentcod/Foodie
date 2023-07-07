@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialSchema : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -149,7 +149,8 @@ namespace API.Data.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     Ingredients = table.Column<string>(type: "TEXT", nullable: true),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
-                    cookTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CookTime = table.Column<int>(type: "INTEGER", nullable: false),
+                    DateAdded = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Origin = table.Column<string>(type: "TEXT", nullable: true),
                     RatingRecipeId = table.Column<int>(type: "INTEGER", nullable: true)
                 },

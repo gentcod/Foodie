@@ -1,7 +1,10 @@
 using API.Data;
 using API.Entities;
+using API.RequestHelpers;
+using API.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using API.DTOs;
 
 namespace API.Controllers
 {
@@ -14,11 +17,18 @@ namespace API.Controllers
       }
       
       [HttpGet]
-      public async Task<ActionResult<Recipe>> GetRecipes()
+      public async Task<ActionResult<RecipeDto>> GetRecipes([FromQuery] RecipeParams recipeParams)
       {
-        var recipes = await _context.Recipes.ToListAsync();
+         var query = _context.Recipes
+         .Search(recipeParams.Keyword)
+         .Sort(recipeParams.SortBy)
+         .OrderByCookTime(recipeParams.OrderBy)
+         .AsQueryable();
 
-        return Ok(recipes);
+      
+        var recipes = await query.ToListAsync();
+
+        return Ok(recipes.MapRecipeToDto());
       }
    }
 }
