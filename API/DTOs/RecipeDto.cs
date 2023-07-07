@@ -1,14 +1,16 @@
-namespace API.Entities
+using API.Entities;
+
+namespace API.DTOs
 {
-   public class Recipe
-   {
-      public int Id { get; set; }
+   public class RecipeDto
+    {
+        public int Id { get; set; }
       public string Name { get; set; }
       public string Ingredients { get; set; }
       public string Description { get; set; }
-      public int CookTime { get; set; }
-      public DateTime DateAdded { get; set; }
+      public string CookTime { get; set; }
+      public string DateAdded { get; set; }
       public string Origin { get; set; }
       public Rating RatingRecipe { get; set;}
-   }
+    }
 }
