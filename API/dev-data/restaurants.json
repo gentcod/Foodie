@@ -1,0 +1,18 @@
+[
+   {
+      "Name": "Lounge 38",
+      "Location": "67 Bode Thomas St, Surulere 101241, Lagos.",
+      "Geolocation": {
+         "Latitude": 6.4902,
+         "Longitude": 3.3552
+      }
+   },
+   {
+      "Name": "Ofada Boy",
+      "Location": "1 Mba St, Surulere, Lagos, Suru Lere, Lagos.",
+      "Geolocation": {
+         "Latitude": 6.4969,
+         "Longitude": 3.3567
+      }
+   }
+]
