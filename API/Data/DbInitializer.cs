@@ -1,4 +1,5 @@
 using API.Entities;
+using API.HelperFunctions;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -8,60 +9,16 @@ namespace API.Data
        public static void Initialize(FoodieContext context)
        {
             if (context.Recipes.Any()) return;
+
+            var retrievedDataRecipes = new DevDataRecipes();
             
-            var recipes = new List<Recipe>
-            {
-                new Recipe
-                {
-                    Name = "Jollof Rice",
-                    Ingredients = "Pepper, Rice, Bulliion Cubes",
-                    Description = "A very delicious meal",
-                    CookTime = 55,
-                    Origin = "Yoruba"
-                },
-                new Recipe
-                {
-                    Name = "Fried Rice",
-                    Ingredients = "Pepper, Rice, Bulliion Cubes, Curry",
-                    Description = "A meal with delicate veggies",
-                    CookTime = 40,
-                    Origin = "Yoruba"
-                },
-                new Recipe
-                {
-                    Name = "Efo Riro",
-                    Ingredients = "Pepper, Spinnach, Bulliion Cubes, Palm Oil",
-                    Description = "Goes well with swallows",
-                    CookTime = 50,
-                    Origin = "Yoruba"
-                }
-            };
+            var recipes = retrievedDataRecipes.RetrievedRecipes;
 
             if (context.Restaurants.Any()) return;
 
-            var restaurants = new List<Restaurant>
-            {
-                new Restaurant
-                {
-                    Name = "Lounge 38",
-                    Location = "67 Bode Thomas St, Surulere 101241, Lagos.",
-                    Geolocation = new Bearing
-                    {
-                        Latitude = 6.4902,
-                        Longitude = 3.3552,
-                    }
-                },
-                new Restaurant
-                {
-                    Name = "Ofada Boy",
-                    Location = "1 Mba St, Surulere, Lagos, Suru Lere, Lagos.",
-                    Geolocation = new Bearing
-                    {
-                        Latitude = 6.4969,
-                        Longitude = 3.3567,
-                    }
-                }
-            };
+            var retrievedDataRestaurants = new DevDataRestaurants();
+
+            var restaurants = retrievedDataRestaurants.RetrievedRestaurants;
 
             if (context.Users.Any()) return;
 
