@@ -1,8 +1,3 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchRecipesStart } from "../../store/recipe/recipe.action";
-import { selectRecipes } from "../../store/recipe/recipe.selector";
-
 import Map from "../../components/map/map.component";
 
 import { FeaturedContainer, FeaturedImage, FeaturedTitle, HomeContainer } from "./home.style";
@@ -10,14 +5,7 @@ import RecipeCategoryContainer from "../../components/recipe-category-container/
 
 
 const Home = () => {
-   
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchRecipesStart());
-  }, [dispatch])
 
-  const data = useSelector(selectRecipes);
-  console.log(data);
    return (
       <HomeContainer>
         <FeaturedContainer>

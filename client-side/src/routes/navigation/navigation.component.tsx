@@ -28,7 +28,7 @@ const Navigation = () => {
       <NavigationContainer>
          <NavigationItemsContainer>
             {
-               navItems.map(item => <NavigationItem key={item.id} >{item.title}</NavigationItem>)
+               navItems.map(item => <NavigationItem key={item.id} to={`/${item.title.replace(" ", "")}`}>{item.title}</NavigationItem>)
             }
          </NavigationItemsContainer>
          <Search/>
