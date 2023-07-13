@@ -30,6 +30,7 @@ namespace API.Controllers
                Id = restaurant.Id,
                Name = restaurant.Name,
                Location = restaurant.Location,
+               ImgSrc = restaurant.ImgSrc,
                Geolocation = bearing,
                RatingRestaurant = restaurant.RatingRestaurant,
             }

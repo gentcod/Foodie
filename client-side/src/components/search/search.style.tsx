@@ -5,7 +5,7 @@ export const SearchBarContainer = styled.div`
    padding: 1rem;
    position: absolute;
    right: 15rem;
-   top: 2.5rem;
+   top: 4rem;
 `
 
 export const SearchBar = styled.input`

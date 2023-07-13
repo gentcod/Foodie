@@ -25,6 +25,7 @@ namespace API.HelperFunctions
          {
             Name = rec.Name,
             Location = rec.Location,
+            ImgSrc = rec.ImgSrc,
             Geolocation = new Bearing
             {
                 Latitude = rec.Geolocation.Latitude,

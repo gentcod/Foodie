@@ -3,6 +3,7 @@
       "Name": "Jollof Rice",
       "Ingredients": "Pepper, Rice, Bulliion Cubes",
       "Description": "A very delicious meal",
+      "imgSrc": "",
       "CookTime": 55,
       "Origin": "Yoruba"
    },
@@ -10,6 +11,7 @@
       "Name": "Fried Rice",
       "Ingredients": "Pepper, Rice, Bulliion Cubes, Curry",
       "Description": "A meal with delicate veggies",
+      "imgSrc": "",
       "CookTime": 40,
       "Origin": "Yoruba"
    },
@@ -17,6 +19,7 @@
       "Name": "Efo Riro",
       "Ingredients": "Pepper, Spinnach, Bulliion Cubes, Palm Oil",
       "Description": "Goes well with swallows",
+      "imgSrc": "",
       "CookTime": 50,
       "Origin": "Yoruba"
    }
