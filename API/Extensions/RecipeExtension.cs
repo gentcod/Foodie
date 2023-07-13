@@ -44,6 +44,7 @@ namespace API.Extensions
             Name = rec.Name,
             Ingredients = rec.Ingredients,
             Description = rec.Description,
+            ImageSrc = rec.ImageSrc,
             CookTime = $"{rec.CookTime.ToString()} mins",
             DateAdded = rec.DateAdded.ToString("dddd, dd MMMM yyyy"),
             Origin = rec.Origin,

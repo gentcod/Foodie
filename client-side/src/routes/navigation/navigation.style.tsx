@@ -6,7 +6,8 @@ export const NavigationContainer = styled.div`
    width: 100%;
    background-color: #222;
    display: flex;
-   // position: fixed;
+   justify-content: space-between;
+   padding: 0 20rem;
    margin-bottom: 3rem;
 
    z-index: 100;
@@ -24,3 +25,7 @@ export const NavigationItem = styled(Link)`
    text-transform: uppercase;
    font-weight: 1000;
 `
+
+export const NavigationItemIcon = styled.img`
+   
+`;

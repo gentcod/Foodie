@@ -25,6 +25,7 @@ namespace API.HelperFunctions
          {
             Name = rec.Name,
             Ingredients = rec.Ingredients,
+            ImageSrc = rec.ImageSrc,
             Description = rec.Description,
             CookTime = rec.CookTime,
             Origin = rec.Origin,
