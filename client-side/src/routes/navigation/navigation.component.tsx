@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { NavigationContainer, NavigationItem, NavigationItemIcon, NavigationItemsContainer} from './navigation.style';
+import { NavigationContainer, NavigationItem, NavigationItemIcon, NavigationItemsContainer, SearchItem} from './navigation.style';
 import Search from '../../components/search/search.component';
 
 type NavItemsLeft = {
@@ -48,6 +48,15 @@ const navItemsRight: NavItemsRight = [
 ]
 
 const Navigation = () => {
+   // const location = useLocation();
+   let path = '';
+
+   const setPath = () => {
+      path = 'search';
+      console.log(path);
+   }
+
+
    return (
       <>
       <NavigationContainer>
@@ -58,13 +67,18 @@ const Navigation = () => {
          </NavigationItemsContainer>
          <NavigationItemsContainer>
             {
-               navItemsRight.map(item => 
+               navItemsRight.map(item => item.title === 'search' ?
+               <SearchItem key={item.id} onClick={setPath}>
+                  <NavigationItemIcon src={item.icon}/>
+               </SearchItem>
+            :
                <NavigationItem key={item.id} to={`/${item.title.replace(" ", "")}`}>
                   <NavigationItemIcon src={item.icon}/>
-               </NavigationItem>)
+               </NavigationItem>
+               )
             }
          </NavigationItemsContainer>
-         <Search/>
+         {path === 'search' ? <Search/> : null}
       </NavigationContainer>
       <Outlet/>
       </>
