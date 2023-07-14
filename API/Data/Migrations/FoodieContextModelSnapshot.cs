@@ -116,6 +116,9 @@ namespace API.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ImageSrc")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Ingredients")
                         .HasColumnType("TEXT");
 
@@ -172,6 +175,9 @@ namespace API.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("ImgSrc")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Location")
                         .HasColumnType("TEXT");

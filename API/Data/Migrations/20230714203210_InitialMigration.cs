@@ -149,6 +149,7 @@ namespace API.Data.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     Ingredients = table.Column<string>(type: "TEXT", nullable: true),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
+                    ImageSrc = table.Column<string>(type: "TEXT", nullable: true),
                     CookTime = table.Column<int>(type: "INTEGER", nullable: false),
                     DateAdded = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Origin = table.Column<string>(type: "TEXT", nullable: true),
@@ -172,6 +173,7 @@ namespace API.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     Location = table.Column<string>(type: "TEXT", nullable: true),
+                    ImgSrc = table.Column<string>(type: "TEXT", nullable: true),
                     RatingRestaurantId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
