@@ -32,10 +32,6 @@ export const SearchItem = styled.a`
   text-transform: uppercase;
   font-weight: 1000;
   cursor: pointer;
-
-  &:active {
-   border: 1px solid red;
-  }
 `;
 
 export const NavigationItemIcon = styled.img``;

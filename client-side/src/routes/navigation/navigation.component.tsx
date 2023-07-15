@@ -1,61 +1,26 @@
 import { Outlet } from 'react-router-dom';
 import { NavigationContainer, NavigationItem, NavigationItemIcon, NavigationItemsContainer, SearchItem} from './navigation.style';
 import Search from '../../components/search/search.component';
-
-type NavItemsLeft = {
-   id: number;
-   title: string;
-}[]
-
-type NavItemsRight = {
-   id: number;
-   title: string;
-   icon: string;
-}[]
-
-const navItemsLeft: NavItemsLeft = [
-   {
-      id: 0,
-      
-      title: 'recipes'
-   },
-   {
-      id: 1,
-      title: 'restaurants'
-   },
-   {
-      id: 3,
-      title: 'easy makes'
-   },
-]
-
-const navItemsRight: NavItemsRight = [
-   {
-      id: 0,
-      title: 'search',
-      icon: 'icons/search.svg'
-   },
-   {
-      id: 1,
-      title: 'user',
-      icon: 'icons/chef.svg'
-   },
-   {
-      id: 3,
-      title: 'bookmarks',
-      icon: 'icons/bookmark.svg'
-   },
-]
+import { useState } from 'react';
+import { navItemsLeft, navItemsRight } from '../../dev-data/navigation-data';
 
 const Navigation = () => {
-   // const location = useLocation();
-   let path = '';
+   const [hideSearch, setHideSearch] = useState(true);
+   const [showSearch, setShowSearch] = useState(false);
 
-   const setPath = () => {
-      path = 'search';
-      console.log(path);
+   const changeSearchState = () => {
+
+      if (hideSearch === true) 
+      {
+         setShowSearch(true);
+         setHideSearch(false);
+      }
+
+      else {
+         setShowSearch(false);
+         setHideSearch(true);
+      }
    }
-
 
    return (
       <>
@@ -68,7 +33,7 @@ const Navigation = () => {
          <NavigationItemsContainer>
             {
                navItemsRight.map(item => item.title === 'search' ?
-               <SearchItem key={item.id} onClick={setPath}>
+               <SearchItem key={item.id} onClick={changeSearchState}>
                   <NavigationItemIcon src={item.icon}/>
                </SearchItem>
             :
@@ -78,7 +43,7 @@ const Navigation = () => {
                )
             }
          </NavigationItemsContainer>
-         {path === 'search' ? <Search/> : null}
+         {showSearch && <Search/>}
       </NavigationContainer>
       <Outlet/>
       </>
