@@ -3,6 +3,8 @@ namespace API.Entities
    public class Favorites
     {
         public int Id { get; set; }
+
+        public string UserId { get; set; }
         public List<RecipeRef> Recipes { get; set; }
 
         public void AddFavorite(Recipe recipe)
@@ -15,10 +17,10 @@ namespace API.Entities
 
         public void RemoveFavorite(int recipeId)
         {
-            var bookmark = Recipes.FirstOrDefault(el => el.RecipeId == recipeId);
-            if(bookmark == null) return;
+            var favorite = Recipes.FirstOrDefault(el => el.RecipeId == recipeId);
+            if(favorite == null) return;
 
-            Recipes.Remove(bookmark);
+            Recipes.Remove(favorite);
         }
     }
 }
