@@ -5,9 +5,24 @@ namespace API.Extensions
 {
    public static class RestaurantExtension
    {
-      private static Restaurant RetrieveRestaurant(this Bearing bearing, List<Restaurant> restaurants)
+      public static IEnumerable<RestaurantDto> MapBearingToRestaurant( this IQueryable<Restaurant> restaurants, IQueryable<Bearing> bearings)
       {
-         return restaurants.FirstOrDefault(a => a.Id == bearing.Id);
+         var restaurantsDto = bearings.Join(
+            restaurants,
+            bearing => bearing,
+            restaurant => restaurant.Geolocation,
+            (bearing, restaurant) => new RestaurantDto
+            {
+               Id = restaurant.Id,
+               Name = restaurant.Name,
+               Location = restaurant.Location,
+               ImgSrc = restaurant.ImgSrc,
+               Geolocation = bearing,
+               RatingRestaurant = restaurant.RatingRestaurant,
+            }
+         );
+
+         return restaurantsDto;
       }
    }
 }

@@ -22,5 +22,13 @@
       "imgSrc": "",
       "CookTime": 50,
       "Origin": "Yoruba"
-   }
+   },
+   {
+      "Name": "Ifokore",
+      "Ingredients": "Yam, Palm Oil, Dry Pepper, Salt, Maggi, Fish",
+      "Description": "A native Ijebu meal",
+      "ImageSrc": "not here",
+      "CookTime": 52,
+      "Origin": "Yoruba - Ijebu"
+    }
 ]
