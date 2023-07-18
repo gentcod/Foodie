@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Data;
 using API.Entities;
 using API.RequestHelpers;
@@ -20,24 +16,24 @@ namespace API.Controllers
       }
 
       [HttpGet(Name = "GetBookmark")]
-      public async Task<ActionResult<Bookmarks>> GetBookMark([FromQuery] BookmarkParams bookmarkParam)
+      public async Task<ActionResult<Bookmarks>> GetBookMark([FromQuery] string userId)
       {
-         var bookmarkList = await _context.Bookmarks.ToListAsync();
-         var bookmarks = bookmarkList.Where(bookmark => bookmark.UserId == bookmarkParam.UserId);
+         Bookmarks bookmarks = await RetrieveBookmarks(userId);
+
+         if (bookmarks == null) return NotFound();
          return Ok(bookmarks);
       }
 
       [HttpPost]
       public async Task<ActionResult<Bookmarks>> AddNewBookMark([FromQuery] BookmarkParams bookmarkParam)
       {
-        var recipes = await _context.Recipes.ToListAsync();
-
-         var bookmarkList = await _context.Bookmarks.ToListAsync();
-         var bookmarks = bookmarkList.Find(bookmark => bookmark.UserId == bookmarkParam.UserId);
-
+         var bookmarks = await RetrieveBookmarks(bookmarkParam.UserId);
          if (bookmarks == null) bookmarks = CreateBookmarks();
 
-         bookmarks.AddBookmark(recipes, bookmarkParam.RecipeId);
+         var recipe = await _context.Recipes.FindAsync(bookmarkParam.RecipeId);
+         if (recipe == null) return NotFound();
+
+         bookmarks.AddBookmark(recipe);
 
          var result = _context.SaveChangesAsync();
          if (result != null) return CreatedAtRoute("GetBookmark", bookmarks);
@@ -45,17 +41,30 @@ namespace API.Controllers
          return BadRequest(new ProblemDetails { Title = "Problem creating bookmark" });
       }
 
+      private async Task<Bookmarks> RetrieveBookmarks(string userId)
+      {
+         if (string.IsNullOrEmpty(userId))
+         {
+            Response.Cookies.Delete("buyerId");
+            return null;
+         }
+         return await _context.Bookmarks
+                 .Include(b => b.Recipes)
+                 .ThenInclude(r => r.Recipe)
+                 .FirstOrDefaultAsync(rec => rec.UserId == userId);
+      }
+
       private Bookmarks CreateBookmarks()
       {
-         var buyerId = User.Identity?.Name;
-         if (string.IsNullOrEmpty(buyerId))
+         var userId = User.Identity?.Name;
+         if (string.IsNullOrEmpty(userId))
          {
-            buyerId = Guid.NewGuid().ToString();
+            userId = Guid.NewGuid().ToString();
             var cookieOptions = new CookieOptions { IsEssential = true, Expires = DateTime.Now.AddDays(30) };
-            Response.Cookies.Append("buyerId", buyerId, cookieOptions);
+            Response.Cookies.Append("userId", userId, cookieOptions);
          }
 
-         var bookmark = new Bookmarks { UserId = buyerId};
+         var bookmark = new Bookmarks { UserId = userId };
          _context.Bookmarks.Add(bookmark);
 
          return bookmark;
