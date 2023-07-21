@@ -29,18 +29,6 @@ axios.interceptors.response.use(async response => {
    return Promise.reject(error.response);
 });
 
-// async function getrecipe() {
-//    try {
-//      const response = await axios.get('recipe');
-//      console.log(response);
-//      return response
-//    } catch (error) {
-//      console.error(error);
-//    }
-//  }
- 
-// getrecipe();
-
 const request = {
    get: (url: string, params?: URLSearchParams) => axios.get(url, {params}).then(responseBody)
 }
@@ -53,9 +41,14 @@ const Restaurant = {
    list: (params?: URLSearchParams) => request.get('restaurant',params)
 }
 
+const Bookmarks = {
+   list: (params: URLSearchParams) => request.get('bookmarks', params)
+}
+
 const messenger = {
    Recipes,
    Restaurant,
+   Bookmarks,
 }
 
 export default messenger;
