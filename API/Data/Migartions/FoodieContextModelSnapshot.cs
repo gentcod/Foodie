@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace API.Data.Migrations
+namespace API.Data.Migartions
 {
     [DbContext(typeof(FoodieContext))]
     partial class FoodieContextModelSnapshot : ModelSnapshot
@@ -125,28 +125,6 @@ namespace API.Data.Migrations
                     b.ToTable("Favorites");
                 });
 
-            modelBuilder.Entity("API.Entities.RatedRecipes", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RatedRecipes");
-                });
-
-            modelBuilder.Entity("API.Entities.RatedRestaurant", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RatedRestaurants");
-                });
-
             modelBuilder.Entity("API.Entities.Rating", b =>
                 {
                     b.Property<int>("Id")
@@ -191,15 +169,10 @@ namespace API.Data.Migrations
                     b.Property<string>("Origin")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("RatedRecipesId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("RatingRecipeId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RatedRecipesId");
 
                     b.HasIndex("RatingRecipeId");
 
@@ -245,15 +218,10 @@ namespace API.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("RatedRestaurantId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("RatingRestaurantId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RatedRestaurantId");
 
                     b.HasIndex("RatingRestaurantId");
 
@@ -325,10 +293,6 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Recipe", b =>
                 {
-                    b.HasOne("API.Entities.RatedRecipes", null)
-                        .WithMany("Recipes")
-                        .HasForeignKey("RatedRecipesId");
-
                     b.HasOne("API.Entities.Rating", "RatingRecipe")
                         .WithMany()
                         .HasForeignKey("RatingRecipeId");
@@ -357,10 +321,6 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Restaurant", b =>
                 {
-                    b.HasOne("API.Entities.RatedRestaurant", null)
-                        .WithMany("Restaurants")
-                        .HasForeignKey("RatedRestaurantId");
-
                     b.HasOne("API.Entities.Rating", "RatingRestaurant")
                         .WithMany()
                         .HasForeignKey("RatingRestaurantId");
@@ -377,16 +337,6 @@ namespace API.Data.Migrations
                 {
                     b.Navigation("Recipes");
 
-                    b.Navigation("Restaurants");
-                });
-
-            modelBuilder.Entity("API.Entities.RatedRecipes", b =>
-                {
-                    b.Navigation("Recipes");
-                });
-
-            modelBuilder.Entity("API.Entities.RatedRestaurant", b =>
-                {
                     b.Navigation("Restaurants");
                 });
 

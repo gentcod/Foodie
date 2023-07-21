@@ -1,6 +1,5 @@
 using API.Data;
 using API.Entities;
-using API.RequestHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,11 +23,10 @@ namespace API.Controllers
          return Ok(favorites);
       }
 
-      [HttpPost("Recipes")]
+      [HttpPost("AddRecipe")]
       public async Task<ActionResult<Favorites>> AddNewFavoriteRecipe([FromQuery] string userId, int recipeId)
       {
-         var favorites = await RetrieveFavorites(userId);
-         if (favorites == null) favorites = CreateFavorites();
+         var favorites = await InitializeFavorites(userId);
 
          var recipe = await _context.Recipes.FindAsync(recipeId);
          if (recipe == null) return NotFound();
@@ -41,11 +39,10 @@ namespace API.Controllers
          return BadRequest(new ProblemDetails { Title = "Problem adding Favorite" });
       }
 
-      [HttpPost("Restaurants")]
+      [HttpPost("AddRestaurant")]
       public async Task<ActionResult<Favorites>> AddNewFavoriteRestaurant([FromQuery] string userId, int restaurantId)
       {
-         var favorites = await RetrieveFavorites(userId);
-         if (favorites == null) favorites = CreateFavorites();
+         var favorites = await InitializeFavorites(userId);
 
          var restaurant = await _context.Restaurants.FindAsync(restaurantId);
          if (restaurant == null) return NotFound();
@@ -58,22 +55,28 @@ namespace API.Controllers
          return BadRequest(new ProblemDetails { Title = "Problem adding Favorite" });
       }
 
+      private async Task<Favorites> InitializeFavorites(string userId)
+      {
+         var favorites = await RetrieveFavorites(userId);
+         if (favorites == null) favorites = CreateFavorites();
+
+         return favorites;
+      }
+
       private async Task<Favorites> RetrieveFavorites(string userId)
       {
          if (string.IsNullOrEmpty(userId))
          {
-            Response.Cookies.Delete("buyerId");
+            Response.Cookies.Delete("userId");
             return null;
          }
 
-         var favorite = await _context.Favorites
+         return await _context.Favorites
                   .Include(b => b.Recipes)
                   .ThenInclude(r => r.Recipe)
                   .Include(f => f.Restaurants)
                   .ThenInclude(r => r.Restaurant)
                   .FirstOrDefaultAsync(rec => rec.UserId == userId);
-
-        return favorite;
       }
 
       private Favorites CreateFavorites()
@@ -86,10 +89,10 @@ namespace API.Controllers
             Response.Cookies.Append("userId", userId, cookieOptions);
          }
 
-         var bookmark = new Favorites { UserId = userId };
-         _context.Favorites.Add(bookmark);
+         var favorites = new Favorites { UserId = userId };
+         _context.Favorites.Add(favorites);
 
-         return bookmark;
+         return favorites;
       }
    }
 }

@@ -36,7 +36,7 @@ namespace API.Extensions
          return query;
       }
 
-      public static List<RecipeDto> MapRecipeToDto(this List<Recipe> recipes)
+      public static List<RecipeDto> MapRecipesToDto(this List<Recipe> recipes)
       {
          return recipes.Select(rec => new RecipeDto
          {
@@ -51,5 +51,22 @@ namespace API.Extensions
             RatingRecipe = rec.RatingRecipe,
          }).ToList();
       }
+
+      public static RecipeDto MapRecipeToDto(this Recipe recipe)
+      {
+         return  new RecipeDto
+         {
+            Id = recipe.Id,
+            Name = recipe.Name,
+            Ingredients = recipe.Ingredients,
+            Description = recipe.Description,
+            ImageSrc = recipe.ImageSrc,
+            CookTime = $"{recipe.CookTime.ToString()} mins",
+            DateAdded = recipe.DateAdded.ToString("dddd, dd MMMM yyyy"),
+            Origin = recipe.Origin,
+            RatingRecipe = recipe.RatingRecipe,
+         };
+      }
+
    }
 }

@@ -7,5 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Oyefule Oluwatayo",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "firebase": "^9.22.2",
+    "mongoose": "^7.2.3",
+    "nodemon": "^2.0.22"
+  }
 }
