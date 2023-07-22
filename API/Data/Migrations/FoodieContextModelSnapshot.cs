@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace API.Data.Migartions
+namespace API.Data.Migrations
 {
     [DbContext(typeof(FoodieContext))]
     partial class FoodieContextModelSnapshot : ModelSnapshot
@@ -125,7 +125,7 @@ namespace API.Data.Migartions
                     b.ToTable("Favorites");
                 });
 
-            modelBuilder.Entity("API.Entities.Rating", b =>
+            modelBuilder.Entity("API.Entities.RatingRecipe", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -137,9 +137,36 @@ namespace API.Data.Migartions
                     b.Property<int>("RatingNum")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("RecipeId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Rating");
+                    b.HasIndex("RecipeId");
+
+                    b.ToTable("RatingRecipe");
+                });
+
+            modelBuilder.Entity("API.Entities.RatingRestaurant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("RatingNum")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("RestaurantId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.ToTable("RatingRestaurant");
                 });
 
             modelBuilder.Entity("API.Entities.Recipe", b =>
@@ -169,12 +196,7 @@ namespace API.Data.Migartions
                     b.Property<string>("Origin")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("RatingRecipeId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("RatingRecipeId");
 
                     b.ToTable("Recipes");
                 });
@@ -218,12 +240,7 @@ namespace API.Data.Migartions
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("RatingRestaurantId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("RatingRestaurantId");
 
                     b.ToTable("Restaurants");
                 });
@@ -291,13 +308,18 @@ namespace API.Data.Migartions
                     b.Navigation("Recipe");
                 });
 
-            modelBuilder.Entity("API.Entities.Recipe", b =>
+            modelBuilder.Entity("API.Entities.RatingRecipe", b =>
                 {
-                    b.HasOne("API.Entities.Rating", "RatingRecipe")
-                        .WithMany()
-                        .HasForeignKey("RatingRecipeId");
+                    b.HasOne("API.Entities.Recipe", null)
+                        .WithMany("RecipeRatings")
+                        .HasForeignKey("RecipeId");
+                });
 
-                    b.Navigation("RatingRecipe");
+            modelBuilder.Entity("API.Entities.RatingRestaurant", b =>
+                {
+                    b.HasOne("API.Entities.Restaurant", null)
+                        .WithMany("RestaurantRatings")
+                        .HasForeignKey("RestaurantId");
                 });
 
             modelBuilder.Entity("API.Entities.References.FavoriteRestaurant", b =>
@@ -319,15 +341,6 @@ namespace API.Data.Migartions
                     b.Navigation("Restaurant");
                 });
 
-            modelBuilder.Entity("API.Entities.Restaurant", b =>
-                {
-                    b.HasOne("API.Entities.Rating", "RatingRestaurant")
-                        .WithMany()
-                        .HasForeignKey("RatingRestaurantId");
-
-                    b.Navigation("RatingRestaurant");
-                });
-
             modelBuilder.Entity("API.Entities.Bookmarks", b =>
                 {
                     b.Navigation("Recipes");
@@ -340,9 +353,16 @@ namespace API.Data.Migartions
                     b.Navigation("Restaurants");
                 });
 
+            modelBuilder.Entity("API.Entities.Recipe", b =>
+                {
+                    b.Navigation("RecipeRatings");
+                });
+
             modelBuilder.Entity("API.Entities.Restaurant", b =>
                 {
                     b.Navigation("Geolocation");
+
+                    b.Navigation("RestaurantRatings");
                 });
 #pragma warning restore 612, 618
         }
