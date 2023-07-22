@@ -1,6 +1,6 @@
 namespace API.Entities
 {
-   public class Rating
+   public class RatingRecipe
     {
         public int Id { get; set; }
         public int RatingNum { get; set; }

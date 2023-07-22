@@ -12,6 +12,6 @@ namespace API.DTOs
       public string CookTime { get; set; }
       public string DateAdded { get; set; }
       public string Origin { get; set; }
-      public Rating RatingRecipe { get; set; }
+      public List<RatingRecipe> RecipeRatings { get; set;}
    }
 }

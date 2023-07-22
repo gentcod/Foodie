@@ -9,6 +9,6 @@ namespace API.DTOs
         public string Location { get; set; }
         public string ImgSrc { get; set; }
         public Bearing Geolocation { get; set; }
-        public Rating RatingRestaurant { get; set; }
+        public List<RatingRestaurant> RestaurantRatings { get; set; }
     }
 }

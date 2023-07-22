@@ -10,6 +10,6 @@ namespace API.Entities
       public int CookTime { get; set; }
       public DateTime DateAdded { get; set; }
       public string Origin { get; set; }
-      public Rating RatingRecipe { get; set;}
+      public List<RatingRecipe> RecipeRatings { get; set;}
    }
 }
