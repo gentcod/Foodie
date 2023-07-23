@@ -20,15 +20,7 @@ namespace API.Controllers
       {
          var restaurants = await _context.Restaurants.Include(el => el.Geolocation).Include(el => el.RestaurantRatings).ToListAsync();
 
-         var restaurantsDto = restaurants.Select(res => new RestaurantDto
-         {
-            Id = res.Id,
-            Name = res.Name,
-            Location = res.Location,
-            ImgSrc = res.ImgSrc,
-            Geolocation = res.Geolocation,
-            RestaurantRatings = res.RestaurantRatings,
-         });
+         var restaurantsDto = restaurants.MapRestaurantsToDto();
 
          return Ok(restaurantsDto);
       }
@@ -49,7 +41,7 @@ namespace API.Controllers
       {
          var restaurant = await _context.Restaurants.FindAsync(restaurantId);
 
-         if (restaurant == null) return BadRequest(new ProblemDetails { Title = "Recipe not found" });
+         if (restaurant == null) return BadRequest(new ProblemDetails { Title = "Restaurant not found" });
 
          if (restaurant.RestaurantRatings == null) restaurant.RestaurantRatings = new List<RatingRestaurant>();
 
