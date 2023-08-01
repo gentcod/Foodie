@@ -30,19 +30,26 @@ axios.interceptors.response.use(async response => {
 });
 
 const request = {
-   get: (url: string, params?: URLSearchParams) => axios.get(url, {params}).then(responseBody)
+   get: (url: string, params?: URLSearchParams) => axios.get(url, {params}).then(responseBody),
+   post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
+   put: (url: string, body: {}) => axios.put(url, body).then(responseBody)
 }
 
 const Recipes = {
-   list: (params?: URLSearchParams) => request.get('recipe',params)
+   list: (params?: URLSearchParams) => request.get('recipe',params),
+   addRecipeRating: (recipeId: number, ratingNum: number, review: string) => 
+      request.put(`recipe/addRecipeRating?recipeId=${recipeId}&ratingNum=${ratingNum}&review=${review}`, {}),
 }
 
 const Restaurant = {
-   list: (params?: URLSearchParams) => request.get('restaurant',params)
+   list: (params?: URLSearchParams) => request.get('restaurant',params),
+   addRestaurantRating: (resaturantId: number, ratingNum: number, review: string) => 
+      request.put(`recipe/addRestaurantRating?resaturantId=${resaturantId}&ratingNum=${ratingNum}&review=${review}`, {}),
 }
 
 const Bookmarks = {
-   list: (params: URLSearchParams) => request.get('bookmarks', params)
+   list: (params: URLSearchParams) => request.get('bookmarks', params),
+   addBookMark: () => request.post(``, {})
 }
 
 const messenger = {

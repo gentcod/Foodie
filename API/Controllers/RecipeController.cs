@@ -45,6 +45,8 @@ namespace API.Controllers
       [HttpPatch("AddRecipeRating")]
       public async Task<ActionResult<Recipe>> AddRating([FromQuery] int recipeId, int ratingNum, string review)
       {
+         if (ratingNum < 1 || ratingNum > 5) return BadRequest(new ProblemDetails { Title = "Rating number is out of rating" });
+
          var recipe = await _context.Recipes.FindAsync(recipeId);
 
          if (recipe == null) return BadRequest(new ProblemDetails { Title = "Recipe not found" });
