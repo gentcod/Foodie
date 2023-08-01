@@ -4,9 +4,9 @@ using API.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Add services to the container.
-
 builder.Services.AddControllers().AddJsonOptions(opt => 
 {
     opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
@@ -16,8 +16,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<FoodieContext>(opt =>
 {
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    opt.UseSqlite(connectionString);
 });
+// builder.Services.AddDefaultIdentity<IdentityUser>();
+
 builder.Services.AddCors();
 
 var app = builder.Build();
