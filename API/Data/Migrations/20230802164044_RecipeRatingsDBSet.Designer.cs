@@ -3,6 +3,7 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(FoodieContext))]
-    partial class FoodieContextModelSnapshot : ModelSnapshot
+    [Migration("20230802164044_RecipeRatingsDBSet")]
+    partial class RecipeRatingsDBSet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
@@ -137,7 +140,7 @@ namespace API.Data.Migrations
                     b.Property<int>("RatingNum")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("RecipeId")
+                    b.Property<int?>("RecipeId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -159,14 +162,14 @@ namespace API.Data.Migrations
                     b.Property<int>("RatingNum")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("RestaurantId")
+                    b.Property<int?>("RestaurantId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("RestaurantRatings");
+                    b.ToTable("RatingRestaurant");
                 });
 
             modelBuilder.Entity("API.Entities.Recipe", b =>
@@ -312,18 +315,14 @@ namespace API.Data.Migrations
                 {
                     b.HasOne("API.Entities.Recipe", null)
                         .WithMany("RecipeRatings")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RecipeId");
                 });
 
             modelBuilder.Entity("API.Entities.RatingRestaurant", b =>
                 {
                     b.HasOne("API.Entities.Restaurant", null)
                         .WithMany("RestaurantRatings")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RestaurantId");
                 });
 
             modelBuilder.Entity("API.Entities.References.FavoriteRestaurant", b =>

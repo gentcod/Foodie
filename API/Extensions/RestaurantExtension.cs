@@ -18,7 +18,6 @@ namespace API.Extensions
             Location = restaurant.Location,
             ImgSrc = restaurant.ImgSrc,
             Geolocation = bearing,
-            RestaurantRatings = restaurant.RestaurantRatings,
          }
          );
 
@@ -34,7 +33,6 @@ namespace API.Extensions
             Location = res.Location,
             ImgSrc = res.ImgSrc,
             Geolocation = res.Geolocation,
-            RestaurantRatings = res.RestaurantRatings,
          });
       }
    }

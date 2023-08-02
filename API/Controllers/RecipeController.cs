@@ -26,7 +26,7 @@ namespace API.Controllers
          .AsQueryable();
 
       
-        var recipes = await query.Include(el => el.RecipeRatings).ToListAsync();
+        var recipes = await query.ToListAsync();
 
         return Ok(recipes.MapRecipesToDto());
       }
@@ -43,9 +43,9 @@ namespace API.Controllers
       }
 
       [HttpPatch("AddRecipeRating")]
-      public async Task<ActionResult<Recipe>> AddRating([FromQuery] int recipeId, int ratingNum, string review)
+      public async Task<ActionResult<Recipe>> AddRating(RatingDto ratingDto, [FromQuery] int recipeId)
       {
-         if (ratingNum < 1 || ratingNum > 5) return BadRequest(new ProblemDetails { Title = "Rating number is out of rating" });
+         if (ratingDto.RatingNum < 1 || ratingDto.RatingNum > 5) return BadRequest(new ProblemDetails { Title = "Rating number is out of rating" });
 
          var recipe = await _context.Recipes.FindAsync(recipeId);
 
@@ -55,8 +55,8 @@ namespace API.Controllers
          
          recipe.RecipeRatings.Add(new RatingRecipe
          {
-            RatingNum = ratingNum,
-            Comment = review,
+            RatingNum = ratingDto.RatingNum,
+            Comment = ratingDto.Comment,
          });
 
          _context.Recipes.Update(recipe);
