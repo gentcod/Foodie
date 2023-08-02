@@ -18,47 +18,20 @@ namespace API.Controllers
       [HttpGet(Name = "GetRestaurants")]
       public async Task<ActionResult<Restaurant>> GetRestaurants()
       {
-         var restaurants = await _context.Restaurants.Include(el => el.Geolocation).Include(el => el.RestaurantRatings).ToListAsync();
+         var restaurants = await _context.Restaurants.Include(el => el.Geolocation).ToListAsync();
 
-         var restaurantsDto = restaurants.MapRestaurantsToDto();
-
-         return Ok(restaurantsDto);
+         return Ok(restaurants.MapRestaurantsToDto());
       }
 
       [HttpGet("{id}")]
-      public async Task<ActionResult<RecipeDto>> GetRestaurantById(int id)
+      public async Task<ActionResult<RestaurantDto>> GetRestaurantById(int id)
       {
-         var restaurant = await _context.Restaurants.Include(el => el.RestaurantRatings)
+         var restaurant = await _context.Restaurants.Include(el => el.Geolocation)
                .FirstOrDefaultAsync(res => res.Id == id);
 
          if (restaurant == null) return NotFound();
 
-         return Ok();
+         return Ok(restaurant.MapRestaurantToDto());
       }
-
-      [HttpPatch("AddRestaurantRating")]
-      public async Task<ActionResult<Recipe>> AddRating(RatingDto ratingDto, [FromQuery] int restaurantId)
-      {
-         if (ratingDto.RatingNum < 1 || ratingDto.RatingNum > 5) return BadRequest(new ProblemDetails { Title = "Rating number is out of rating" });
-
-         var restaurant = await _context.Restaurants.FindAsync(restaurantId);
-
-         if (restaurant == null) return BadRequest(new ProblemDetails { Title = "Restaurant not found" });
-
-         if (restaurant.RestaurantRatings == null) restaurant.RestaurantRatings = new List<RatingRestaurant>();
-
-         restaurant.RestaurantRatings.Add(new RatingRestaurant
-         {
-            RatingNum = ratingDto.RatingNum,
-            Comment = ratingDto.Comment,
-         });
-
-         _context.Restaurants.Update(restaurant);
-         var result = _context.SaveChangesAsync();
-         if (result != null) return CreatedAtRoute("GetRestaurants", restaurant);
-
-         return BadRequest(new ProblemDetails { Title = "Problem adding Restaurant Rating" });
-      }
-
    }
 }

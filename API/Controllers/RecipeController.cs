@@ -34,36 +34,11 @@ namespace API.Controllers
       [HttpGet("{id}")]
       public async Task<ActionResult<RecipeDto>> GetRecipeById(int id)
       {
-         var recipe = await _context.Recipes.Include(el => el.RecipeRatings)
-               .FirstOrDefaultAsync(rec => rec.Id == id);
+         var recipe = await _context.Recipes.FirstOrDefaultAsync(rec => rec.Id == id);
 
          if (recipe == null) return NotFound();
 
          return Ok(recipe.MapRecipeToDto());
-      }
-
-      [HttpPatch("AddRecipeRating")]
-      public async Task<ActionResult<Recipe>> AddRating(RatingDto ratingDto, [FromQuery] int recipeId)
-      {
-         if (ratingDto.RatingNum < 1 || ratingDto.RatingNum > 5) return BadRequest(new ProblemDetails { Title = "Rating number is out of rating" });
-
-         var recipe = await _context.Recipes.FindAsync(recipeId);
-
-         if (recipe == null) return BadRequest(new ProblemDetails { Title = "Recipe not found" });
-
-         if (recipe.RecipeRatings == null) recipe.RecipeRatings = new List<RatingRecipe>();
-         
-         recipe.RecipeRatings.Add(new RatingRecipe
-         {
-            RatingNum = ratingDto.RatingNum,
-            Comment = ratingDto.Comment,
-         });
-
-         _context.Recipes.Update(recipe);
-         var result = _context.SaveChangesAsync();
-         if (result != null) return CreatedAtRoute("GetRecipes", recipe);
-
-         return BadRequest(new ProblemDetails { Title = "Problem adding Recipe Rating" });
       }
    }
 }

@@ -24,7 +24,7 @@ namespace API.Extensions
          return restaurantsDto;
       }
 
-      public static IEnumerable<RestaurantDto> MapRestaurantsToDto(this List<Restaurant> restaurants)
+      public static List<RestaurantDto> MapRestaurantsToDto(this List<Restaurant> restaurants)
       {
          return restaurants.Select(res => new RestaurantDto
          {
@@ -33,7 +33,19 @@ namespace API.Extensions
             Location = res.Location,
             ImgSrc = res.ImgSrc,
             Geolocation = res.Geolocation,
-         });
+         }).ToList();
+      }
+
+      public static RestaurantDto MapRestaurantToDto(this Restaurant restaurant)
+      {
+         return new RestaurantDto
+         {
+            Id = restaurant.Id,
+            Name = restaurant.Name,
+            Location = restaurant.Location,
+            ImgSrc = restaurant.ImgSrc,
+            Geolocation = restaurant.Geolocation,
+         };
       }
    }
 }

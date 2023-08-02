@@ -1,6 +1,7 @@
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,17 +20,46 @@ namespace API.Controllers
         public async Task<ActionResult<RecipeRatingsDto>> GetRecipeRatings()
         {
             var recipes = await _context.Recipes.ToListAsync();
-            var recipeRatings = await _context.RecipeRatings.ToListAsync();
+            var recipesRatings = await _context.RecipeRatings.ToListAsync();
 
-            var recipeRatingsDto = recipeRatings.Select(rec => new RecipeRatingsDto
+            var recipesRatingsDto = recipesRatings.MapRecipesRatingsToDto(recipes);
+
+            return Ok(recipesRatingsDto);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<RecipeRatingsDto>> GetRecipeRatingById(int id)
+        {
+            var recipe = await _context.Recipes.FirstOrDefaultAsync(el => el.Id == id);
+            var recipeRatings = await _context.RecipeRatings.Where(el => el.RecipeId == id).ToListAsync();
+
+            var recipeRatingDto = recipeRatings.MapRecipeRatingsToDto(recipe);
+
+            return Ok(recipeRatingDto);
+        }
+
+         [HttpPatch("AddRecipeRating")]
+        public async Task<ActionResult<Recipe>> AddRating(RatingDto ratingDto, [FromQuery] int recipeId)
+        {
+            if (ratingDto.RatingNum < 1 || ratingDto.RatingNum > 5) return BadRequest(new ProblemDetails { Title = "Rating number is out of rating" });
+
+            var recipe = await _context.Recipes.FindAsync(recipeId);
+
+            if (recipe == null) return BadRequest(new ProblemDetails { Title = "Recipe not found" });
+
+            if (recipe.RecipeRatings == null) recipe.RecipeRatings = new List<RatingRecipe>();
+            
+            recipe.RecipeRatings.Add(new RatingRecipe
             {
-                RatingId = rec.Id,
-                RecipeName = recipes.Find(el => el.Id == rec.RecipeId).Name,
-                RatingNum = rec.RatingNum,
-                Comment = rec.Comment,
+                RatingNum = ratingDto.RatingNum,
+                Comment = ratingDto.Comment,
             });
 
-            return Ok(recipeRatingsDto);
+            _context.Recipes.Update(recipe);
+            var result = _context.SaveChangesAsync();
+            if (result != null) return CreatedAtRoute("GetRecipes", recipe);
+
+            return BadRequest(new ProblemDetails { Title = "Problem adding Recipe Rating" });
         }
     }
 }
