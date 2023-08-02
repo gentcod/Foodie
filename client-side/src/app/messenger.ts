@@ -37,14 +37,20 @@ const request = {
 
 const Recipes = {
    list: (params?: URLSearchParams) => request.get('recipe',params),
-   addRecipeRating: (recipeId: number, ratingNum: number, review: string) => 
-      request.put(`recipe/addRecipeRating?recipeId=${recipeId}&ratingNum=${ratingNum}&review=${review}`, {}),
+   addRecipeRating: (recipeId: number, rating: number, review: string) => 
+      request.put(`recipe/addRecipeRating?recipeId=${recipeId}`, {
+         'ratingNum': rating,
+         'comment': review,
+      }),
 }
 
 const Restaurant = {
    list: (params?: URLSearchParams) => request.get('restaurant',params),
-   addRestaurantRating: (resaturantId: number, ratingNum: number, review: string) => 
-      request.put(`recipe/addRestaurantRating?resaturantId=${resaturantId}&ratingNum=${ratingNum}&review=${review}`, {}),
+   addRestaurantRating: (resaturantId: number, rating: number, review: string) => 
+      request.put(`recipe/addRestaurantRating?resaturantId=${resaturantId}`, {
+         'ratingNum': rating,
+         'comment': review,
+      }),
 }
 
 const Bookmarks = {

@@ -15,5 +15,7 @@ namespace API.Data
         public DbSet<Bookmarks> Bookmarks { get; set; }
         public DbSet<Favorites> Favorites { get; set; }
         public DbSet<Bearing> Bearing { get; set; }
+        public DbSet<RatingRecipe> RecipeRatings { get; set; }
+        public DbSet<RatingRestaurant> RestaurantRatings { get; set; }
     }
 }

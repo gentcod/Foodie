@@ -37,9 +37,9 @@ namespace API.Controllers
       }
 
       [HttpPatch("AddRestaurantRating")]
-      public async Task<ActionResult<Recipe>> AddRating([FromQuery] int restaurantId, int ratingNum, string review)
+      public async Task<ActionResult<Recipe>> AddRating(RatingDto ratingDto, [FromQuery] int restaurantId)
       {
-         if (ratingNum < 1 || ratingNum > 5) return BadRequest(new ProblemDetails { Title = "Rating number is out of rating" });
+         if (ratingDto.RatingNum < 1 || ratingDto.RatingNum > 5) return BadRequest(new ProblemDetails { Title = "Rating number is out of rating" });
 
          var restaurant = await _context.Restaurants.FindAsync(restaurantId);
 
@@ -49,8 +49,8 @@ namespace API.Controllers
 
          restaurant.RestaurantRatings.Add(new RatingRestaurant
          {
-            RatingNum = ratingNum,
-            Comment = review,
+            RatingNum = ratingDto.RatingNum,
+            Comment = ratingDto.Comment,
          });
 
          _context.Restaurants.Update(restaurant);
