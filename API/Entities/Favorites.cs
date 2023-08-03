@@ -37,7 +37,7 @@ namespace API.Entities
             Recipes.Remove(favorite);
         }
 
-         public void AddFavoriteRestaurant(Restaurant restaurant)
+        public void AddFavoriteRestaurant(Restaurant restaurant)
         {
             if (Restaurants == null) Restaurants = new List<FavoriteRestaurant>();
 

@@ -27,18 +27,20 @@ namespace API.Controllers
             return Ok(recipesRatingsDto);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<RecipeRatingsDto>> GetRecipeRatingById(int id)
+        [HttpGet("{recipeId}")]
+        public async Task<ActionResult<RecipeRatingsDto>> GetRecipeRatingById(int recipeId)
         {
-            var recipe = await _context.Recipes.FirstOrDefaultAsync(el => el.Id == id);
-            var recipeRatings = await _context.RecipeRatings.Where(el => el.RecipeId == id).ToListAsync();
+            var recipe = await _context.Recipes.FirstOrDefaultAsync(el => el.Id == recipeId);
+            if (recipe == null) return BadRequest(new ProblemDetails{ Title = "Recipe not found"});
+
+            var recipeRatings = await _context.RecipeRatings.Where(el => el.RecipeId == recipeId).ToListAsync();
 
             var recipeRatingDto = recipeRatings.MapRecipeRatingsToDto(recipe);
 
             return Ok(recipeRatingDto);
         }
 
-         [HttpPatch("AddRecipeRating")]
+        [HttpPatch("AddRecipeRating")]
         public async Task<ActionResult<Recipe>> AddRating(RatingDto ratingDto, [FromQuery] int recipeId)
         {
             if (ratingDto.RatingNum < 1 || ratingDto.RatingNum > 5) return BadRequest(new ProblemDetails { Title = "Rating number is out of rating" });
