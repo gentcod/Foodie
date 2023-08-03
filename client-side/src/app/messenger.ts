@@ -37,11 +37,13 @@ const request = {
 
 const Recipes = {
    list: (params?: URLSearchParams) => request.get('recipe',params),
-   addRecipeRating: (recipeId: number, rating: number, review: string) => 
+   addRecipeRating: (recipeId: URLSearchParams, rating: number, review: string) => 
       request.put(`recipe/addRecipeRating?recipeId=${recipeId}`, {
          'ratingNum': rating,
          'comment': review,
-      }),
+      }
+   ),
+   listRecipeRatings: (params?: URLSearchParams) => request.get('RecipeRatings/')
 }
 
 const Restaurant = {
@@ -58,10 +60,17 @@ const Bookmarks = {
    addBookMark: () => request.post(``, {})
 }
 
+const Favorites = {
+   list: (params: URLSearchParams) => request.get('favorite', params),
+   addFavoriteRecipe: (userId: string, recipeId: number) => request.post(`Favorites/AddRecipe?userId=${userId}&recipeId=${recipeId}`, {}),
+   addFavoriteRestaurant: (userId: string, resaturantId: number) => request.post(`Favorites/AddRestaurant?userId=${userId}&resaturantId=${resaturantId}`, {})
+}
+
 const messenger = {
    Recipes,
    Restaurant,
    Bookmarks,
+   Favorites,
 }
 
 export default messenger;

@@ -15,11 +15,15 @@ namespace API.Controllers
       }
 
       [HttpGet(Name = "GetFavorites")]
-      public async Task<ActionResult<Favorites>> GetFavorites([FromQuery] string userId)
+      public async Task<ActionResult<Favorites>> GetFavorites(string userId)
       {
          Favorites favorites = await RetrieveFavorites(userId);
 
-         if (favorites == null) return NotFound();
+         if (favorites == null) {
+            //Todo implement getting cookie data
+            return NotFound();
+         };
+
          return Ok(favorites);
       }
 
@@ -90,7 +94,7 @@ namespace API.Controllers
          }
 
          var favorites = new Favorites { UserId = userId };
-         _context.Favorites.Add(favorites);
+         // _context.Favorites.Add(favorites); //To be removed when user authentication is resolved
 
          return favorites;
       }

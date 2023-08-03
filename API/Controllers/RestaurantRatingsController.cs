@@ -27,11 +27,13 @@ namespace API.Controllers
             return Ok(restaurantsRatingsDto);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<RestaurantRatingsDto>> GetRestaurantRatingsById(int id)
+        [HttpGet("{restaurantId}")]
+        public async Task<ActionResult<RestaurantRatingsDto>> GetRestaurantRatingsById(int restaurantId)
         {
-            var restaurant = await _context.Restaurants.FirstOrDefaultAsync(el => el.Id == id);
-            var restaurantRatings = await _context.RestaurantRatings.Where(el => el.RestaurantId == id).ToListAsync();
+            var restaurant = await _context.Restaurants.FirstOrDefaultAsync(el => el.Id == restaurantId);
+            if (restaurant == null) return BadRequest(new ProblemDetails{ Title = "Restaurant not found"});
+
+            var restaurantRatings = await _context.RestaurantRatings.Where(el => el.RestaurantId == restaurantId).ToListAsync();
 
             var restaurantRatingsDto = restaurantRatings.MapRestaurantRatingsToDto(restaurant);
 
