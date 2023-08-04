@@ -16,15 +16,15 @@ namespace API.Controllers
       }
 
       [HttpGet(Name = "GetBookmark")]
-      public async Task<ActionResult<Bookmarks>> GetBookMark([FromQuery] string userId)
+      public async Task<ActionResult<Bookmarks>> GetBookMark(string userId)
       {
          Bookmarks bookmarks = await RetrieveBookmarks(userId);
 
-         if (bookmarks == null) return NotFound();
+         if (bookmarks == null) return NotFound(new ProblemDetails{ Title= "Bookmarked Recipes could not be found"});
          return Ok(bookmarks);
       }
 
-      [HttpPost]
+      [HttpPost("AddBookmark")]
       public async Task<ActionResult<Bookmarks>> AddNewBookMark([FromQuery] BookmarkParams bookmarkParam)
       {
          var bookmarks = await RetrieveBookmarks(bookmarkParam.UserId);
