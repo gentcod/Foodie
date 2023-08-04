@@ -40,8 +40,8 @@ namespace API.Controllers
             return Ok(recipeRatingDto);
         }
 
-        [HttpPatch("AddRecipeRating")]
-        public async Task<ActionResult<Recipe>> AddRating(RatingDto ratingDto, [FromQuery] int recipeId)
+        [HttpPatch("AddRating/{recipeId}")]
+        public async Task<ActionResult<Recipe>> AddRating(RatingDto ratingDto, int recipeId)
         {
             if (ratingDto.RatingNum < 1 || ratingDto.RatingNum > 5) return BadRequest(new ProblemDetails { Title = "Rating number is out of rating" });
 

@@ -37,8 +37,8 @@ const request = {
 
 const Recipes = {
    list: (params?: URLSearchParams) => request.get('recipe',params),
-   addRecipeRating: (recipeId: URLSearchParams, rating: number, review: string) => 
-      request.put(`recipe/addRecipeRating?recipeId=${recipeId}`, {
+   addRating: (recipeId: URLSearchParams, rating: number, review: string) => 
+      request.put(`recipe/addRating?recipeId=${recipeId}`, {
          'ratingNum': rating,
          'comment': review,
       }
@@ -48,8 +48,8 @@ const Recipes = {
 
 const Restaurant = {
    list: (params?: URLSearchParams) => request.get('restaurant',params),
-   addRestaurantRating: (resaturantId: number, rating: number, review: string) => 
-      request.put(`recipe/addRestaurantRating?resaturantId=${resaturantId}`, {
+   addRating: (resaturantId: number, rating: number, review: string) => 
+      request.put(`recipe/addRating?resaturantId=${resaturantId}`, {
          'ratingNum': rating,
          'comment': review,
       }),

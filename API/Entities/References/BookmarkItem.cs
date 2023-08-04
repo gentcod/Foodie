@@ -7,6 +7,6 @@ namespace API.Entities
         public int RecipeId { get; set; }
         public Recipe Recipe { get; set; }
 
-        public int BookmarkId { get; set; }
+        public int BookmarksId { get; set; }
     }
 }

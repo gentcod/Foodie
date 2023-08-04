@@ -1,8 +1,11 @@
 import { Outlet } from 'react-router-dom';
-import { NavigationContainer, NavigationItem, NavigationItemIcon, NavigationItemsContainer, SearchItem} from './navigation.style';
-import Search from '../../components/search/search.component';
 import { useState } from 'react';
 import { navItemsLeft, navItemsRight } from '../../dev-data/navigation-data';
+
+import Search from '../../components/search/search.component';
+import UserDropdown from '../../components/user-dropdown/user-dropdown.component';
+
+import { NavigationContainer, NavigationItem, NavigationItemIcon, NavigationItemsContainer, SearchItem} from './navigation.style';
 
 const Navigation = () => {
    const [hideSearch, setHideSearch] = useState(true);
@@ -42,6 +45,7 @@ const Navigation = () => {
                </NavigationItem>
                )
             }
+            <UserDropdown name='Oyefule Oluwatayo' imgSrc='icons/user-profile.svg'/>
          </NavigationItemsContainer>
          {showSearch && <Search/>}
       </NavigationContainer>

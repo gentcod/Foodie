@@ -19,7 +19,7 @@ namespace API.Entities
             {
                 RecipeId = recipe.Id, 
                 Recipe = recipe,
-                BookmarkId = Id,
+                BookmarksId = Id,
             });
 
             TotalBookmarks = Recipes.Count();
