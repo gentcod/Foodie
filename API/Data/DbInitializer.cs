@@ -1,4 +1,4 @@
-using API.Entities;
+using API.Models;
 using API.HelperFunctions;
 using Microsoft.EntityFrameworkCore;
 

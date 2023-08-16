@@ -1,6 +1,6 @@
-using API.Entities.References;
+using API.Models.References;
 
-namespace API.Entities
+namespace API.Models
 {
    public class Favorites
     {

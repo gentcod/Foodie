@@ -1,5 +1,5 @@
 using System.Text.Json;
-using API.Entities;
+using API.Models;
 
 namespace API.HelperFunctions
 {

@@ -1,8 +1,6 @@
-using API.Entities;
-
 namespace API.DTOs
 {
-   public class RecipeDto
+    public class RecipeDto
    {
       public int Id { get; set; }
       public string Name { get; set; }

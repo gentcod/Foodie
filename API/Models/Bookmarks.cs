@@ -1,4 +1,6 @@
-namespace API.Entities
+using API.Models.References;
+
+namespace API.Models
 {
    public class Bookmarks
     {

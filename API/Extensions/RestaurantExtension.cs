@@ -1,5 +1,5 @@
 using API.DTOs;
-using API.Entities;
+using API.Models;
 
 namespace API.Extensions
 {
