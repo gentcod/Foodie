@@ -1,4 +1,4 @@
-namespace API.Entities.References
+namespace API.Models.References
 {
    public class FavoriteRestaurant
    {

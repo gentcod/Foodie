@@ -1,4 +1,4 @@
-namespace API.Entities
+namespace API.Models
 {
    public class RatingRecipe
     {

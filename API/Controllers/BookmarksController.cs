@@ -1,5 +1,5 @@
 using API.Data;
-using API.Entities;
+using API.Models;
 using API.RequestHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
