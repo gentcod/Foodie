@@ -10,5 +10,6 @@ export type Recipe = {
    name: string,
    ingredients: string,
    description: string,
-   origin: string
+   origin: string,
+   cookTime: string;
 }

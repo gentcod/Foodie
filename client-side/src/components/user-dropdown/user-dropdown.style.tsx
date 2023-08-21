@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const DropdownContainer = styled.div`
    height: 15rem;
    width: 25rem;
-   background-color: #f6f6f6;
+   background-color: #555;
    padding: 1rem;
    border-radius: 1rem;
    box-shadow: .6rem .6rem 1rem rgba(0, 0, 0, .3);
@@ -56,4 +56,5 @@ export const UserModListItem = styled(Link)`
    font-weight: 500;
    letter-spacing: 1px;
    padding: 5px 0;
+   color: white;
 `;
