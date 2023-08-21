@@ -1,4 +1,6 @@
+import RecipeCardContainer from "../../components/recipe-card-container/recipe-card-container.component.";
 import { categoryData } from "../../dev-data/recipe-data";
+
 import {
   Container,
   RecipeCategory,
@@ -10,6 +12,8 @@ import {
 } from "./recipes.style";
 
 const Recipes = () => {
+
+
   return (
     <Container>
       {categoryData.map((data) => (
@@ -25,16 +29,9 @@ const Recipes = () => {
           </RecipeCategoryContent>
         </RecipeCategory>
       ))}
+      <RecipeCardContainer/>
     </Container>
   );
 };
 
 export default Recipes;
-
- // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(fetchRecipesStart());
-  // }, [dispatch])
-
-  // const data = useSelector(selectRecipes);
-  // console.log(data);

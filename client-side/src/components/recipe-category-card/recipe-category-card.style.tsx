@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const Container = styled(Link)`
-   height: 30rem;
-   width: 20rem;
+   height: 25rem;
+   width: 15rem;
    border: 1px soild #333;
    border-radius: .5rem;
    overflow: hidden;
@@ -37,7 +37,8 @@ export const RecipeCategoryContentContainer = styled.div`
 export const RecipeCategoryContent = styled.div`
    height: 10rem;
    padding: 2rem;
-   background-color: white;
+   background-color: #555;
+   color: #e8e8e8;
    border-radius: .5rem;
    text-align: left;
 

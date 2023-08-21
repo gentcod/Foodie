@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-   padding: 3rem 5rem;
-   border-top: 1px solid #333;
-   border-bottom: 1px solid #333;
+   padding: 5rem;
+   // border-top: 1px solid #333;
+   // border-bottom: 1px solid #333;
    margin-top: 3rem;
 
    display: flex;
