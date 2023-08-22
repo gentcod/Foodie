@@ -33,6 +33,7 @@ export const FeaturedImage = styled.img`
 export const WelcomeContainer = styled.div`
    height: 30rem;
    padding: 3rem;
+   border-radius: 1rem;
    margin-top: 3rem;
    display: flex;
    column-gap: 5rem;
