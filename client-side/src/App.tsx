@@ -1,21 +1,23 @@
 import {Routes, Route} from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 
 import "./App.css";
+import Loading from './components/loading/loading.component';
 // import "./sass/main.scss";
-import Navigation from "./routes/navigation/navigation.component";
-import Home from "./routes/home/home.component";
-import Recipes from './routes/recipes/recipes.component';
+const Navigation = lazy(() => import("./routes/navigation/navigation.component"));
+const Home = lazy(() => import("./routes/home/home.component"));
+const Recipes = lazy(() => import('./routes/recipes/recipes.component'));
 
 function App() {
   return (
-    <div className="App">
+    <Suspense fallback={<Loading/>}>
       <Routes>
         <Route element={<Navigation/>}>
           <Route path="/" index element={<Home/>}/>
           <Route path='recipes' element={<Recipes/>}/>
         </Route>
       </Routes>
-    </div>
+    </Suspense>
   );
 }
 

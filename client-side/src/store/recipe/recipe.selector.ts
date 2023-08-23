@@ -7,3 +7,8 @@ export const selectRecipes = createSelector(
    [selectRecipeReducer],
    (recipesSlice) => recipesSlice.recipes
 )
+
+export const selectRecipeIsLoading = createSelector(
+   [selectRecipeReducer],
+   (isLoadingSlice) => isLoadingSlice.isLoading
+)

@@ -1,4 +1,26 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+export const Bounce = keyframes`
+   0% {
+      transform: translateY(1rem) scale(1.1);
+   }
+
+   25% {
+      transform: translateY(-1rem) scale(1);
+   }
+
+   50% {
+      transform: translateY(1rem) scale(1.2);
+   }
+
+   75% {
+      transform: translateY(-1rem) scale(1.1);
+   }
+
+   100% {
+      transform: translateY(1rem) scale(1);
+   }
+`
 
 export const Overlay = styled.div`
    height: 90%;
@@ -19,6 +41,6 @@ export const Overlay = styled.div`
 export const IconContainer = styled.div`
    margin: 0 auto;
 
-
+   animation: ${Bounce} 1s ease infinite;
 `;
 
