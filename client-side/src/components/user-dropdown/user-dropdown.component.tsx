@@ -8,7 +8,7 @@ type ModListProp = {
 
 const modList: ModListProp = [
    {
-      id: 1,
+      id: 0,
       item: "profile",
       link: '',
    },
@@ -18,7 +18,7 @@ const modList: ModListProp = [
       link: '',
    },
    {
-      id: 1,
+      id: 2,
       item: "logout",
       link: '',
    },
