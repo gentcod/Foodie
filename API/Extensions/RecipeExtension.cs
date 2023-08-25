@@ -7,7 +7,7 @@ namespace API.Extensions
    {
       public static IQueryable<Recipe> Search(this IQueryable<Recipe> query, string keyword)
       {
-         if (string.IsNullOrEmpty(keyword)) return query;
+         if (string.IsNullOrEmpty(keyword)) return query.OrderBy(rec => rec.Id);
 
          var keywordLower = keyword.ToLower();
 
@@ -16,12 +16,12 @@ namespace API.Extensions
 
       public static IQueryable<Recipe> Sort(this IQueryable<Recipe> query, string sortBy)
       {
-         if (string.IsNullOrEmpty(sortBy)) return query.OrderBy(rec => rec.Name);
+         if (string.IsNullOrEmpty(sortBy)) return query.OrderBy(rec => rec.Id);
 
          query = sortBy switch
          {
             "origin" => query.OrderBy(rec => rec.Origin),
-            _ => query.OrderBy(rec => rec.Name)
+            _ => query.OrderBy(rec => rec.Id)
          };
 
          return query;
@@ -29,11 +29,9 @@ namespace API.Extensions
 
       public static IQueryable<Recipe> OrderByCookTime(this IQueryable<Recipe> query, int? orderBy)
       {
-         if (orderBy == null) return query.OrderBy(rec => rec.Name);
+         if (orderBy == null) return query.OrderBy(rec => rec.Id);
 
-         query = query.OrderBy(rec => rec.CookTime);
-
-         return query;
+         return query.OrderBy(rec => rec.CookTime);
       }
 
       public static List<RecipeDto> MapRecipesToDto(this List<Recipe> recipes)
