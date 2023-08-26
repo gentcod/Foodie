@@ -1,6 +1,6 @@
+import LoadingRecipe from "../../components/loading-recipe/loading-recipe.component";
 import RecipeCardContainer from "../../components/recipe-card-container/recipe-card-container.component.";
 import { categoryData } from "../../dev-data/recipe-data";
-// import Loading from "../../components/loading/loading.component";
 
 import {
   Container,
@@ -17,7 +17,7 @@ const Recipes = () => {
 
   return (
     <Container>
-      {/* <Loading/> */}
+      <LoadingRecipe/>
       {categoryData.map((data) => (
         <RecipeCategory key={data.id}>
           <RecipeCategoryHeader>{data.heading}</RecipeCategoryHeader>
