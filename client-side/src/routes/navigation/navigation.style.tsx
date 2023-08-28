@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const NavigationContainer = styled.div`
   height: 4rem;
   width: 100%;

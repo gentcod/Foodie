@@ -7,6 +7,7 @@ import RecipeCard from "../recipe-card/recipe-card.component";
 
 import { CardContainer } from './recipe-card-container.style';
 import Loading from "../loading/loading.component";
+import LoadingRecipe from "../loading-recipe/loading-recipe.component";
 
 
 
@@ -24,6 +25,8 @@ const RecipeCardContainer = () => {
    return (
       <CardContainer>
          {
+            isLoading ?
+            <LoadingRecipe/> :
             data.map(el => (
                isLoading ? <Loading/> : <RecipeCard key={el.id} name={el.name} origin={el.origin} cookTime={el.cookTime} description={el.description} imgSrc="images/foodie.png"/>
             ))
