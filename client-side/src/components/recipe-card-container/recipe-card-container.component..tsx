@@ -31,6 +31,7 @@ const RecipeCardContainer = () => {
                isLoading ? <Loading/> : <RecipeCard key={el.id} name={el.name} origin={el.origin} cookTime={el.cookTime} description={el.description} imgSrc="images/foodie.png"/>
             ))
          }
+         {/* <LoadingRecipe/> */}
       </CardContainer>
    )
 }

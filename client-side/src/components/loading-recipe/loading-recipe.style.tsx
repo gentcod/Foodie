@@ -24,7 +24,6 @@ export const ContainerInnerLeft = styled.div`
    padding: .5rem;
    width: 15rem;
    height: 100%;
-   border-radius: 50%;
 
    position: relative;
 `;
@@ -40,21 +39,14 @@ export const ContainerInnerRight = styled.div`
 
 export const ContainerContent = styled.div`
    background-color: #777;
-   height: 100%
+   height: 100%;
+   border-radius: .5rem;
 `;
 
-export const ContainerName = styled(ContainerContent)`
-   
+export const ContainerContentMid = styled(ContainerContent)`
+   width: 15rem;
 `;
 
-export const ContainerCookTime  = styled(ContainerContent)`
-
-`;
-
-export const ContainerDescription = styled(ContainerContent)`
-   
-`;
-
-export const ContainerOrigin = styled(ContainerContent)`
-   
+export const ContainerContentShort = styled(ContainerContent)`
+   width: 8rem;
 `;
