@@ -15,7 +15,7 @@ export const RecipeContainer = styled.div`
 `;
 
 export const RecipeInnerLeft = styled.div`
-
+   padding: .5rem;
 `;
 
 export const RecipeInnerRight = styled.div`
@@ -25,9 +25,9 @@ export const RecipeInnerRight = styled.div`
 `;
 
 export const RecipeImage = styled.img`
-   height: 15rem;
+   height: 14rem;
    width: 15rem;
-   border-radius: 50%;
+   border-radius: 1rem;
 `;
 
 export const RecipeName = styled.h4`

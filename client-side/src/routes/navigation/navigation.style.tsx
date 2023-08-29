@@ -22,21 +22,32 @@ export const NavigationItemsContainer = styled.div`
   display: flex;
   width: 35rem;
   padding: 1rem;
+  justify-content: center;
+  align-items: center;
+  column-gap: 3rem;
+`;
+
+export const NavigationItemsContainerRight = styled(NavigationItemsContainer)`
+  column-gap: 5rem;
 `;
 
 export const NavigationItem = styled(Link)`
-  width: 100%;
-  color: white;
-  text-transform: uppercase;
-  font-weight: 1000;
-`;
-
-export const SearchItem = styled.a`
-  width: 100%;
   color: white;
   text-transform: uppercase;
   font-weight: 1000;
   cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
 `;
 
-export const NavigationItemIcon = styled.img``;
+export const SearchItem = styled(NavigationItem)`
+  color: white;
+  text-transform: uppercase;
+  font-weight: 1000;
+`;
+
+export const NavigationItemIcon = styled.img`
+
+`;

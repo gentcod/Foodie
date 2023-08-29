@@ -1,5 +1,5 @@
 import Loading from '../loading/loading.component';
-import { Container, ContainerCookTime, ContainerDescription, ContainerInnerLeft, ContainerInnerRight, ContainerName, ContainerOrigin, LoadingContainer } from './loading-recipe.style';
+import { Container, ContainerContent, ContainerContentMid, ContainerContentShort, ContainerInnerLeft, ContainerInnerRight,  LoadingContainer } from './loading-recipe.style';
 
 const containerNumber = [
    {id: 1},
@@ -17,10 +17,10 @@ const LoadingRecipe = () => {
                   <Loading/>
                </ContainerInnerLeft>
                <ContainerInnerRight>
-                  <ContainerName/>
-                  <ContainerCookTime/>
-                  <ContainerOrigin/>
-                  <ContainerDescription/>
+                  <ContainerContentMid/>
+                  <ContainerContentShort/>
+                  <ContainerContent/>
+                  <ContainerContentMid/>
                </ContainerInnerRight>
             </LoadingContainer>
          ))}

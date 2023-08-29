@@ -5,7 +5,7 @@ import { navItemsLeft, navItemsRight } from '../../dev-data/navigation-data';
 import Search from '../../components/search/search.component';
 import UserDropdown from '../../components/user-dropdown/user-dropdown.component';
 
-import { Container, NavigationContainer, NavigationItem, NavigationItemIcon, NavigationItemsContainer, SearchItem} from './navigation.style';
+import { Container, NavigationContainer, NavigationItem, NavigationItemIcon, NavigationItemsContainer, NavigationItemsContainerRight, SearchItem} from './navigation.style';
 import Header from '../../components/header/header.component';
 
 const Navigation = () => {
@@ -36,20 +36,22 @@ const Navigation = () => {
                   navItemsLeft.map(item => <NavigationItem key={item.id} to={`/${item.title.replace(" ", "")}`}>{item.title}</NavigationItem>)
                }
             </NavigationItemsContainer>
-            <NavigationItemsContainer>
+            <NavigationItemsContainerRight>
                {
                   navItemsRight.map(item => item.title === 'search' ?
-                  <SearchItem key={item.id} onClick={changeSearchState}>
+                  <SearchItem to={'#'} key={item.id} onClick={changeSearchState}>
+                     <span>Search</span>
                      <NavigationItemIcon src={item.icon}/>
                   </SearchItem>
                :
                   <NavigationItem key={item.id} to={`/${item.title.replace(" ", "")}`}>
+                     <span>{item.title}</span>
                      <NavigationItemIcon src={item.icon}/>
                   </NavigationItem>
                   )
                }
                {<UserDropdown name='Oyefule Oluwatayo' imgSrc='icons/user-profile.svg'/>}
-            </NavigationItemsContainer>
+            </NavigationItemsContainerRight>
             {showSearch && <Search/>}
          </NavigationContainer>
       </Container>
