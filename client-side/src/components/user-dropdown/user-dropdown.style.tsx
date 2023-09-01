@@ -19,7 +19,7 @@ export const DropdownContainer = styled.div`
 
 export const UserDetailsContainer = styled.div`
    height: 5rem;
-   background-color: #444;
+   background-color: #e6be8a;
    border-radius: 3rem;
 
    display: flex;
@@ -37,7 +37,7 @@ export const UserPicture = styled.img`
 `;
 
 export const UserName = styled.h5`
-   color: white;
+   color: #444;
    font-size: 1.4rem;
    letter-spacing: 1px;
 `;
@@ -57,4 +57,8 @@ export const UserModListItem = styled(Link)`
    letter-spacing: 1px;
    padding: 5px 0;
    color: white;
+
+   &:hover {
+      color: #e6be8a;
+   }
 `;

@@ -3,7 +3,7 @@
       "Name": "Jollof Rice",
       "Ingredients": "Pepper, Rice, Bulliion Cubes",
       "Description": "A very delicious meal",
-      "imgSrc": "",
+      "ImageSrc": "https://i.ibb.co/gtHjVJW/jollof-rice.jpg",
       "CookTime": 55,
       "Origin": "Yoruba"
    },
@@ -11,7 +11,7 @@
       "Name": "Fried Rice",
       "Ingredients": "Pepper, Rice, Bulliion Cubes, Curry",
       "Description": "A meal with delicate veggies",
-      "imgSrc": "",
+      "ImageSrc": "https://i.ibb.co/0FXsPpW/fried-rice.jpg",
       "CookTime": 40,
       "Origin": "Yoruba"
    },
@@ -19,15 +19,15 @@
       "Name": "Efo Riro",
       "Ingredients": "Pepper, Spinnach, Bulliion Cubes, Palm Oil",
       "Description": "Goes well with swallows",
-      "imgSrc": "",
+      "ImageSrc": "https://i.ibb.co/qNC0X6N/efor-riro.jpg",
       "CookTime": 50,
       "Origin": "Yoruba"
    },
    {
       "Name": "Ifokore",
       "Ingredients": "Yam, Palm Oil, Dry Pepper, Salt, Maggi, Fish",
-      "Description": "A native Ijebu meal",
-      "ImageSrc": "not here",
+      "Description": "A native Ijebu meal, also called Ikokore",
+      "ImageSrc": "https://i.ibb.co/c6WMBxV/ikokore.jpg",
       "CookTime": 52,
       "Origin": "Yoruba - Ijebu"
     }

@@ -25,7 +25,8 @@ export const Bounce = keyframes`
 export const Overlay = styled.div`
    height: 90%;
    width: 90%;
-   background-color: rgba(255, 255, 255, .9);
+   background-color: rgba(235, 88, 20, .5);
+   backdrop-filter: blur(3px);
    border-radius: 1rem;
    position: absolute;
    top: 50%;

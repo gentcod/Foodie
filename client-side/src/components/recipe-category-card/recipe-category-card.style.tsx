@@ -1,6 +1,27 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+export const RecipeImage = styled.img`
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   transition: .8s all ease;
+`;
+
+export const RecipeCategoryContent = styled.div`
+   height: 10rem;
+   padding: 2rem;
+   background-color: #555;
+   color: #e8e8e8;
+   border-radius: .5rem;
+   text-align: left;
+   transition: .8s all ease;
+
+   display: flex;
+   flex-direction: column;
+   row-gap: 1rem;
+`;
+
 export const Container = styled(Link)`
    height: 25rem;
    width: 15rem;
@@ -15,15 +36,13 @@ export const Container = styled(Link)`
 
    flex: 0 0 25%;
 
-   &:hover {
-      transform: translateY(-1rem) scale(1.05);
+   &:hover ${RecipeImage}{
+      transform: translateY(-1rem) scale(1.1);
    }
-`;
 
-export const RecipeImage = styled.img`
-   width: 100%;
-   height: 100%;
-   object-fit: cover;
+   &:hover ${RecipeCategoryContent} {
+      color: #e6be8a;
+   }
 `;
 
 export const RecipeCategoryContentContainer = styled.div`
@@ -33,19 +52,6 @@ export const RecipeCategoryContentContainer = styled.div`
    left: 50%;
    transform: translate(-50%, 0);
 `
-
-export const RecipeCategoryContent = styled.div`
-   height: 10rem;
-   padding: 2rem;
-   background-color: #555;
-   color: #e8e8e8;
-   border-radius: .5rem;
-   text-align: left;
-
-   display: flex;
-   flex-direction: column;
-   row-gap: 1rem;
-`;
 
 export const RecipeCategoryName = styled.h3`
 

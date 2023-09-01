@@ -40,6 +40,10 @@ export const NavigationItem = styled(Link)`
   display: flex;
   align-items: center;
   column-gap: 1rem;
+
+  &:hover {
+    color: #e6be8a;
+  }
 `;
 
 export const SearchItem = styled(NavigationItem)`

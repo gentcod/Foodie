@@ -28,7 +28,7 @@ const RecipeCardContainer = () => {
             isLoading ?
             <LoadingRecipe/> :
             data.map(el => (
-               isLoading ? <Loading/> : <RecipeCard key={el.id} name={el.name} origin={el.origin} cookTime={el.cookTime} description={el.description} imgSrc="images/foodie.png"/>
+               isLoading ? <Loading/> : <RecipeCard key={el.id} name={el.name} origin={el.origin} cookTime={el.cookTime} description={el.description} imgSrc={el.imageSrc}/>
             ))
          }
          {/* <LoadingRecipe/> */}
