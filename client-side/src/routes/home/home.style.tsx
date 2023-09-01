@@ -31,7 +31,9 @@ export const FeaturedImage = styled.img`
 `
 
 export const WelcomeContainer = styled.div`
-   height: 30rem;
+   height: 25rem;
+   width: 80%;
+   margin: 0 auto;
    padding: 3rem;
    border-radius: 1rem;
    margin-top: 3rem;
@@ -50,7 +52,7 @@ export const WelcomeLogo = styled.img`
 
 export const WelcomeText = styled.p`
    width: 50%;
-   font-size: 1.6rem;
+   font-size: 1.4rem;
    font-weight: 500;
-   // color: #333;
+   color: #e6be8a;
 `;

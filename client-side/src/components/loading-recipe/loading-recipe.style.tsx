@@ -8,7 +8,7 @@ export const Container = styled.div`
 
 export const LoadingContainer = styled.div`
    height: 18rem;
-   width: 80%;
+   width: 70%;
    padding: 2rem;
    text-align: left;
    background-color: #555;

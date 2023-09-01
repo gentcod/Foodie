@@ -12,4 +12,5 @@ export type Recipe = {
    description: string,
    origin: string,
    cookTime: string;
+   imageSrc: string;
 }
