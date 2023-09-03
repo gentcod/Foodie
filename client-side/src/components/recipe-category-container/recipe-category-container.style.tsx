@@ -3,9 +3,9 @@ import styled from "styled-components";
 export const Container = styled.div`
    padding: 5rem;
    margin-top: 3rem;
-   background-image: url(https://i.ibb.co/CQHW8Bn/foreign.jpg);
-   background-position: center;
-   background-attachment: fixed;
+   background-color: rgba(0, 0, 0, .5);
+   backdrop-filter: blur(10px);
+   border-radius: .5rem;
    border: 2px solid #e6be8a;
    display: flex;
    flex: 1 1 1;

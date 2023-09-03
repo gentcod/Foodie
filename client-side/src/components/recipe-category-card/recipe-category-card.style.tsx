@@ -37,7 +37,7 @@ export const Container = styled(Link)`
    flex: 0 0 25%;
 
    &:hover ${RecipeImage}{
-      transform: translateY(-1rem) scale(1.1);
+      transform: translateY(-1rem) scale(1.2);
    }
 
    &:hover ${RecipeCategoryContent} {

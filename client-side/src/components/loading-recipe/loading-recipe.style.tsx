@@ -1,14 +1,17 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+   width: 100%;
    display: flex;
    flex-direction: column;
    row-gap: 2rem;
+   justify-content: center;
+   align-items: center;
 `;
 
 export const LoadingContainer = styled.div`
    height: 18rem;
-   width: 70%;
+   width: 60%;
    padding: 2rem;
    text-align: left;
    background-color: #555;

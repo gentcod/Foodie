@@ -1,7 +1,15 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-   padding: 2rem 5rem;
+   padding: 0 3rem;
+`;
+
+export const RecipeCategoryItemImage = styled.img`
+   height: 100%;
+   width: 100%;
+   object-fit: cover;
+   border-radius: 1rem;
+   transition: .8s all ease;
 `;
 
 export const RecipeCategory = styled.div`
@@ -15,10 +23,11 @@ export const RecipeCategory = styled.div`
 export const RecipeCategoryHeader = styled.h2`
    font-weight: 300;
    font-size: 2rem;
-   color: #222;
+   color: white;
    text-transform: uppercase;
    letter-spacing: .5rem;
    text-align: left;
+   margin-left: 10rem;
 `;
 
 export const RecipeCategoryContent = styled.div`
@@ -34,14 +43,12 @@ export const RecipeCategoryItem = styled.div`
    border-radius: 1rem;
    border: 1px solid #e6be8a;
    box-shadow: 1rem 1rem .7rem rgba(0, 0, 0, .3);
+   cursor: pointer;
    position: relative;
-`;
 
-export const RecipeCategoryItemImage = styled.img`
-   height: 100%;
-   width: 100%;
-   object-fit: cover;
-   border-radius: 1rem;
+   &:hover ${RecipeCategoryItemImage} {
+      transform: scale(1.2);
+   }
 `;
 
 export const RecipeCategoryItemName = styled.p`

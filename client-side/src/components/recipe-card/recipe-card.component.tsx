@@ -1,4 +1,4 @@
-import { RecipeContainer, RecipeCookTime, RecipeDescription, RecipeImage, RecipeInnerLeft, RecipeInnerRight, RecipeName, RecipeOrigin } from './recipe-card.style';
+import { RecipeContainer, RecipeCookTime, RecipeDescription, RecipeImage, RecipeImageContainer, RecipeInnerLeft, RecipeInnerRight, RecipeName, RecipeOrigin } from './recipe-card.style';
 
 type RecipeProps = {
    name: string;
@@ -12,7 +12,9 @@ const RecipeCard = ({name, imgSrc, description, cookTime, origin}: RecipeProps) 
    return (
       <RecipeContainer>
          <RecipeInnerLeft>
-            <RecipeImage src={imgSrc}/>
+            <RecipeImageContainer>
+               <RecipeImage src={imgSrc}/>
+            </RecipeImageContainer>
          </RecipeInnerLeft>
          <RecipeInnerRight>
             <RecipeName>{name}</RecipeName>
