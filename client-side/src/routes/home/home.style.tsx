@@ -3,6 +3,9 @@ import styled from "styled-components";
 
 export const HomeContainer = styled.div`
    padding: 2rem 5rem;
+   background-image: url(https://i.ibb.co/CQHW8Bn/foreign.jpg);
+   background-attachment: fixed;
+   background-position: center;
 `
 
 export const FeaturedContainer = styled.div`
