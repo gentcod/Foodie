@@ -1,11 +1,11 @@
 import RecipeCardContainer from "../../components/recipe-card-container/recipe-card-container.component.";
-import { categoryData } from "../../dev-data/recipe-data";
+import { categoryData } from "../../dev-data/recipe-page-data";
+import Heading from "../../components/heading/heading.component";
 
 import {
   Container,
   RecipeCategory,
   RecipeCategoryContent,
-  RecipeCategoryHeader,
   RecipeCategoryItem,
   RecipeCategoryItemImage,
   RecipeCategoryItemName,
@@ -18,7 +18,7 @@ const Recipes = () => {
     <Container>
       {categoryData.map((data) => (
         <RecipeCategory key={data.id}>
-          <RecipeCategoryHeader>{data.heading}</RecipeCategoryHeader>
+          <Heading text={data.heading}/>
           <RecipeCategoryContent>
             {data.contents.map((el) => (
               <RecipeCategoryItem key={el.id}>

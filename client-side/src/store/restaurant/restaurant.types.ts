@@ -17,7 +17,8 @@ export type Rating = {
 export type Restaurant = {
    id: number,
    name: string,
+   imgSrc: string,
    location: string,
    geolocation: Bearing,
-   rating: Rating
+   rating: Rating,
 }
