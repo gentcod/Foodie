@@ -7,3 +7,8 @@ export const selectRestaurants = createSelector(
    [selectRestaurantReducer],
    (restaurantSlice) => restaurantSlice.restaurants
 )
+
+export const selectRestaurantsIsLoading = createSelector(
+   [selectRestaurantReducer],
+   (restaurantSlice) => restaurantSlice.isLoading
+)

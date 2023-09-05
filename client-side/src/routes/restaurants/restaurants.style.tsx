@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const RestaurantsContainer = styled.div`
    padding: 0 3rem;
 `;
 
-export const RecipeCategoryItemImage = styled.img`
+export const RestaurantCategoryItemImage = styled.img`
    height: 100%;
    width: 100%;
    object-fit: cover;
@@ -12,7 +12,7 @@ export const RecipeCategoryItemImage = styled.img`
    transition: .8s all ease;
 `;
 
-export const RecipeCategory = styled.div`
+export const RestaurantCategory = styled.div`
    width: 100%;
    height: 45rem;
    display: flex;
@@ -20,13 +20,13 @@ export const RecipeCategory = styled.div`
    row-gap: 2rem;
 `;
 
-export const RecipeCategoryContent = styled.div`
+export const RestaurantCategoryContent = styled.div`
    display: flex;
    column-gap: 3rem;
    justify-content: center;
 `;
 
-export const RecipeCategoryItem = styled.div`
+export const RestaurantCategoryItem = styled.div`
    width: 30rem;
    height: 35rem;
    overflow: hidden;
@@ -36,12 +36,12 @@ export const RecipeCategoryItem = styled.div`
    cursor: pointer;
    position: relative;
 
-   &:hover ${RecipeCategoryItemImage} {
+   &:hover ${RestaurantCategoryItemImage} {
       transform: scale(1.2);
    }
 `;
 
-export const RecipeCategoryItemName = styled.p`
+export const RestaurantCategoryItemName = styled.p`
    height: 10%;
    width: 100%;
    padding: 1rem;

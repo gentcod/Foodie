@@ -1,5 +1,5 @@
 import Loading from '../loading/loading.component';
-import { Container, ContainerContent, ContainerContentMid, ContainerContentShort, ContainerInnerLeft, ContainerInnerRight,  LoadingContainer } from './loading-recipe.style';
+import { Container, ContainerContent, ContainerContentMid, ContainerContentShort, ContainerInnerLeft, ContainerInnerRight,  LoadingContainer } from './loading-comp.style';
 
 const containerNumber = [
    {id: 1},
@@ -8,7 +8,7 @@ const containerNumber = [
    {id: 4}
 ]
 
-const LoadingRecipe = () => {
+const LoadingComp = () => {
    return (
       <Container>
          {containerNumber.map(el => (
@@ -28,4 +28,4 @@ const LoadingRecipe = () => {
    )
 }
 
-export default LoadingRecipe;
+export default LoadingComp;

@@ -7,7 +7,7 @@ import RecipeCard from "../recipe-card/recipe-card.component";
 
 import { CardContainer } from './recipe-card-container.style';
 import Loading from "../loading/loading.component";
-import LoadingRecipe from "../loading-recipe/loading-recipe.component";
+import LoadingComp from "../loading-comp/loading-comp.component";
 
 
 
@@ -19,19 +19,16 @@ const RecipeCardContainer = () => {
  
    const data = useSelector(selectRecipes);
    const isLoading = useSelector(selectRecipeIsLoading);
-   console.log(data);
-   console.log(isLoading)
 
    return (
       <CardContainer>
          {
             isLoading ?
-            <LoadingRecipe/> :
+            <LoadingComp/> :
             data.map(el => (
                isLoading ? <Loading/> : <RecipeCard key={el.id} name={el.name} origin={el.origin} cookTime={el.cookTime} description={el.description} imgSrc={el.imageSrc}/>
             ))
          }
-         {/* <LoadingRecipe/> */}
       </CardContainer>
    )
 }
