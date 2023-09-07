@@ -1,4 +1,4 @@
-import { RestaurantContainer, RestaurantContent, RestaurantImage, RestaurantImageContainer, RestaurantInnerLeft, RestaurantInnerRight } from './restaurant-card.style';
+import { RestaurantContainer, RestaurantContent, RestaurantImage, RestaurantImageContainer, RestaurantInnerLeft, RestaurantInnerRight, RestaurantName } from './restaurant-card.style';
 
 type RestaurantProps = {
    name: string;
@@ -15,7 +15,7 @@ const RestaurantCard = ({name, imgSrc, location}: RestaurantProps) => {
          </RestaurantImageContainer>
       </RestaurantInnerLeft>
       <RestaurantInnerRight>
-         <RestaurantContent>{name}</RestaurantContent>
+         <RestaurantName>{name}</RestaurantName>
          <RestaurantContent>{location}</RestaurantContent>
       </RestaurantInnerRight>
    </RestaurantContainer>

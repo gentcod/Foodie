@@ -1,3 +1,5 @@
+import { Rating } from "../../utils/reducer/reducer.utilities";
+
 export enum RECIPES_ACTION_TYPES {
    SET_RECIPES = 'recipe/SET_RECIPES',
    FETCH_RECIPE_START = 'recipe/FETCH_RECIPE_START',
@@ -13,4 +15,5 @@ export type Recipe = {
    origin: string,
    cookTime: string;
    imageSrc: string;
+   rating: Rating,
 }

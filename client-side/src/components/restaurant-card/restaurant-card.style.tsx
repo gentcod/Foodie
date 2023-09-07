@@ -22,8 +22,10 @@ export const RestaurantContainer = styled.div`
    width: 60%;
    padding: 2rem;
    text-align: left;
-   background-color: rgba(230, 190, 138, .5);;
+   background-color: rgba(230, 190, 138, .5);
    border-radius: 1rem;
+   border: 1px solid white;
+   backdrop-filter: blur(5px);
    color: white;
    cursor: pointer;
    transition: .8s all ease;
@@ -52,9 +54,15 @@ export const RestaurantInnerRight = styled.div`
 
 export const RestaurantContent = styled.p`
    width: 100%;
-   padding: 2px;
+   padding: 5px;
    margin-left: 1rem;
-   background-color: #555;
+   color: #e8e8e8;
+   background-color: #333;
    border-radius: 3px;
-   border: 2px solid #222;
+   border: 1px solid white;
+`;
+
+export const RestaurantName = styled(RestaurantContent)`
+   font-weight: 1000;
+   color: white;
 `;
