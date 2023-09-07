@@ -13,8 +13,6 @@ export const FeaturedContainer = styled.div`
    margin: 0 auto;
    margin-top: 3rem;
    border-radius: 1rem;
-   // padding: 2rem 5rem;
-   // border: 1px solid #222;
 `
 
 export const FeaturedTitle = styled.p`
@@ -27,7 +25,7 @@ export const FeaturedTitle = styled.p`
 
 export const FeaturedImage = styled.img`
    width: 100%;
-   height: 40rem;
+   height: 50rem;
    object-fit: cover;
    object-position: center;
    border-radius: 2rem;

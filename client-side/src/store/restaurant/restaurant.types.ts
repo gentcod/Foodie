@@ -1,3 +1,6 @@
+import { Rating } from "../../utils/reducer/reducer.utilities";
+
+
 export enum RESTAURANT_ACTION_TYPES {
    FETCH_RESTAURANT_START = 'recipe/FETCH_RESTAURANT_START',
    FETCH_RESTAURANT_SUCCESS = 'recipe/FETCH_RESTAURANT_SUCCESS',
@@ -7,11 +10,6 @@ export enum RESTAURANT_ACTION_TYPES {
 export type Bearing = {
    latitude: number,
    longitude: number
-}
-
-export type Rating = {
-   ratingNum: number,
-   comment: string,
 }
 
 export type Restaurant = {

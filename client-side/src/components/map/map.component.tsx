@@ -17,8 +17,6 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const Map = () => {
-
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchRestaurantsStart());
