@@ -1,4 +1,4 @@
-import RecipeCardContainer from "../../components/recipe-card-container/recipe-card-container.component.";
+import RecipeCardContainer from "../recipe-card-container/recipe-preview.component";
 import { categoryData } from "../../dev-data/recipe-page-data";
 import Heading from "../../components/heading/heading.component";
 
@@ -10,27 +10,29 @@ import {
   RecipeCategoryItemImage,
   RecipeCategoryItemName,
 } from "./recipes.style";
+import { Outlet } from "react-router-dom";
 
 const Recipes = () => {
-
-
   return (
-    <Container>
-      {categoryData.map((data) => (
-        <RecipeCategory key={data.id}>
-          <Heading text={data.heading}/>
-          <RecipeCategoryContent>
-            {data.contents.map((el) => (
-              <RecipeCategoryItem key={el.id}>
-               <RecipeCategoryItemImage src={el.imgSrc}/>
-               <RecipeCategoryItemName>{el.name}</RecipeCategoryItemName>
-              </RecipeCategoryItem>
-            ))}
-          </RecipeCategoryContent>
-        </RecipeCategory>
-      ))}
-      <RecipeCardContainer/>
-    </Container>
+    <>
+      <Container>
+        {categoryData.map((data) => (
+          <RecipeCategory key={data.id}>
+            <Heading text={data.heading} />
+            <RecipeCategoryContent>
+              {data.contents.map((el) => (
+                <RecipeCategoryItem key={el.id}>
+                  <RecipeCategoryItemImage src={el.imgSrc} />
+                  <RecipeCategoryItemName>{el.name}</RecipeCategoryItemName>
+                </RecipeCategoryItem>
+              ))}
+            </RecipeCategoryContent>
+          </RecipeCategory>
+        ))}
+        {/* <RecipeCardContainer/> */}
+      </Container>
+      <Outlet />
+    </>
   );
 };
 
