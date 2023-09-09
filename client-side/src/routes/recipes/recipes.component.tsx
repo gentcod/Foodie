@@ -1,4 +1,3 @@
-import RecipeCardContainer from "../recipe-card-container/recipe-preview.component";
 import { categoryData } from "../../dev-data/recipe-page-data";
 import Heading from "../../components/heading/heading.component";
 
@@ -29,7 +28,6 @@ const Recipes = () => {
             </RecipeCategoryContent>
           </RecipeCategory>
         ))}
-        {/* <RecipeCardContainer/> */}
       </Container>
       <Outlet />
     </>

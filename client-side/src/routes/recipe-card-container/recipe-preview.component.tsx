@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import { fetchRecipesStart } from "../../store/recipe/recipe.action";
+import { fetchRecipeRatingsStart, fetchRecipesStart } from "../../store/recipe/recipe.action";
 import {
   selectRecipeIsLoading,
   selectRecipes,
+  selectRecipesRatings,
 } from "../../store/recipe/recipe.selector";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,10 +19,13 @@ const RecipeCardContainer = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchRecipesStart());
+    dispatch(fetchRecipeRatingsStart());
   }, [dispatch]);
 
   const allRecipes = useSelector(selectRecipes);
   const isLoading = useSelector(selectRecipeIsLoading);
+  const recipeRatings = useSelector(selectRecipesRatings);
+  console.log('ratings: ',recipeRatings);
 
   const params = useParams();
 
@@ -48,6 +52,8 @@ const RecipeCardContainer = () => {
           )
         )
       )}
+
+      {/* {params.recipeCat === 'rec' ? <RecipeCard name="Trial" origin="Trial" cookTime="Trial" description="Trial" imgSrc="Trial"/> : ''} */}
     </CardContainer>
   );
 };

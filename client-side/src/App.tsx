@@ -22,7 +22,8 @@ function App() {
       <Routes>
         <Route element={<Navigation />}>
           <Route path="/" index element={<Home />} />
-          <Route path="recipes" element={<Recipes />}>
+          <Route path="recipes/" element={<Recipes />}>
+            <Route index element={<RecipePreview/>}/>
             <Route path=":recipeCat" element={<RecipePreview />} />
           </Route>
           <Route path="restaurants" element={<Restaurants />} />
