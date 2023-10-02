@@ -52,6 +52,10 @@ export const SearchItem = styled(NavigationItem)`
   font-weight: 1000;
 `;
 
+export const UserProfile = styled(NavigationItem)`
+
+`
+
 export const NavigationItemIcon = styled.img`
 
 `;

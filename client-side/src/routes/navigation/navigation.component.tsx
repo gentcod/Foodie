@@ -5,12 +5,15 @@ import { navItemsLeft, navItemsRight } from '../../dev-data/navigation-data';
 import Search from '../../components/search/search.component';
 import UserDropdown from '../../components/user-dropdown/user-dropdown.component';
 
-import { Container, NavigationContainer, NavigationItem, NavigationItemIcon, NavigationItemsContainer, NavigationItemsContainerRight, SearchItem} from './navigation.style';
+import { Container, NavigationContainer, NavigationItem, NavigationItemIcon, NavigationItemsContainer, NavigationItemsContainerRight, SearchItem, UserProfile} from './navigation.style';
 import Header from '../../components/header/header.component';
 
 const Navigation = () => {
    const [hideSearch, setHideSearch] = useState(true);
    const [showSearch, setShowSearch] = useState(false);
+
+   const [hideProfile, setHideProfile] = useState(true);
+   const [showProfile, setShowProfile] = useState(false);
 
    const changeSearchState = () => {
 
@@ -18,10 +21,28 @@ const Navigation = () => {
       {
          setShowSearch(true);
          setHideSearch(false);
+         setShowProfile(false);
       }
 
       else {
          setShowSearch(false);
+         setHideSearch(true);
+         setHideProfile(true)
+      }
+   }
+
+   const changeProfileState = () => {
+
+      if (hideProfile === true) 
+      {
+         setShowProfile(true);
+         setHideProfile(false);
+         setShowSearch(false);
+      }
+
+      else {
+         setShowProfile(false);
+         setHideProfile(true);
          setHideSearch(true);
       }
    }
@@ -40,18 +61,26 @@ const Navigation = () => {
                {
                   navItemsRight.map(item => item.title === 'search' ?
                   <SearchItem to={'#'} key={item.id} onClick={changeSearchState}>
-                     <span>Search</span>
+                     <span>{item.title}</span>
                      <NavigationItemIcon src={item.icon}/>
                   </SearchItem>
                :
-                  <NavigationItem key={item.id} to={`/${item.title.replace(" ", "")}`}>
-                     <span>{item.title}</span>
-                     <NavigationItemIcon src={item.icon}/>
-                  </NavigationItem>
+                  (
+                     item.title === 'user' ? 
+                     <UserProfile key={item.id} to={'#'} onClick={changeProfileState}>
+                        <span>{item.title}</span>
+                        <NavigationItemIcon src={item.icon}/>
+                     </UserProfile>
+                     :
+                     <NavigationItem key={item.id} to={`/${item.title.replace(" ", "")}`}>
+                        <span>{item.title}</span>
+                        <NavigationItemIcon src={item.icon}/>
+                     </NavigationItem>
+                  )
                   )
                }
-               {<UserDropdown name='Oyefule Oluwatayo' imgSrc='icons/user-profile.svg'/>}
             </NavigationItemsContainerRight>
+            {showProfile && <UserDropdown name='Oyefule Oluwatayo' imgSrc='icons/user-profile.svg'/>}
             {showSearch && <Search/>}
          </NavigationContainer>
       </Container>

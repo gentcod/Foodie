@@ -10,7 +10,7 @@ export const DropdownContainer = styled.div`
    box-shadow: .6rem .6rem 1rem rgba(0, 0, 0, .3);
    position: absolute;
    right: 13rem;
-   top: 12rem;
+   top: 13rem;
    z-index: 10;
 
    display: flex;

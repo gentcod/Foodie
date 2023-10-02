@@ -23,8 +23,3 @@ export const selectRecipesRatingsIsLoading = createSelector(
    [selectRecipesRatingsReducer],
    (recipeRatingsSlice) => recipeRatingsSlice.isLoading
 );
-
-//export const selectRecipesCat = createSelector(
-   //    [selectRecipeReducer],
-   //    (recipesSlice) => recipesSlice.recipes
-   // );
