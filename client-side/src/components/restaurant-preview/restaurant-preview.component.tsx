@@ -1,4 +1,4 @@
-import { CardContainer } from "./restaurant-card-container.style";
+import { CardContainer } from "./restaurant-preview.style";
 import { useEffect } from 'react';
 import { selectRestaurants, selectRestaurantsIsLoading } from '../../store/restaurant/restaurant.selector';
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,7 +16,6 @@ const RestaurantCardContainer = () => {
 
    const restaurants = useSelector(selectRestaurants);
    const isLoading = useSelector(selectRestaurantsIsLoading)
-   console.log(restaurants)
 
    return (
       <CardContainer>

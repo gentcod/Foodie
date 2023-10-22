@@ -36,7 +36,7 @@ const request = {
 }
 
 const Recipes = {
-   list: (params?: URLSearchParams) => request.get('recipe',params),
+   list: (params?: URLSearchParams) => request.get('recipe/',params),
    addRating: (recipeId: URLSearchParams, rating: number, review: string) => 
       request.put(`recipe/addRating?recipeId=${recipeId}`, {
          'ratingNum': rating,

@@ -1,5 +1,6 @@
 import { createAction, Action, ActionWithPayload, withMatcher } from "../../utils/reducer/reducer.utilities";
-import { RESTAURANT_ACTION_TYPES, Restaurant } from "./restaurant.types";
+import { RESTAURANT_ACTION_TYPES } from "./restaurant.types";
+import { Restaurant } from "../../app/models/restaurant";
 
 export type FetchRestaurantsStart = Action<RESTAURANT_ACTION_TYPES.FETCH_RESTAURANT_START>;
 export type FetchRestaurantsSuccess = ActionWithPayload<RESTAURANT_ACTION_TYPES.FETCH_RESTAURANT_SUCCESS, Restaurant[]>;

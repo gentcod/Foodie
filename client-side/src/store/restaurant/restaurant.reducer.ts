@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 import { fetchRestaurantsStart, fetchRestaurantsSuccess, fetchRestaurantsFailed } from "./restaurant.action";
-import { Restaurant } from "./restaurant.types";
+import { Restaurant } from "../../app/models/restaurant";
 
 export type RestaurantState = {
    readonly restaurants: Restaurant[];
