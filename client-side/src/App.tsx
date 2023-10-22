@@ -13,7 +13,7 @@ const Restaurants = lazy(
   () => import("./routes/restaurants/restaurants.component")
 );
 const RecipePreview = lazy(
-  () => import("./routes/recipe-card-container/recipe-preview.component")
+  () => import("./components/recipe-preview/recipe-preview.component")
 );
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
         <Route element={<Navigation />}>
           <Route path="/" index element={<Home />} />
           <Route path="recipes/" element={<Recipes />}>
-            <Route index element={<RecipePreview/>}/>
+            <Route index element={<RecipePreview />} />
             <Route path=":recipeCat" element={<RecipePreview />} />
           </Route>
           <Route path="restaurants" element={<Restaurants />} />

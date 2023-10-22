@@ -20,7 +20,7 @@ namespace API.Controllers
       public async Task<ActionResult<RecipeDto>> GetRecipes([FromQuery] RecipeParams recipeParams)
       {
          var query = _context.Recipes
-         .Search(recipeParams.Keyword)
+         .Search(recipeParams.Search)
          .Sort(recipeParams.SortBy)
          .OrderByCookTime(recipeParams.OrderBy)
          .AsQueryable();

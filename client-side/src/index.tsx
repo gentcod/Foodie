@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { ClerkProvider } from '@clerk/clerk-react'
+// import { ClerkProvider } from '@clerk/clerk-react'
 
 import 'leaflet/dist/leaflet.css'
 import "./index.css";
@@ -13,20 +13,20 @@ import { store } from "./store/store";
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
 }
-const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
+// const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <ClerkProvider publishableKey={clerkPubKey}>
+    {/* <ClerkProvider publishableKey={clerkPubKey}> */}
       <Provider store={store}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </Provider>
-    </ClerkProvider>
+    {/* </ClerkProvider> */}
   </React.StrictMode>
 );
 

@@ -1,5 +1,5 @@
 import Heading from '../../components/heading/heading.component';
-import RestaurantCardContainer from '../../components/restaurant-card-container/restaurant-card-container.component';
+import RestaurantCardContainer from '../../components/restaurant-preview/restaurant-preview.component';
 import {  RestaurantsContainer } from './restaurants.style';
 
 

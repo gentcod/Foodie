@@ -1,5 +1,5 @@
 import { all, call, put, takeLatest } from "typed-redux-saga/macro";
-import messenger from '../../app/messenger';
+import messenger from '../../app/api/messenger';
 import { RESTAURANT_ACTION_TYPES } from "./restaurant.types";
 import { fetchRestaurantsFailed, fetchRestaurantsSuccess } from "./restaurant.action";
 

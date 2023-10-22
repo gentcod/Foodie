@@ -1,17 +1,24 @@
 import { createSelector } from "reselect";
-import { RecipeRatingsState, RecipeState } from "./recipe.reducer";
+import { RecipeRatingsState, RecipeState, RecipesSearchState } from "./recipe.reducer";
 
-const selectRecipeReducer = (state: any): RecipeState => state.recipes;
+const selectRecipesReducer = (state: any): RecipeState => state.recipes;
+const selectRecipesSearchReducer = (state: any): RecipesSearchState => state.recipes;
 const selectRecipesRatingsReducer = (state: any): RecipeRatingsState => state.recipesRatings
 
+
 export const selectRecipes = createSelector(
-   [selectRecipeReducer],
+   [selectRecipesReducer],
    (recipesSlice) => recipesSlice.recipes
 );
 
 export const selectRecipeIsLoading = createSelector(
-   [selectRecipeReducer],
+   [selectRecipesReducer],
    (isLoadingSlice) => isLoadingSlice.isLoading
+);
+
+export const selectRecipesSearch = createSelector(
+   [selectRecipesSearchReducer],
+   (recipesSearchSlice) => recipesSearchSlice.recipesSearch
 );
 
 export const selectRecipesRatings = createSelector(

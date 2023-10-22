@@ -1,36 +1,40 @@
 import { useEffect } from "react";
-import { fetchRecipeRatingsStart, fetchRecipesStart } from "../../store/recipe/recipe.action";
+import {
+  fetchRecipesSearchStart,
+  fetchRecipesStart,
+} from "../../store/recipe/recipe.action";
 import {
   selectRecipeIsLoading,
   selectRecipes,
-  selectRecipesRatings,
+  // selectRecipesSearch,
 } from "../../store/recipe/recipe.selector";
 import { useDispatch, useSelector } from "react-redux";
 
-import RecipeCard from "../../components/recipe-card/recipe-card.component";
+import RecipeCard from "../recipe-card/recipe-card.component";
 
 import { CardContainer } from "./recipe-preview.style";
-import Loading from "../../components/loading/loading.component";
-import LoadingComp from "../../components/loading-comp/loading-comp.component";
+import Loading from "../loading/loading.component";
+import LoadingComp from "../loading-comp/loading-comp.component";
 import { useParams } from "react-router-dom";
-import { Recipe } from "../../store/recipe/recipe.types";
+import { Recipe } from "../../app/models/recipes";
 
 const RecipeCardContainer = () => {
+  const params = useParams();
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchRecipesStart());
-    dispatch(fetchRecipeRatingsStart());
+    dispatch(fetchRecipesSearchStart());
   }, [dispatch]);
 
   const allRecipes = useSelector(selectRecipes);
   const isLoading = useSelector(selectRecipeIsLoading);
-  const recipeRatings = useSelector(selectRecipesRatings);
-  console.log('ratings: ',recipeRatings);
 
-  const params = useParams();
+  // const recipeSearch = useSelector(selectRecipesSearch);
+  // console.log(recipeSearch);
 
   let data;
-  data = params.recipeCat === 'recipe' ?  [] as Recipe[] : allRecipes; 
+  data = params.recipeCat === "recipe" ? ([] as Recipe[]) : allRecipes;
 
   return (
     <CardContainer>
