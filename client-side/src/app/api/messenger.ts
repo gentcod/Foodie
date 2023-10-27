@@ -43,7 +43,7 @@ const Recipes = {
          'comment': review,
       }
    ),
-   listRecipeRatings: (params?: URLSearchParams) => request.get('RecipeRatings/')
+   listRecipeRatings: () => request.get('RecipeRatings/')
 }
 
 const Restaurant = {
