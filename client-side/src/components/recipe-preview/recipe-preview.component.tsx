@@ -1,12 +1,10 @@
 import { useEffect } from "react";
 import {
-  fetchRecipesSearchStart,
   fetchRecipesStart,
 } from "../../store/recipe/recipe.action";
 import {
   selectRecipeIsLoading,
   selectRecipes,
-  // selectRecipesSearch,
 } from "../../store/recipe/recipe.selector";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,26 +13,26 @@ import RecipeCard from "../recipe-card/recipe-card.component";
 import { CardContainer } from "./recipe-preview.style";
 import Loading from "../loading/loading.component";
 import LoadingComp from "../loading-comp/loading-comp.component";
-import { useParams } from "react-router-dom";
-import { Recipe } from "../../app/models/recipes";
+import { useLocation } from "react-router-dom";
+// import { useParams } from "react-router-dom";
+// import { Recipe } from "../../app/models/recipes";
 
 const RecipeCardContainer = () => {
-  const params = useParams();
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchRecipesStart());
-    dispatch(fetchRecipesSearchStart());
   }, [dispatch]);
 
   const allRecipes = useSelector(selectRecipes);
   const isLoading = useSelector(selectRecipeIsLoading);
 
-  // const recipeSearch = useSelector(selectRecipesSearch);
-  // console.log(recipeSearch);
+  const location = useLocation()
+  console.log(location)
+
 
   let data;
-  data = params.recipeCat === "recipe" ? ([] as Recipe[]) : allRecipes;
+  // data = params.recipeCat === "recipe" ? ([] as Recipe[]) : allRecipes; //Implement the search return here
+  data = allRecipes; //Implement the search return here
 
   return (
     <CardContainer>
