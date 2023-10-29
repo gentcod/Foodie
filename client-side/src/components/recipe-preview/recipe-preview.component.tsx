@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import {
+  fetchRecipesSearchStart,
   fetchRecipesStart,
 } from "../../store/recipe/recipe.action";
 import {
   selectRecipeIsLoading,
   selectRecipes,
+  // selectRecipesSearch,
 } from "../../store/recipe/recipe.selector";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -21,17 +23,19 @@ const RecipeCardContainer = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchRecipesStart());
+    dispatch(fetchRecipesSearchStart())
   }, [dispatch]);
 
   const allRecipes = useSelector(selectRecipes);
   const isLoading = useSelector(selectRecipeIsLoading);
+  // const recipeSearch = useSelector(selectRecipesSearch)
 
   const location = useLocation()
   console.log(location)
-
+  // console.log(recipeSearch)
 
   let data;
-  // data = params.recipeCat === "recipe" ? ([] as Recipe[]) : allRecipes; //Implement the search return here
+  // data = location.recipeCat === "recipe" ? ([] as Recipe[]) : allRecipes; //Implement the search return here
   data = allRecipes; //Implement the search return here
 
   return (
