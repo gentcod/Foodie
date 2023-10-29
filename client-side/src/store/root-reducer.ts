@@ -6,4 +6,5 @@ export const rootReducer = combineReducers({
    recipes: recipesReducer,
    recipesRatings: recipesRatingsReducer,
    restaurants: restaurantReducer,
+   // recipeSearch: recipesSearchReducer,
 })

@@ -10,8 +10,8 @@ export const getAxiosParams = () => {
    return params
 }
 
-export const fetchRecipesFromApi = async () => {   
-   const response = await Recipes.list();
+export const fetchRecipesFromApi = async (params?: URLSearchParams) => {   
+   const response = await Recipes.list(params);
    return response;
 }
 
@@ -21,13 +21,14 @@ export const fetchRecipeSRatingsFromApi = async () => {
 }
 
 // export const fetchRecipesSearchFromApi = async (params: URLSearchParams) => {   
-//    const response = await Recipes.search(params);
+//    const response = await Recipes.list(params);
 //    return response;
 // }
 
 export function* fetchRecipesAsync() {
    try {
-      const recipes = yield* call(fetchRecipesFromApi);
+      const axiosParams = getAxiosParams()
+      const recipes = yield* call(fetchRecipesFromApi, axiosParams);
       yield* put(fetchRecipesSuccess(recipes));
    } catch (error) {
       yield* put(fetchRecipesFailed(error as Error));
@@ -66,5 +67,7 @@ export function* onFetchRecipesRatings() {
 // }
 
 export function* recipesSaga() {
-   yield* all([call(onFetchRecipes), call(onFetchRecipesRatings),]);
+   yield* all([call(onFetchRecipes), call(onFetchRecipesRatings), ]);
 }
+
+// const axiosParams = getAxiosParams()
