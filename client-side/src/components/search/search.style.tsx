@@ -4,7 +4,7 @@ export const SearchBarContainer = styled.div`
    display: in-line block;
    padding: 1rem;
    position: absolute;
-   right: 20rem;
+   right: 5rem;
    top: 12rem;
 `
 
@@ -17,6 +17,7 @@ export const SearchBar = styled.input`
    padding: 1.5rem;
    background-color: #eee;
    color: #555;
+   margin-bottom: 1rem;
 
    &:focus {
       border-bottom: 3px solid rgb(235, 88, 20);
