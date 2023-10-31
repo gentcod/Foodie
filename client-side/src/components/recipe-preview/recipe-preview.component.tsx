@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import {
-  fetchRecipesSearchStart,
   fetchRecipesStart,
 } from "../../store/recipe/recipe.action";
 import {
@@ -15,24 +14,15 @@ import RecipeCard from "../recipe-card/recipe-card.component";
 import { CardContainer } from "./recipe-preview.style";
 import Loading from "../loading/loading.component";
 import LoadingComp from "../loading-comp/loading-comp.component";
-import { useLocation } from "react-router-dom";
-// import { useParams } from "react-router-dom";
-// import { Recipe } from "../../app/models/recipes";
 
 const RecipeCardContainer = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchRecipesStart());
-    dispatch(fetchRecipesSearchStart())
   }, [dispatch]);
 
   const allRecipes = useSelector(selectRecipes);
   const isLoading = useSelector(selectRecipeIsLoading);
-  // const recipeSearch = useSelector(selectRecipesSearch)
-
-  const location = useLocation()
-  console.log(location)
-  // console.log(recipeSearch)
 
   let data;
   // data = location.recipeCat === "recipe" ? ([] as Recipe[]) : allRecipes; //Implement the search return here

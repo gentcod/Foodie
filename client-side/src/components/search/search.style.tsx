@@ -20,7 +20,7 @@ export const SearchBar = styled.input`
    margin-bottom: 1rem;
 
    &:focus {
-      border-bottom: 3px solid rgb(235, 88, 20);
+      border-bottom: 3px solid #ed6b2e;
 
       ::placeholder {
          color: #333;

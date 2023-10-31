@@ -13,3 +13,9 @@ export type RecipeParams = {
    sortBy: string,
    orderBy: number,
 }
+
+export type RecipeSearch = {
+   id: number,
+   name: string,
+   imageSrc: string;
+}
