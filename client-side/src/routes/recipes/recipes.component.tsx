@@ -29,6 +29,8 @@ const Recipes = () => {
           </RecipeCategory>
         ))}
       </Container>
+      <Heading text="Top Rated Recipes"/>
+      
       <Outlet />
     </>
   );

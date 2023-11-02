@@ -13,7 +13,7 @@ type RecipeCategoryProp = {
 export const categoryData: RecipeCategoryProp = [
    {
       id: 0,
-      heading: "Top Rated Recipes",
+      heading: "Top Recipe Categories",
       contents: [
          {
             id: 0,

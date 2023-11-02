@@ -6,20 +6,20 @@ import { selectSearchParams } from "./recipe.selector";
 
 const { Recipes } = messenger;
 
-export const getAxiosParams = (searchString: string) => {
+export const getAxiosParams = (searchString: string = document.location.search) => {
    const params = new URLSearchParams(searchString);
    return params
 }
 
-//Recipes Saga
 export const fetchRecipesFromApi = async (params?: URLSearchParams) => {   
    const response = await Recipes.list(params);
    return response;
 }
 
+//Recipes Saga
 export function* fetchRecipesAsync() {
    try {
-      const axiosParams = getAxiosParams(document.location.search)
+      const axiosParams = getAxiosParams()
       const recipes = yield* call(fetchRecipesFromApi, axiosParams);
       yield* put(fetchRecipesSuccess(recipes));
    } catch (error) {
@@ -52,16 +52,12 @@ export function* onFetchRecipesRatings() {
 }
 
 //Recipe Search
-export const fetchRecipesSearchFromApi = async (params: URLSearchParams) => {   
-   const response = await Recipes.list(params);
-   return response;
-}
 
 export function* fetchRecipesSearchAsync() {
    try {
       const searchString = yield* select(selectSearchParams)
       const axiosParams = getAxiosParams(searchString)
-      const recipes = yield* call(fetchRecipesSearchFromApi, axiosParams);
+      const recipes = yield* call(fetchRecipesFromApi, axiosParams);
       yield* put(fetchRecipesSearchSuccess(recipes));
    } catch (error) {
       yield* put(fetchRecipesSearchFailed(error as Error));

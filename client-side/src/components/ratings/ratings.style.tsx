@@ -4,15 +4,7 @@ export const Container = styled.div`
    padding: 0 3rem;
 `;
 
-export const RecipeCategoryItemImage = styled.img`
-   height: 100%;
-   width: 100%;
-   object-fit: cover;
-   border-radius: 1rem;
-   transition: .8s all ease;
-`;
-
-export const RecipeCategory = styled.div`
+export const Ratings = styled.div`
    width: 100%;
    height: 45rem;
    display: flex;
@@ -20,13 +12,13 @@ export const RecipeCategory = styled.div`
    row-gap: 2rem;
 `;
 
-export const RecipeCategoryContent = styled.div`
+export const RatingName = styled.div`
    display: flex;
    column-gap: 3rem;
    justify-content: center;
 `;
 
-export const RecipeCategoryItem = styled.div`
+export const RatingNum = styled.div`
    width: 30rem;
    height: 35rem;
    overflow: hidden;
@@ -36,12 +28,12 @@ export const RecipeCategoryItem = styled.div`
    cursor: pointer;
    position: relative;
 
-   &:hover ${RecipeCategoryItemImage} {
+   &:hover  {
       transform: scale(1.2);
    }
 `;
 
-export const RecipeCategoryItemName = styled.p`
+export const RatingComment = styled.p`
    height: 10%;
    width: 100%;
    padding: 1rem;
