@@ -61,12 +61,12 @@ export const RecipeDetail = styled.p`
    text-align: left;
 `;
 
-export const Button = styled.button`
+export const Button = styled(Link)`
+   text-align: center;
    width: 90%;
    margin: 0 auto;
    margin-top: 1.5rem;
    cursor: pointer;
-   border: none;
    padding: .5rem;
    border-radius: .5rem;
    background-color: #ed6b2e;

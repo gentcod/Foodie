@@ -1,6 +1,6 @@
 import { Button, Container, Recipe, RecipeDetail, RecipeDetailsContainer, RecipeImage, RecipesContainer } from './search-preview.style';
 import { useDispatch, useSelector } from "react-redux";
-import { selectRecipesSearch } from '../../store/recipe/recipe.selector';
+import { selectRecipesSearch, selectSearchParams } from '../../store/recipe/recipe.selector';
 import { useEffect } from 'react';
 import { fetchRecipesSearchStart } from '../../store/recipe/recipe.action';
 
@@ -15,7 +15,7 @@ const SearchPreview = ({searchString}: SearchProps) => {
       dispatch(fetchRecipesSearchStart(searchString))
    }, [dispatch, searchString])
    const searchRecipes = useSelector(selectRecipesSearch)
-
+   const searchParams = useSelector(selectSearchParams)
 
    return (
       <Container>
@@ -28,7 +28,7 @@ const SearchPreview = ({searchString}: SearchProps) => {
                </RecipeDetailsContainer>
             </Recipe>)}
          </RecipesContainer>
-         <Button>View All</Button>
+         <Button to={`/recipes${searchParams}`}>View All</Button>
       </Container>
    )
 };
