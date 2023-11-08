@@ -27,6 +27,17 @@ namespace API.Controllers
             return Ok(recipesRatingsDto);
         }
 
+        [HttpGet(Name = "agg")]
+        public async Task<ActionResult<RecipeRatingsDto>> GetRecipesAgg()
+        {
+            var recipes = await _context.Recipes.ToListAsync();
+            var recipesRatings = await _context.RecipeRatings.ToListAsync();
+
+            var recipesRatingsDto = recipesRatings.MapRecipesRatingsAggregatorToDto(recipes);
+
+            return Ok(recipesRatingsDto);
+        }
+
         [HttpGet("{recipeId}")]
         public async Task<ActionResult<RecipeRatingsDto>> GetRecipeRatingById(int recipeId)
         {
@@ -40,13 +51,12 @@ namespace API.Controllers
             return Ok(recipeRatingDto);
         }
 
-        [HttpPatch("AddRating/{recipeId}")]
-        public async Task<ActionResult<Recipe>> AddRating(RatingDto ratingDto, int recipeId)
+        [HttpPost("AddRating/{recipeId}")]
+        public async Task<ActionResult<RecipeRatingsDto>> AddRating(RatingDto ratingDto, int recipeId)
         {
             if (ratingDto.RatingNum < 1 || ratingDto.RatingNum > 5) return BadRequest(new ProblemDetails { Title = "Rating number is out of rating" });
 
-            var recipe = await _context.Recipes.FindAsync(recipeId);
-
+            var recipe = await _context.Recipes.FirstOrDefaultAsync(rec => rec.Id == recipeId);
             if (recipe == null) return BadRequest(new ProblemDetails { Title = "Recipe not found" });
 
             if (recipe.RecipeRatings == null) recipe.RecipeRatings = new List<RatingRecipe>();
@@ -57,9 +67,14 @@ namespace API.Controllers
                 Comment = ratingDto.Comment,
             });
 
+            var recipeRatings = await _context.RecipeRatings.Where(rec => rec.Id == recipeId).ToListAsync();
+            var average = recipeRatings.Average(rating => rating.RatingNum);
+
+            recipe.Rating = average;
+
             _context.Recipes.Update(recipe);
             var result = _context.SaveChangesAsync();
-            if (result != null) return CreatedAtRoute("GetRecipes", recipe);
+            if (result != null) return CreatedAtRoute("agg", ratingDto);
 
             return BadRequest(new ProblemDetails { Title = "Problem adding Recipe Rating" });
         }

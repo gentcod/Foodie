@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class TestMigrations : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -52,7 +52,8 @@ namespace API.Data.Migrations
                     ImageSrc = table.Column<string>(type: "TEXT", nullable: true),
                     CookTime = table.Column<int>(type: "INTEGER", nullable: false),
                     DateAdded = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Origin = table.Column<string>(type: "TEXT", nullable: true)
+                    Origin = table.Column<string>(type: "TEXT", nullable: true),
+                    Rating = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -67,7 +68,8 @@ namespace API.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     Location = table.Column<string>(type: "TEXT", nullable: true),
-                    ImgSrc = table.Column<string>(type: "TEXT", nullable: true)
+                    ImgSrc = table.Column<string>(type: "TEXT", nullable: true),
+                    Rating = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -96,8 +98,7 @@ namespace API.Data.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     RecipeId = table.Column<int>(type: "INTEGER", nullable: false),
-                    BookmarkId = table.Column<int>(type: "INTEGER", nullable: false),
-                    BookmarksId = table.Column<int>(type: "INTEGER", nullable: true)
+                    BookmarksId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -106,7 +107,8 @@ namespace API.Data.Migrations
                         name: "FK_BookmarkItem_Bookmarks_BookmarksId",
                         column: x => x.BookmarksId,
                         principalTable: "Bookmarks",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BookmarkItem_Recipes_RecipeId",
                         column: x => x.RecipeId,
@@ -143,23 +145,24 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RatingRecipe",
+                name: "RecipeRatings",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    RecipeId = table.Column<int>(type: "INTEGER", nullable: false),
                     RatingNum = table.Column<int>(type: "INTEGER", nullable: false),
-                    Comment = table.Column<string>(type: "TEXT", nullable: true),
-                    RecipeId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Comment = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RatingRecipe", x => x.Id);
+                    table.PrimaryKey("PK_RecipeRatings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RatingRecipe_Recipes_RecipeId",
+                        name: "FK_RecipeRatings_Recipes_RecipeId",
                         column: x => x.RecipeId,
                         principalTable: "Recipes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -211,23 +214,24 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RatingRestaurant",
+                name: "RestaurantRatings",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    RestaurantId = table.Column<int>(type: "INTEGER", nullable: false),
                     RatingNum = table.Column<int>(type: "INTEGER", nullable: false),
-                    Comment = table.Column<string>(type: "TEXT", nullable: true),
-                    RestaurantId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Comment = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RatingRestaurant", x => x.Id);
+                    table.PrimaryKey("PK_RestaurantRatings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RatingRestaurant_Restaurants_RestaurantId",
+                        name: "FK_RestaurantRatings_Restaurants_RestaurantId",
                         column: x => x.RestaurantId,
                         principalTable: "Restaurants",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -267,13 +271,13 @@ namespace API.Data.Migrations
                 column: "RestaurantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RatingRecipe_RecipeId",
-                table: "RatingRecipe",
+                name: "IX_RecipeRatings_RecipeId",
+                table: "RecipeRatings",
                 column: "RecipeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RatingRestaurant_RestaurantId",
-                table: "RatingRestaurant",
+                name: "IX_RestaurantRatings_RestaurantId",
+                table: "RestaurantRatings",
                 column: "RestaurantId");
         }
 
@@ -293,10 +297,10 @@ namespace API.Data.Migrations
                 name: "FavoriteRestaurant");
 
             migrationBuilder.DropTable(
-                name: "RatingRecipe");
+                name: "RecipeRatings");
 
             migrationBuilder.DropTable(
-                name: "RatingRestaurant");
+                name: "RestaurantRatings");
 
             migrationBuilder.DropTable(
                 name: "Users");
