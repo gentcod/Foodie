@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace API.DTOs
 {
     public class RecipeDto
@@ -10,5 +12,6 @@ namespace API.DTOs
       public string CookTime { get; set; }
       public string DateAdded { get; set; }
       public string Origin { get; set; }
+      public double Rating { get; set; }
    }
 }

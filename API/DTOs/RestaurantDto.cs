@@ -8,6 +8,7 @@ namespace API.DTOs
         public string Name { get; set; }
         public string Location { get; set; }
         public string ImgSrc { get; set; }
+        public double Rating { get; set; }
         public Bearing Geolocation { get; set; }
     }
 }

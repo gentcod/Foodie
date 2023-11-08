@@ -46,6 +46,7 @@ namespace API.Extensions
             CookTime = $"{rec.CookTime.ToString()} mins",
             DateAdded = rec.DateAdded.ToString("dddd, dd MMMM yyyy"),
             Origin = rec.Origin,
+            Rating = rec.Rating,
          }).ToList();
       }
 
@@ -61,6 +62,7 @@ namespace API.Extensions
             CookTime = $"{recipe.CookTime.ToString()} mins",
             DateAdded = recipe.DateAdded.ToString("dddd, dd MMMM yyyy"),
             Origin = recipe.Origin,
+            Rating = recipe.Rating,
          };
       }
 
