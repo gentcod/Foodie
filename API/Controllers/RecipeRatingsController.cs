@@ -16,7 +16,7 @@ namespace API.Controllers
             
         }
 
-        [HttpGet]
+        [HttpGet(Name = "recipeRating")]
         public async Task<ActionResult<RecipeRatingsDto>> GetRecipeRatings()
         {
             var recipes = await _context.Recipes.ToListAsync();
@@ -27,7 +27,7 @@ namespace API.Controllers
             return Ok(recipesRatingsDto);
         }
 
-        [HttpGet(Name = "agg")]
+        [HttpGet("agg", Name = "agg")]
         public async Task<ActionResult<RecipeRatingsDto>> GetRecipesAgg()
         {
             var recipes = await _context.Recipes.ToListAsync();
@@ -59,22 +59,21 @@ namespace API.Controllers
             var recipe = await _context.Recipes.FirstOrDefaultAsync(rec => rec.Id == recipeId);
             if (recipe == null) return BadRequest(new ProblemDetails { Title = "Recipe not found" });
 
-            if (recipe.RecipeRatings == null) recipe.RecipeRatings = new List<RatingRecipe>();
+            var recipeRatings = await _context.RecipeRatings.Where(el => el.RecipeId == recipeId).ToListAsync();
+            if (recipeRatings == null) recipeRatings ??= new List<RatingRecipe>();
             
-            recipe.RecipeRatings.Add(new RatingRecipe
+            recipeRatings.Add(new RatingRecipe
             {
                 RatingNum = ratingDto.RatingNum,
                 Comment = ratingDto.Comment,
-            });
+            }); 
 
-            var recipeRatings = await _context.RecipeRatings.Where(rec => rec.Id == recipeId).ToListAsync();
-            var average = recipeRatings.Average(rating => rating.RatingNum);
-
-            recipe.Rating = average;
+            recipe.RecipeRatings = recipeRatings;
+            recipe.Rating = Math.Round(recipeRatings.Average(rating => rating.RatingNum), 1);;
 
             _context.Recipes.Update(recipe);
             var result = _context.SaveChangesAsync();
-            if (result != null) return CreatedAtRoute("agg", ratingDto);
+            if (result != null) return CreatedAtRoute("recipeRating", recipeRatings.MapRecipeRatingsToDto(recipe));
 
             return BadRequest(new ProblemDetails { Title = "Problem adding Recipe Rating" });
         }

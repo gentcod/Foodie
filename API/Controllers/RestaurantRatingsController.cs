@@ -16,7 +16,7 @@ namespace API.Controllers
             
         }
 
-        [HttpGet]
+        [HttpGet(Name = "restaurantRating")]
         public async Task<ActionResult<RestaurantRatingsDto>> GetRestaurantRatings()
         {
             var restaurants = await _context.Restaurants.ToListAsync();
@@ -40,26 +40,29 @@ namespace API.Controllers
             return Ok(restaurantRatingsDto);
         }
 
-         [HttpPatch("AddRating/{restaurantId}")]
+         [HttpPost("AddRating/{restaurantId}")]
         public async Task<ActionResult<Restaurant>> AddRating(RatingDto ratingDto, int restaurantId)
         {
             if (ratingDto.RatingNum < 1 || ratingDto.RatingNum > 5) return BadRequest(new ProblemDetails { Title = "Rating number is out of rating" });
 
             var restaurant = await _context.Restaurants.FindAsync(restaurantId);
-
             if (restaurant == null) return BadRequest(new ProblemDetails { Title = "Restaurant not found" });
 
-            if (restaurant.RestaurantRatings == null) restaurant.RestaurantRatings = new List<RatingRestaurant>();
+            var restaurantRatings = await _context.RestaurantRatings.Where(el => el.RestaurantId == restaurantId).ToListAsync();
+            restaurantRatings ??= new List<RatingRestaurant>();
 
-            restaurant.RestaurantRatings.Add(new RatingRestaurant
+            restaurantRatings.Add(new RatingRestaurant
             {
                 RatingNum = ratingDto.RatingNum,
                 Comment = ratingDto.Comment,
             });
 
+            restaurant.Rating = Math.Round(restaurantRatings.Average(rating => rating.RatingNum), 1);
+            restaurant.RestaurantRatings = restaurantRatings;
+
             _context.Restaurants.Update(restaurant);
             var result = _context.SaveChangesAsync();
-            if (result != null) return CreatedAtRoute("GetRestaurants", restaurant);
+            if (result != null) return CreatedAtRoute("restaurantRating", restaurantRatings.MapRestaurantRatingsToDto(restaurant));
 
             return BadRequest(new ProblemDetails { Title = "Problem adding Restaurant Rating" });
         }
