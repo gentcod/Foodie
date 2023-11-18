@@ -1,0 +1,94 @@
+import { createGlobalStyle } from 'styled-components';
+
+/**
+ * /*MEDIA QUERY MANAGER
+   0 - 600px: Phone
+   600 - 900px: Tablet portrait
+   900 - 1200px: Tablet Landscape
+   1200 - 1800px: Desktop
+   1800px +: Big Desktop
+
+   1em = 16px
+ */
+
+export const GlobalStyle = createGlobalStyle`
+   @keyframes shake {
+   0% {
+      transform: rotate(5deg) scale(1.1);
+   }
+   25% {
+      transform: rotate(-5deg) scale(1);
+   }
+   50% {
+      transform: rotate(5deg) scale(1.2);
+   }
+   75% {
+      transform: rotate(-5deg) scale(1.1);
+   }
+   100% {
+      transform: rotate(0) scale(1);
+   }
+   }
+
+   *,
+   *::before,
+   *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: inherit;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+         "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+         sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+   }
+
+   code {
+      font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+      monospace;
+   }
+
+   html {
+      font-size: 62.5%;
+      background-color: #222;
+   }
+   @media only screen and (max-width: 75em) {
+   html {
+      font-size: 56.25%;
+   }
+   }
+   @media only screen and (max-width: 56.25em) {
+   html {
+      font-size: 50%;
+   }
+   }
+   @media only screen and (min-width: 112.5em) {
+   html {
+      font-size: 75%;
+   }
+   }
+
+   body {
+      box-sizing: border-box;
+      background-color: #222;
+      font-family: "Lato", sans-serif;
+      font-size: 16px;
+      color: white;
+   }
+
+   .margin-big {
+      margin-left: 10rem;
+      margin-bottom: 5rem;
+   }
+   @media only screen and (max-width: 56.25em) {
+      .margin-big {
+         margin-left: 0;
+         text-align: center;
+      }
+   }
+
+   a {
+      text-decoration: none;
+      color: #1f252f;
+   }
+`;

@@ -1,7 +1,5 @@
 import { useEffect } from "react";
-import {
-  fetchRecipesStart,
-} from "../../store/recipe/recipe.action";
+import { fetchRecipesStart } from "../../store/recipe/recipe.action";
 import {
   selectRecipeIsLoading,
   selectRecipes,
@@ -12,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import RecipeCard from "../recipe-card/recipe-card.component";
 
 import { CardContainer } from "./recipe-preview.style";
-import Loading from "../loading/loading.component";
+import Loading from "../page-loading/page-loading.component";
 import LoadingComp from "../loading-comp/loading-comp.component";
 
 const RecipeCardContainer = () => {
