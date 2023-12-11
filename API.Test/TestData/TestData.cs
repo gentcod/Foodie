@@ -1,24 +1,22 @@
 ﻿using API.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using API.Models.References;
 
 namespace API.Test.TestData
 {
-
+    /// <summary>
+    /// This is a class that contains initialized data for tests
+    /// </summary>
     public class TestContextData
     {
         public List<Recipe> TestRecipes { get; set; } = GetTestRecipes();
         public List<Restaurant> TestRestaurants { get; set; } = GetTestRestaurants();
+        public List<Bookmarks> TestBookMarks { get; set; } = GetTestBookmarks();
 
         private static List<Recipe> GetTestRecipes()
         {
             var testRecipes = new List<Recipe>
             {
-                new Recipe
-                {
+                new() {
                     Id = 1,
                     Name = "Food1",
                     Description = "Food1 Description",
@@ -31,8 +29,7 @@ namespace API.Test.TestData
                     RecipeRatings = new List<RatingRecipe>()
                 },
 
-                new Recipe
-                {
+                new() {
                     Id = 2,
                     Name = "Food2",
                     Description = "Food2 Description",
@@ -53,29 +50,45 @@ namespace API.Test.TestData
         {
             var testRestaurants = new List<Restaurant>
             {
-                new Restaurant
-                {
+                new() {
                     Id = 1,
                     Name = "Restaurant1",
                     Location = "Location1",
                     ImgSrc = "imgSrc",
                     Rating = 5.0,
                     Geolocation = new Bearing(),
-                    RestaurantRatings = new List<RatingRestaurant> { new RatingRestaurant { } },
+                    RestaurantRatings = new List<RatingRestaurant> { new() { } },
                 },
-                new Restaurant
-                {
+                new() {
                     Id = 2,
                     Name = "Restaurant2",
                     Location = "Location2",
                     ImgSrc = "imgSrc",
                     Rating = 5.0,
                     Geolocation = new Bearing(),
-                    RestaurantRatings = new List<RatingRestaurant> { new RatingRestaurant { } },
+                    RestaurantRatings = new List<RatingRestaurant> { new() { } },
                 },
             };
 
             return testRestaurants;
+        }
+    
+        private static List<Bookmarks> GetTestBookmarks()
+        {
+            var bookmarks = new List<Bookmarks> 
+            {
+                new() {
+                    Id = 1,
+                    UserId = "testUser1",
+                },
+
+                new() {
+                    Id = 2,
+                    UserId = "testUser2",
+                },
+            };
+
+            return bookmarks;
         }
     }
 
