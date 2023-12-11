@@ -16,7 +16,7 @@ namespace API.Controllers
       }
 
       [HttpGet(Name = "GetRestaurants")]
-      public async Task<ActionResult<Restaurant>> GetRestaurants()
+      public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetRestaurants()
       {
          var restaurants = await _context.Restaurants.Include(el => el.Geolocation).ToListAsync();
 
