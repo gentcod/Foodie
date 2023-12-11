@@ -28,7 +28,7 @@ namespace API.Controllers
       public async Task<ActionResult<Bookmarks>> AddNewBookMark([FromQuery] BookmarkParams bookmarkParam)
       {
          var bookmarks = await RetrieveBookmarks(bookmarkParam.UserId);
-         if (bookmarks == null) bookmarks = CreateBookmarks();
+         if (bookmarks == null) bookmarks = CreateBookmarks(bookmarkParam.UserId);
 
          var recipe = await _context.Recipes.FindAsync(bookmarkParam.RecipeId);
          if (recipe == null) return NotFound();
@@ -54,20 +54,28 @@ namespace API.Controllers
                  .FirstOrDefaultAsync(rec => rec.UserId == userId);
       }
 
-      private Bookmarks CreateBookmarks()
+      private Bookmarks CreateBookmarks(string userId)
       {
-         var userId = User.Identity?.Name;
-         if (string.IsNullOrEmpty(userId))
+         //TODO: After resolving User Identity Roles, check if user idenity role exist
+         // var userIdNameB = User.Identity?.Name;
+         var bookmark = new Bookmarks{};
+
+         if (userId == null)
          {
-            userId = Guid.NewGuid().ToString();
+            var userIdName = Guid.NewGuid().ToString();
             var cookieOptions = new CookieOptions { IsEssential = true, Expires = DateTime.Now.AddDays(30) };
-            Response.Cookies.Append("userId", userId, cookieOptions);
+            Response.Cookies.Append("userId", userIdName, cookieOptions);
+            bookmark.UserId = userIdName;
+            _context.Bookmarks.Add(bookmark);
+            return bookmark;
          }
 
-         var bookmark = new Bookmarks { UserId = userId };
+         bookmark.UserId = userId;
          _context.Bookmarks.Add(bookmark);
 
          return bookmark;
       }
+
+      //TODO: Handle DB transaction to delete user cookie bookmarks after specific time from database
    }
 }
