@@ -1,0 +1,26 @@
+{
+  "stryker-config":
+   {
+       "ignore-methods": [
+         "*migrationBuilder.CreateTable",
+         "*migrationBuilder.CreateIndex",
+         "*migrationBuilder.DropTable",
+         "*Column",
+         "*Annotation",
+         "*PrimaryKey",
+         "*ForeignKey",
+         "Up",
+         "Down"
+       ],
+       "thresholds": {
+         "high": 80,
+         "low": 60,
+         "break": 0
+       },
+       "reporters": [
+         "progress",
+         "html",
+         "cleartext"
+       ]
+   }
+}
