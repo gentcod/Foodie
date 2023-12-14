@@ -60,7 +60,6 @@ public class TestContextData
                 ImgSrc = "imgSrc",
                 Rating = 5.0,
                 Geolocation = new Bearing(),
-                RestaurantRatings = new List<RatingRestaurant> { new() { } },
             },
             new() {
                 Id = 2,
@@ -69,7 +68,6 @@ public class TestContextData
                 ImgSrc = "imgSrc",
                 Rating = 5.0,
                 Geolocation = new Bearing(),
-                RestaurantRatings = new List<RatingRestaurant> { new() { } },
             },
         };
 
