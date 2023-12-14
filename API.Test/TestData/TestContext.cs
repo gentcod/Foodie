@@ -15,6 +15,9 @@ public class TestFoodieContext : FoodieContext
     public virtual DbSet<Recipe> TestRecipes { get; set; }
     public virtual DbSet<Restaurant> TestRestaurants { get; set; }
     public virtual DbSet<Bookmarks> TestBookmarks { get; set; }
+    public virtual DbSet<Favorites> TestFavorites { get; set;}
+    public virtual DbSet<RatingRecipe> TestRecipeRatings { get; set;}
+    public virtual DbSet<RatingRestaurant> TestRestaurantRatings { get; set;}
 }
 
 /// <summary>
@@ -29,10 +32,16 @@ public static class TestDBInitializer
         var testRecipes = testData.TestRecipes;
         var testRestaurants = testData.TestRestaurants;
         var testBookmarks = testData.TestBookMarks;
+        var testFavorites = testData.TestFavorites;
+        var testRecipeRatings = testData.TestRecipeRatings;
+        var testRestaurantRatings = testData.TestRestaurantRatings;
 
         testFoodieContext.TestRecipes.AddRange(testRecipes);
         testFoodieContext.TestRestaurants.AddRange(testRestaurants);
         testFoodieContext.TestBookmarks.AddRange(testBookmarks);
+        testFoodieContext.TestFavorites.AddRange(testFavorites);
+        testFoodieContext.TestRecipeRatings.AddRange(testRecipeRatings);
+        testFoodieContext.TestRestaurantRatings.AddRange(testRestaurantRatings);
         testFoodieContext.SaveChanges();
     }
 }

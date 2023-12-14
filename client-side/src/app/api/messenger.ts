@@ -43,7 +43,7 @@ const Recipes = {
          'comment': review,
       }
    ),
-   listRecipeRatings: () => request.get('RecipeRatings/')
+   listRecipeRatings: () => request.get('recipeRatings/')
 }
 
 const Restaurant = {
@@ -62,8 +62,8 @@ const Bookmarks = {
 
 const Favorites = {
    list: (params: URLSearchParams) => request.get('favorite', params),
-   addFavoriteRecipe: (userId: string, recipeId: number) => request.post(`Favorites/AddRecipe?userId=${userId}&recipeId=${recipeId}`, {}),
-   addFavoriteRestaurant: (userId: string, resaturantId: number) => request.post(`Favorites/AddRestaurant?userId=${userId}&resaturantId=${resaturantId}`, {})
+   addFavoriteRecipe: (userId: string, recipeId: number) => request.post(`favorites/AddRecipe?userId=${userId}&recipeId=${recipeId}`, {}),
+   addFavoriteRestaurant: (userId: string, resaturantId: number) => request.post(`favorites/AddRestaurant?userId=${userId}&resaturantId=${resaturantId}`, {})
 }
 
 const messenger = {

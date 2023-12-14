@@ -11,6 +11,9 @@ public class TestContextData
     public List<Recipe> TestRecipes { get; set; } = GetTestRecipes();
     public List<Restaurant> TestRestaurants { get; set; } = GetTestRestaurants();
     public List<Bookmarks> TestBookMarks { get; set; } = GetTestBookmarks();
+    public List<Favorites> TestFavorites { get; set; } = GetTestFavorites();
+    public List<RatingRecipe> TestRecipeRatings { get; set; } = GetTestRecipeRatings();
+    public List<RatingRestaurant> TestRestaurantRatings { get; set; } = GetTestRestaurantRatings();
 
     private static List<Recipe> GetTestRecipes()
     {
@@ -89,5 +92,65 @@ public class TestContextData
         };
 
         return bookmarks;
+    }
+
+    private static List<Favorites> GetTestFavorites()
+    {
+        return new List<Favorites>
+        {
+            new()
+            {
+                Id = 1,
+                UserId = "testUser 1"
+            },
+            new() {
+                Id = 2,
+                UserId = "testUser2",
+            },
+        };
+    }
+    
+    private static List<RatingRecipe> GetTestRecipeRatings()
+    {
+        return new List<RatingRecipe>
+        {
+            new()
+            {
+                Id = 1,
+                RecipeId = 1,
+                RatingNum = 5,
+                Comment = "Recipe Rating 1",
+            },
+            new()
+            {
+                Id = 2,
+                RecipeId = 2,
+                RatingNum = 5,
+                Comment = "Recipe Rating 2",
+            }
+        };
+    }
+
+    private static List<RatingRestaurant> GetTestRestaurantRatings()
+    {
+        var restaurantRatings = new List<RatingRestaurant>
+        {
+            new()
+            {
+                Id = 1,
+                RestaurantId = 1,
+                RatingNum = 5,
+                Comment = "Restaurant Rating 1",
+            },
+            new()
+            {
+                Id = 2,
+                RestaurantId = 2,
+                RatingNum = 5,
+                Comment = "Restaurant Rating 2",
+            }
+        };
+
+        return restaurantRatings;
     }
 }
