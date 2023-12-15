@@ -16,8 +16,8 @@ public class TestFoodieContext : FoodieContext
     public virtual DbSet<Restaurant> TestRestaurants { get; set; }
     public virtual DbSet<Bookmarks> TestBookmarks { get; set; }
     public virtual DbSet<Favorites> TestFavorites { get; set;}
-    public virtual DbSet<RatingRecipe> TestRecipeRatings { get; set;}
-    public virtual DbSet<RatingRestaurant> TestRestaurantRatings { get; set;}
+    public virtual DbSet<RecipeRating> TestRecipeRatings { get; set;}
+    public virtual DbSet<RestaurantRating> TestRestaurantRatings { get; set;}
 }
 
 /// <summary>

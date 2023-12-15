@@ -11,6 +11,6 @@ namespace API.Models
       public DateTime DateAdded { get; set; }
       public string Origin { get; set; }
       public double Rating { get; set; }
-      public List<RatingRecipe> RecipeRatings { get; set;}
+      public List<RecipeRating> RecipeRatings { get; set;}
    }
 }

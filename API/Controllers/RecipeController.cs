@@ -5,6 +5,7 @@ using API.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.DTOs;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace API.Controllers
 {
@@ -31,10 +32,10 @@ namespace API.Controllers
         return Ok(recipes.MapRecipesToDto());
       }
 
-      [HttpGet("{id}")]
-      public async Task<ActionResult<RecipeDto>> GetRecipeById(int id)
+      [HttpGet(":id")]
+      public async Task<ActionResult<RecipeDto>> GetRecipeById([BindRequired][FromQuery]int recipeId)
       {
-         var recipe = await _context.Recipes.FirstOrDefaultAsync(rec => rec.Id == id);
+         var recipe = await _context.Recipes.FirstOrDefaultAsync(rec => rec.Id == recipeId);
 
          if (recipe == null) return NotFound();
 

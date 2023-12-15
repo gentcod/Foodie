@@ -4,6 +4,8 @@ using API.Models;
 using API.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using API.RequestHelpers;
 
 namespace API.Controllers
 {
@@ -38,8 +40,8 @@ namespace API.Controllers
             return Ok(recipesRatingsDto);
         }
 
-        [HttpGet("{recipeId}")]
-        public async Task<ActionResult<RecipeRatingsDto>> GetRecipeRatingById(int recipeId)
+        [HttpGet(":id")]
+        public async Task<ActionResult<RecipeRatingsDto>> GetRecipeRatingById([BindRequired][FromQuery]int recipeId)
         {
             var recipe = await _context.Recipes.FirstOrDefaultAsync(el => el.Id == recipeId);
             if (recipe == null) return BadRequest(new ProblemDetails{ Title = "Recipe not found"});
@@ -51,8 +53,8 @@ namespace API.Controllers
             return Ok(recipeRatingDto);
         }
 
-        [HttpPost("AddRating/{recipeId}")]
-        public async Task<ActionResult<RecipeRatingsDto>> AddRating(RatingDto ratingDto, int recipeId)
+        [HttpPost("AddRating")]
+        public async Task<ActionResult<RecipeRatingsDto>> AddRating(RatingDto ratingDto, [BindRequired][FromQuery]int recipeId)
         {
             if (ratingDto.RatingNum < 1 || ratingDto.RatingNum > 5) return BadRequest(new ProblemDetails { Title = "Rating number is out of rating" });
 
@@ -60,9 +62,9 @@ namespace API.Controllers
             if (recipe == null) return BadRequest(new ProblemDetails { Title = "Recipe not found" });
 
             var recipeRatings = await _context.RecipeRatings.Where(el => el.RecipeId == recipeId).ToListAsync();
-            if (recipeRatings == null) recipeRatings ??= new List<RatingRecipe>();
+            if (recipeRatings == null) recipeRatings ??= new List<RecipeRating>();
             
-            recipeRatings.Add(new RatingRecipe
+            recipeRatings.Add(new RecipeRating
             {
                 RatingNum = ratingDto.RatingNum,
                 Comment = ratingDto.Comment,

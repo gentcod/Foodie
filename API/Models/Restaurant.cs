@@ -8,6 +8,6 @@ namespace API.Models
         public required string ImgSrc { get; set; }
         public double Rating { get; set; }
         public Bearing Geolocation { get; set; }
-        public List<RatingRestaurant> RestaurantRatings { get; set; }
+        public List<RestaurantRating> RestaurantRatings { get; set; }
     }
 }
