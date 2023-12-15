@@ -4,6 +4,7 @@ using API.Models;
 using API.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace API.Controllers
 {
@@ -27,8 +28,8 @@ namespace API.Controllers
             return Ok(restaurantsRatingsDto);
         }
 
-        [HttpGet("{restaurantId}")]
-        public async Task<ActionResult<RestaurantRatingsDto>> GetRestaurantRatingsById(int restaurantId)
+        [HttpGet(":id")]
+        public async Task<ActionResult<RestaurantRatingsDto>> GetRestaurantRatingsById([BindRequired][FromQuery]int restaurantId)
         {
             var restaurant = await _context.Restaurants.FirstOrDefaultAsync(el => el.Id == restaurantId);
             if (restaurant == null) return BadRequest(new ProblemDetails{ Title = "Restaurant not found"});
@@ -40,8 +41,8 @@ namespace API.Controllers
             return Ok(restaurantRatingsDto);
         }
 
-         [HttpPost("AddRating/{restaurantId}")]
-        public async Task<ActionResult<Restaurant>> AddRating(RatingDto ratingDto, int restaurantId)
+         [HttpPost("AddRating")]
+        public async Task<ActionResult<Restaurant>> AddRating(RatingDto ratingDto, [BindRequired][FromQuery]int restaurantId)
         {
             if (ratingDto.RatingNum < 1 || ratingDto.RatingNum > 5) return BadRequest(new ProblemDetails { Title = "Rating number is out of rating" });
 
@@ -49,9 +50,9 @@ namespace API.Controllers
             if (restaurant == null) return BadRequest(new ProblemDetails { Title = "Restaurant not found" });
 
             var restaurantRatings = await _context.RestaurantRatings.Where(el => el.RestaurantId == restaurantId).ToListAsync();
-            restaurantRatings ??= new List<RatingRestaurant>();
+            restaurantRatings ??= new List<RestaurantRating>();
 
-            restaurantRatings.Add(new RatingRestaurant
+            restaurantRatings.Add(new RestaurantRating
             {
                 RatingNum = ratingDto.RatingNum,
                 Comment = ratingDto.Comment,

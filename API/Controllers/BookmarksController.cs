@@ -2,6 +2,7 @@ using API.Data;
 using API.Models;
 using API.RequestHelpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
@@ -16,7 +17,7 @@ namespace API.Controllers
       }
 
       [HttpGet(Name = "GetBookmark")]
-      public async Task<ActionResult<Bookmarks>> GetBookMark(string userId)
+      public async Task<ActionResult<Bookmarks>> GetBookMark([BindRequired][FromQuery]string userId)
       {
          Bookmarks bookmarks = await RetrieveBookmarks(userId);
 
@@ -25,7 +26,7 @@ namespace API.Controllers
       }
 
       [HttpPost("AddBookmark")]
-      public async Task<ActionResult<Bookmarks>> AddNewBookMark([FromQuery] BookmarkParams bookmarkParam)
+      public async Task<ActionResult<Bookmarks>> AddNewBookMark([BindRequired][FromQuery]BookmarkParams bookmarkParam)
       {
          var bookmarks = await RetrieveBookmarks(bookmarkParam.UserId);
          if (bookmarks == null) bookmarks = CreateBookmarks(bookmarkParam.UserId);

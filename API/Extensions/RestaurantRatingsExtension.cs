@@ -5,7 +5,7 @@ namespace API.Extensions
 {
    public static class RestaurantRatingsExtension
     {
-        public static IEnumerable<RestaurantRatingsDto> MapRestaurantsRatingsToDto(this List<RatingRestaurant> restaurantRatings, List<Restaurant> restaurants)
+        public static IEnumerable<RestaurantRatingsDto> MapRestaurantsRatingsToDto(this List<RestaurantRating> restaurantRatings, List<Restaurant> restaurants)
         {
             return restaurantRatings.Select(rec => new RestaurantRatingsDto
             {
@@ -16,11 +16,12 @@ namespace API.Extensions
             });
         }
 
-        public static IEnumerable<RestaurantRatingsDto> MapRestaurantRatingsToDto(this List<RatingRestaurant> restaurantRatings, Restaurant restaurant)
+        public static IEnumerable<RestaurantRatingsDto> MapRestaurantRatingsToDto(this List<RestaurantRating> restaurantRatings, Restaurant restaurant)
         {
             return restaurantRatings.Select(rec => new RestaurantRatingsDto
             {
                 RatingId = rec.Id,
+                RestaurantName = restaurant.Name,
                 RatingNum = rec.RatingNum,
                 Comment = rec.Comment,
             });

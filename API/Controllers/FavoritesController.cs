@@ -1,6 +1,8 @@
 using API.Data;
 using API.Models;
+using API.RequestHelpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
@@ -15,7 +17,7 @@ namespace API.Controllers
       }
 
       [HttpGet(Name = "GetFavorites")]
-      public async Task<ActionResult<Favorites>> GetFavorites(string userId)
+      public async Task<ActionResult<Favorites>> GetFavorites([BindRequired][FromQuery]string userId)
       {
          Favorites favorites = await RetrieveFavorites(userId);
 
@@ -28,11 +30,11 @@ namespace API.Controllers
       }
 
       [HttpPost("AddRecipe")]
-      public async Task<ActionResult<Favorites>> AddNewFavoriteRecipe([FromQuery] string userId, int recipeId)
+      public async Task<ActionResult<Favorites>> AddNewFavoriteRecipe([BindRequired][FromQuery]FavoriteRecipeParams favoriteRecipeParams)
       {
-         var favorites = await InitializeFavorites(userId);
+         var favorites = await InitializeFavorites(favoriteRecipeParams.UserId);
 
-         var recipe = await _context.Recipes.FindAsync(recipeId);
+         var recipe = await _context.Recipes.FindAsync(favoriteRecipeParams.RecipeId);
          if (recipe == null) return NotFound();
 
          favorites.AddFavoriteRecipe(recipe);
@@ -44,11 +46,11 @@ namespace API.Controllers
       }
 
       [HttpPost("AddRestaurant")]
-      public async Task<ActionResult<Favorites>> AddNewFavoriteRestaurant([FromQuery] string userId, int restaurantId)
+      public async Task<ActionResult<Favorites>> AddNewFavoriteRestaurant([BindRequired][FromQuery]FavoriteRestaurantParams favoriteRecipeParams)
       {
-         var favorites = await InitializeFavorites(userId);
+         var favorites = await InitializeFavorites(favoriteRecipeParams.UserId);
 
-         var restaurant = await _context.Restaurants.FindAsync(restaurantId);
+         var restaurant = await _context.Restaurants.FindAsync(favoriteRecipeParams.RestaurantId);
          if (restaurant == null) return NotFound();
 
          favorites.AddFavoriteRestaurant(restaurant);

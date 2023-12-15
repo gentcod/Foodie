@@ -77,50 +77,6 @@ namespace API.Data.Migrations
                     b.ToTable("Favorites");
                 });
 
-            modelBuilder.Entity("API.Models.RatingRecipe", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("RatingNum")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("RecipeId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("RecipeRatings");
-                });
-
-            modelBuilder.Entity("API.Models.RatingRestaurant", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("RatingNum")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("RestaurantId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RestaurantId");
-
-                    b.ToTable("RestaurantRatings");
-                });
-
             modelBuilder.Entity("API.Models.Recipe", b =>
                 {
                     b.Property<int>("Id")
@@ -154,6 +110,28 @@ namespace API.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Recipes");
+                });
+
+            modelBuilder.Entity("API.Models.RecipeRating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("RatingNum")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RecipeId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipeId");
+
+                    b.ToTable("RecipeRatings");
                 });
 
             modelBuilder.Entity("API.Models.References.BookmarkItem", b =>
@@ -248,6 +226,28 @@ namespace API.Data.Migrations
                     b.ToTable("Restaurants");
                 });
 
+            modelBuilder.Entity("API.Models.RestaurantRating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("RatingNum")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RestaurantId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.ToTable("RestaurantRatings");
+                });
+
             modelBuilder.Entity("API.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -277,22 +277,15 @@ namespace API.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("API.Models.RatingRecipe", b =>
+            modelBuilder.Entity("API.Models.RecipeRating", b =>
                 {
-                    b.HasOne("API.Models.Recipe", null)
+                    b.HasOne("API.Models.Recipe", "Recipe")
                         .WithMany("RecipeRatings")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("API.Models.RatingRestaurant", b =>
-                {
-                    b.HasOne("API.Models.Restaurant", null)
-                        .WithMany("RestaurantRatings")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Recipe");
                 });
 
             modelBuilder.Entity("API.Models.References.BookmarkItem", b =>
@@ -346,6 +339,17 @@ namespace API.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Favorites");
+
+                    b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("API.Models.RestaurantRating", b =>
+                {
+                    b.HasOne("API.Models.Restaurant", "Restaurant")
+                        .WithMany("RestaurantRatings")
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Restaurant");
                 });

@@ -12,8 +12,8 @@ public class TestContextData
     public List<Restaurant> TestRestaurants { get; set; } = GetTestRestaurants();
     public List<Bookmarks> TestBookMarks { get; set; } = GetTestBookmarks();
     public List<Favorites> TestFavorites { get; set; } = GetTestFavorites();
-    public List<RatingRecipe> TestRecipeRatings { get; set; } = GetTestRecipeRatings();
-    public List<RatingRestaurant> TestRestaurantRatings { get; set; } = GetTestRestaurantRatings();
+    public List<RecipeRating> TestRecipeRatings { get; set; } = GetTestRecipeRatings();
+    public List<RestaurantRating> TestRestaurantRatings { get; set; } = GetTestRestaurantRatings();
 
     private static List<Recipe> GetTestRecipes()
     {
@@ -29,7 +29,7 @@ public class TestContextData
                 Origin = "Food1 Origin",
                 Rating = 5,
                 DateAdded = DateTime.Now,
-                RecipeRatings = new List<RatingRecipe>()
+                RecipeRatings = new List<RecipeRating>()
             },
 
             new() {
@@ -42,7 +42,7 @@ public class TestContextData
                 Origin = "Food2 Origin",
                 Rating = 4.5,
                 DateAdded = DateTime.Now,
-                RecipeRatings = new List<RatingRecipe>()
+                RecipeRatings = new List<RecipeRating>()
             }
         };
 
@@ -108,13 +108,13 @@ public class TestContextData
         };
     }
     
-    private static List<RatingRecipe> GetTestRecipeRatings()
+    private static List<RecipeRating> GetTestRecipeRatings()
     {
-        return new List<RatingRecipe>
+        return new List<RecipeRating>
         {
             new()
             {
-                Id = 1,
+                Id = 1,            
                 RecipeId = 1,
                 RatingNum = 5,
                 Comment = "Recipe Rating 1",
@@ -122,16 +122,16 @@ public class TestContextData
             new()
             {
                 Id = 2,
-                RecipeId = 2,
+                RecipeId = 1,
                 RatingNum = 5,
                 Comment = "Recipe Rating 2",
             }
         };
     }
 
-    private static List<RatingRestaurant> GetTestRestaurantRatings()
+    private static List<RestaurantRating> GetTestRestaurantRatings()
     {
-        var restaurantRatings = new List<RatingRestaurant>
+        var restaurantRatings = new List<RestaurantRating>
         {
             new()
             {

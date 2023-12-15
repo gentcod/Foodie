@@ -4,6 +4,7 @@ using API.Models;
 using API.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace API.Controllers
 {
@@ -23,11 +24,11 @@ namespace API.Controllers
          return Ok(restaurants.MapRestaurantsToDto());
       }
 
-      [HttpGet("{id}")]
-      public async Task<ActionResult<RestaurantDto>> GetRestaurantById(int id)
+      [HttpGet(":id")]
+      public async Task<ActionResult<RestaurantDto>> GetRestaurantById([BindRequired][FromQuery]int restaurantId)
       {
          var restaurant = await _context.Restaurants.Include(el => el.Geolocation)
-               .FirstOrDefaultAsync(res => res.Id == id);
+               .FirstOrDefaultAsync(res => res.Id == restaurantId);
 
          if (restaurant == null) return NotFound();
 
