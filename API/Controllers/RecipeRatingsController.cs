@@ -18,7 +18,7 @@ namespace API.Controllers
             
         }
 
-        [HttpGet(Name = "recipeRating")]
+        [HttpGet(Name = "recipeRating")] //It returns all the individual recipe ratings
         public async Task<ActionResult<RecipeRatingsDto>> GetRecipeRatings()
         {
             var recipes = await _context.Recipes.ToListAsync();
@@ -29,7 +29,7 @@ namespace API.Controllers
             return Ok(recipesRatingsDto);
         }
 
-        [HttpGet("agg", Name = "agg")]
+        [HttpGet("agg", Name = "agg")] //It returns an aggregated recipe list w
         public async Task<ActionResult<RecipeRatingsDto>> GetRecipesAgg()
         {
             var recipes = await _context.Recipes.ToListAsync();

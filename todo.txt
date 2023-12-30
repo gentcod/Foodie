@@ -1,0 +1,2 @@
+TODO: 1. When fetching for bookmarks data - Initialize by attempting to get cookie data,
+if null, delete cookie data 

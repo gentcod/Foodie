@@ -12,7 +12,7 @@ namespace API.Extensions
                 RatingId = rec.Id,
                 RecipeName = recipes.Find(el => el.Id == rec.RecipeId).Name,
                 RecipeImgSrc = recipes.Find(el => el.Id == rec.RecipeId).ImageSrc,
-                RatingNum = rec.RatingNum,
+                Rating = recipes.Find(el => el.Id == rec.RecipeId).Rating,
                 Comment = rec.Comment,
             });
         }
@@ -24,7 +24,8 @@ namespace API.Extensions
             {
                 RatingId = rec.Id,
                 RecipeName = recipe.Name,
-                RatingNum = rec.RatingNum,
+                RecipeImgSrc = recipe.ImageSrc,
+                Rating = recipe.Rating,
                 Comment = rec.Comment,
             });
         }
@@ -36,7 +37,7 @@ namespace API.Extensions
                 RatingId = rec.Id,
                 RecipeName = recipes.Find(el => el.Id == rec.RecipeId).Name,
                 RecipeImgSrc = recipes.Find(el => el.Id == rec.RecipeId).ImageSrc,
-                RatingNum = rec.RatingNum,
+                Rating = recipes.Find(el => el.Id == rec.RecipeId).Rating,
             }).DistinctBy(rec => rec.RecipeName);
         }
     }
