@@ -27,12 +27,13 @@ public class TestRecipeRatingsController
       #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
       var actionRes = (OkObjectResult)actionResult.Result;
       var result = actionRes!.Value;
+      var resultRatings = ((IEnumerable<RecipeRatingsDto>)result)!.ToList();
       Assert.NotNull(result);
+      Assert.Equal(2, resultRatings.Count);
 
-      //TODO: Resolve test for RecipeName
-      // var recipes = _testData.TestRecipes;
-      // var recipeRatingsTemp = _testData.TestRecipeRatings.MapRecipesRatingsToDto(recipes);
-      // var recipeRatings = new List<RecipeRatingsDto>(recipeRatingsTemp);
-      // Assert.Equal(result, recipeRatings[0].RecipeName);
+      var recipes = _testData.TestRecipes;
+      var recipeRatingsTemp = _testData.TestRecipeRatings.MapRecipesRatingsToDto(recipes);
+      var recipeRatings = new List<RecipeRatingsDto>(recipeRatingsTemp);
+      Assert.Equal(resultRatings[0].RecipeName, recipeRatings[0].RecipeName);
    }
 }
