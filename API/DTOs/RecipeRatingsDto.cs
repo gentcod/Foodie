@@ -9,7 +9,7 @@ namespace API.DTOs
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string RecipeImgSrc { get; set; }
         public string RecipeName { get; set; }
-        public int RatingNum { get; set; }
+        public double Rating { get; set; }
         public string Comment { get; set; }
     }
 }
