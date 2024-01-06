@@ -1,34 +1,186 @@
 [
    {
       "Name": "Jollof Rice",
-      "Ingredients": "Pepper, Rice, Bulliion Cubes",
-      "Description": "A very delicious meal",
+      "Ingredients": "2 cups long-grain Rice, 1 cup tomato paste, 1/2 cup onions (chopped), 1/4 cup red bell peppers (chopped), 1/4 cup green bell peppers (chopped), 1/4 cup vegetable oil, 2 tablespoons curry powder, 1 teaspoon thyme, 1 teaspoon salt, 1/2 teaspoon black pepper, 3 cups chicken broth, bullion Cubes",
+      "Description": "Jollof rice is a popular Nigerian dish made with rice, tomato paste, onions, peppers, and spices. It is often served with fried chicken or fish.",
       "ImageSrc": "https://i.ibb.co/xGLGJqX/jollof-rice.webp",
-      "CookTime": 55,
-      "Origin": "Yoruba"
+      "CookTime": 45,
+      "Origin": "Nigeria"
    },
    {
-      "Name": "Fried Rice",
-      "Ingredients": "Pepper, Rice, Bulliion Cubes, Curry",
-      "Description": "A meal with delicate veggies",
-      "ImageSrc": "https://i.ibb.co/JvrBG3G/fried-rice.webp",
-      "CookTime": 40,
-      "Origin": "Yoruba"
+      "Name": "Egusi Soup",
+      "Ingredients": "1 cup egusi seeds, ground 1/2 cup onions, (chopped), 1/4 cup tomatoes, (chopped), 1/4 cup red bell peppers, (chopped), 1/4 cup vegetable oil, 1 tablespoon curry powder, 1 teaspoon thyme, 1 teaspoon salt, 1/2 teaspoon black pepper, 3 cups chicken broth",
+      "Description": "Egusi soup is a popular Nigerian dish made with egusi seeds, onions, tomatoes, peppers, and spices. It is often served with fufu or rice.",
+      "ImageSrc": "",
+      "CookTime": 30,
+      "Origin": "Nigeria"
+   },
+   {
+      "Name": "Akara",
+      "Ingredients": "1 cup black-eyed peas (soaked overnight), 1 onion (chopped), 1 red bell pepper (chopped), 1/4 cup vegetable oil, 1 teaspoon salt, 1/2 teaspoon black pepper",
+      "Description": "Description: Akara is a popular Nigerian fritter made with black-eyed peas, onions, peppers, and spices. It is often served with bread or yam.",
+      "ImageSrc": "",
+      "CookTime": 20,
+      "Origin": "Nigeria"
+   },
+   {
+      "Name": "Moi Moi",
+      "Ingredients": "1 cup black-eyed peas, soaked overnight, 1 onion, chopped, 1 red bell pepper, chopped, 1/4 cup vegetable oil, 1 teaspoon salt, 1/2 teaspoon black pepper, 3 eggs, 1/2 cup crayfish (optional), 1 bouillon cube (optional), 4 cups water (or enough to blend smoothly)",
+      "Description": "Moi Moi is a delicious Nigerian steamed bean pudding made from a blend of black-eyed peas, peppers, onions, and spices. It's a popular and versatile dish that can be enjoyed for breakfast, lunch, or dinner. It's often served with tomato stew, pepper sauce, or fried plantains.",
+      "ImageSrc": "https://example.com/images/moimoi.jpg",
+      "CookTime": 60,
+      "Origin": "Nigeria"
+   },
+   {
+      "Name": "Nigerian Fried Rice",
+      "Ingredients": "2 cups cooked long-grain rice (preferably leftover), 1/2 cup palm oil (or vegetable oil), 1 medium onion, (chopped), 1/2 cup red bell pepper, (chopped), 1/4 cup green bell pepper, (chopped), 2 cloves garlic, minced, 1 cup mixed vegetables (e.g., peas, carrots, corn), 1/2 cup cooked protein (e.g., chicken, beef, shrimp), 1/4 cup diced onion (optional), 2 tablespoons soy sauce, 1 tablespoon oyster sauce (optional), 1/2 teaspoon curry powder, 1/2 teaspoon thyme, 1/4 teaspoon black pepper, Salt to taste",
+      "Description": "Nigerian Fried Rice is a delicious and flavorful dish made with cooked rice, vegetables, protein, and spices. It's a popular dish in Nigeria and often served with stew, grilled meat, or plantains.",
+      "ImageSrc": "https://example.com/images/nigerian-fried-rice.jpg",
+      "CookTime": 50,
+      "Origin": "Nigeria"
    },
    {
       "Name": "Efo Riro",
-      "Ingredients": "Pepper, Spinnach, Bulliion Cubes, Palm Oil",
-      "Description": "Goes well with swallows",
-      "ImageSrc": "https://i.ibb.co/M2S60sN/efor-riro.webp",
+      "Ingredients": "2 bunches of spinach or other leafy greens (washed and chopped), 1/2 cup palm oil, 1 onion (chopped), 2 tomatoes (chopped), 2 red bell peppers (chopped), 2 scotch bonnet peppers (chopped), 1 tablespoon locust beans (iru), 2 tablespoons crayfish, 1 teaspoon ground crayfish, 400g assorted meat and fish (optional), 1/2 teaspoon salt, 1/4 teaspoon black pepper, 2 stock cubes, Water (as needed)",
+      "Description": "Efo riro is a savory, spicy, and hearty Nigerian stew made with leafy greens, assorted meats and fish, and a blend of rich spices. It's a popular dish in Yoruba cuisine and often served with rice, fufu, or pounded yam.",
+      "ImageSrc": "https://www.myactivekitchen.com/wp-content/uploads/2015/06/Efo-Riro-4.jpg",
       "CookTime": 50,
-      "Origin": "Yoruba"
+      "Origin": "Nigeria"
    },
    {
-      "Name": "Ifokore",
-      "Ingredients": "Yam, Palm Oil, Dry Pepper, Salt, Maggi, Fish",
-      "Description": "A native Ijebu meal, also called Ikokore",
-      "ImageSrc": "https://i.ibb.co/wpZq9rD/ikokore.webp",
-      "CookTime": 52,
-      "Origin": "Yoruba - Ijebu"
-   }
+      "Name": "Ikokore",
+      "Ingredients": "500g water yam (peeled and grated), 1 cup palm oil, 1 medium onion (chopped), 4 habanero peppers (chopped), 2 large smoked mackerel (deboned and shredded), 1 cup smoked prawns (chopped), 1 cup periwinkles (cleaned), 1 cup smoked fish (deboned and shredded), 2 tablespoons crayfish powder, 1 tablespoon locust beans, 1/2 teaspoon salt, 1/4 teaspoon black pepper",
+      "Description": "Ikokore is a hearty and flavorful Nigerian dish from the Ijebu region, made with grated water yam, assorted seafood, and a rich palm oil sauce. It is typically served with a side of eba or fufu.",
+      "ImageSrc": "https://www.sisijemimah.com/wp-content/uploads/2015/08/ikokore-ifokore-recipe-540x405.jpg",
+      "CookTime": 50,
+      "Origin": "Nigeria"
+   },
+   {
+      "Name": "Abacha",
+      "Ingredients": "1 pound cod, cooked and shredded, 1 cup onions, chopped, 1 red bell pepper, chopped, 1/4 cup vegetable oil, 1 teaspoon salt, 1/2 teaspoon black pepper",
+      "Description": "Abacha is a popular Nigerian salad made with cod, onions, peppers, and spices. It is often served with rice or fufu.",
+      "ImageSrc": "",
+      "CookTime": 20,
+      "Origin": "Nigeria"
+   },
+   {
+      "Name": "Spaghetti Carbonara",
+      "Ingredients": "1 pound spaghetti, 4 ounces pancetta (diced), 4 large eggs, 1 cup grated Parmesan cheese, 1/4 cup chopped fresh parsley, Freshly ground black pepper",
+      "Description": "A rich and creamy pasta dish made with eggs, pancetta, Parmesan cheese, and black pepper.",
+      "ImageSrc": "https://example.com/images/spaghetti-carbonara.jpg",
+      "CookTime": 30,
+      "Origin": "Italy"
+    },
+    {
+      "Name": "Penne Arrabbiata",
+      "Ingredients": "1 pound penne pasta, 1/4 cup olive oil, 4 cloves garlic (minced), 1 teaspoon red pepper flakes, 1 can (28 ounces) crushed tomatoes, 1/2 cup chopped fresh basil, salt and freshly ground black pepper to taste",
+      "Description": "A spicy pasta dish made with garlic, red pepper flakes, tomatoes, and basil.",
+      "ImageSrc": "https://example.com/images/penne-arrabbiata.jpg",
+      "CookTime": 20,
+      "Origin": "Italy"
+    },
+    {
+      "Name": "Baked Ziti",
+      "Ingredients": "1 pound ziti pasta, 1 pound ground beef, 1 jar (28 ounces) marinara sauce, 1 cup ricotta cheese, 1 cup shredded mozzarella cheese, 1/2 cup grated Parmesan cheese, 1/4 cup chopped fresh parsley, Salt and freshly ground black pepper to taste",
+      "Description": "A hearty pasta dish made with ground beef, marinara sauce, ricotta, mozzarella, and Parmesan cheeses.",
+      "ImageSrc": "https://example.com/images/baked-ziti.jpg",
+      "CookTime": 45,
+      "Origin": "Italy"
+    },
+    {
+      "Name": "Fettuccine Alfredo",
+      "Ingredients": "1 pound fettuccine pasta, 1/2 cup butter, 1 cup heavy cream, 1 cup grated Parmesan cheese, Salt and freshly ground black pepper to taste",
+      "Description": "A classic pasta dish made with butter, cream, and Parmesan cheese.",
+      "ImageSrc": "https://example.com/images/fettuccine-alfredo.jpg",
+      "CookTime": 20,
+      "Origin": "Italy"
+    },
+    {
+      "Name": "Lasagna",
+      "Ingredients": "1 box lasagna noodles, 1 pound ground beef, 1 jar (28 ounces) marinara sauce, 1 container (15 ounces) ricotta cheese, 1 cup shredded mozzarella cheese, 1/2 cup grated Parmesan cheese, 1 egg, Salt and freshly ground black pepper to taste",
+      "Description": "A layered pasta dish made with ground beef, marinara sauce, ricotta, mozzarella, and Parmesan cheeses.",
+      "ImageSrc": "https://example.com/images/lasagna.jpg",
+      "CookTime": 60,
+      "Origin": "Italy"
+    },
+    {
+      "Name": "Jeera Rice",
+      "Ingredients": "2 cups basmati rice, 2 tablespoons cumin seeds, 4 cloves, 2 green cardamom pods, 1 cinnamon stick, 4 black peppercorns, 4 cups water, 1 tablespoon salt, 2 tablespoons vegetable oil",
+      "Description": "A fragrant and flavorful rice dish made with cumin seeds, whole spices, and basmati rice.",
+      "ImageSrc": "https://example.com/images/jeera-rice.jpg",
+      "CookTime": 30,
+      "Origin": "India"
+    },
+    {
+      "Name": "Biryani",
+      "Ingredients": "2 cups basmati rice, 1 pound boneless chicken thighs, cut into bite-sized pieces, 1 onion, thinly sliced, 2 cloves garlic, minced, 1 tablespoon ginger-garlic paste, 1 teaspoon turmeric powder, 1 teaspoon coriander powder, 1 teaspoon cumin powder, 1/2 teaspoon red chili powder, 1/4 teaspoon garam masala, 2 tablespoons yogurt, 1/4 cup chopped cilantro, 1/4 cup chopped mint, 1/4 cup milk, 3 tablespoons vegetable oil, Salt to taste",
+      "Description": "A layered rice dish made with chicken, spices, yogurt, and herbs.",
+      "ImageSrc": "https://example.com/images/biryani.jpg",
+      "CookTime": 60,
+      "Origin": "India"
+   },
+   {
+      "Name": "Paella",
+      "Ingredients": "2 cups bomba rice, 1 pound chicken thighs, boneless and skinless, 1 pound shrimp, peeled and deveined, 1/2 pound chorizo sausage, sliced, 1 onion, chopped, 1 red bell pepper, chopped, 2 cloves garlic, minced, 1 (14.5-ounce) can diced tomatoes, 1 teaspoon saffron threads, 4 cups chicken broth, 1/4 cup olive oil, Salt and pepper to taste",
+      "Description": "A Spanish rice dish made with seafood, chicken, chorizo, vegetables, and saffron.",
+      "ImageSrc": "https://example.com/images/paella.jpg",
+      "CookTime": 45,
+      "Origin": "Spain"
+   },
+   {
+      "Name": "Rice Pilaf",
+      "Ingredients": "1 cup long-grain rice, 1 tablespoon butter, 1 onion, chopped, 1/2 cup carrots, diced, 1/2 cup celery, diced, 2 cups chicken broth, 1/4 teaspoon salt, 1/4 teaspoon black pepper, 1/4 cup chopped parsley",
+      "Description": "A simple rice dish made with rice, vegetables, and broth.",
+      "ImageSrc": "https://example.com/images/rice-pilaf.jpg",
+      "CookTime": 30,
+      "Origin": "Middle East"
+   },
+   {
+      "Name": "Amala",
+      "Ingredients": "4 cups yam flour (elubo), 4 cups water, 1/2 teaspoon salt, Optional: 1 tablespoon palm oil",
+      "Description": "Amala is a popular Nigerian dish made from yam flour. It is typically served with a variety of soups and stews.",
+      "ImageSrc": "https://example.com/images/amala.jpg",
+      "CookTime": 30,
+      "Origin": "Nigeria"
+   },
+   {
+      "Name": "Chocolate Chip Cookies",
+      "Ingredients": "1 cup (2 sticks) unsalted butter, softened, 3/4 cup granulated sugar, 3/4 cup packed light brown sugar, 1 large egg, 1 teaspoon pure vanilla extract, 2 1/4 cups all-purpose flour, 1 teaspoon baking soda, 1/2 teaspoon salt, 1 cup semisweet chocolate chips",
+      "Description": "A classic chewy cookie made with butter, sugar, chocolate chips, and a hint of vanilla.",
+      "ImageSrc": "https://example.com/images/chocolate-chip-cookies.jpg",
+      "CookTime": 15,
+      "Origin": "United States"
+    },
+    {
+      "Name": "Apple Pie",
+      "Ingredients": "For the crust: 2 1/2 cups all-purpose flour, 1 teaspoon salt, 2 sticks unsalted butter, chilled and cut into pieces, 1/2 cup ice water. For the filling: 6 Granny Smith apples, peeled, cored, and sliced, 3/4 cup granulated sugar, 2 tablespoons all-purpose flour, 1 teaspoon ground cinnamon, 1/4 teaspoon ground nutmeg, 1/4 teaspoon salt, 1 tablespoon lemon juice.",
+      "Description": "A classic American pie made with a flaky crust and a sweet and tart apple filling.",
+      "ImageSrc": "https://example.com/images/apple-pie.jpg",
+      "CookTime": 60,
+      "Origin": "United States"
+    },
+    {
+      "Name": "Croissants",
+      "Ingredients": "3 cups all-purpose flour, 1 teaspoon salt, 1 tablespoon sugar, 1 1/4 cups cold water, 1/4 cup cold milk, 2 1/4 teaspoons active dry yeast, 1 cup (2 sticks) unsalted butter, cold",
+      "Description": "A buttery, flaky pastry made with layers of dough and butter.",
+      "ImageSrc": "https://example.com/images/croissants.jpg",
+      "CookTime": 120,
+      "Origin": "France"
+    },
+    {
+      "Name": "Chocolate Cake",
+      "Ingredients": "2 cups all-purpose flour, 1 cup unsweetened cocoa powder, 1 1/2 teaspoons baking soda, 1/2 teaspoon baking powder, 1/2 teaspoon salt, 1 3/4 cups granulated sugar, 1 1/4 cups (2 1/2 sticks) unsalted butter, softened, 3 large eggs, 1 cup buttermilk, 1 teaspoon pure vanilla extract, 1 cup boiling water",
+      "Description": "A rich and moist cake made with chocolate, butter, and sugar.",
+      "ImageSrc": "https://example.com/images/chocolate-cake.jpg",
+      "CookTime": 30,
+      "Origin": "United States"
+    },
+    {
+      "Name": "Cheese Danish",
+      "Ingredients": "For the dough:\n1 cup (2 sticks) unsalted butter, softened\n1/2 cup granulated sugar\n1 large egg\n1 teaspoon pure vanilla extract\n2 1/2 cups all-purpose flour\n1/2 teaspoon salt\nFor the filling:\n8 ounces cream cheese, softened\n1/4 cup granulated sugar\n1 large egg yolk\n1 teaspoon pure vanilla extract",
+      "Description": "A sweet pastry made with a buttery dough and a creamy cheese filling.",
+      "ImageSrc": "https://example.com/images/cheese-danish.jpg",
+      "CookTime": 30,
+      "Origin": "Denmark"
+    }
 ]

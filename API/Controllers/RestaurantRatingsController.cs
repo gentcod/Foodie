@@ -28,7 +28,7 @@ namespace API.Controllers
             return Ok(restaurantsRatingsDto);
         }
 
-        [HttpGet]
+        [HttpGet(":id")]
         public async Task<ActionResult<RestaurantRatingsDto>> GetRestaurantRatingsById([BindRequired][FromQuery]int restaurantId)
         {
             var restaurant = await _context.Restaurants.FirstOrDefaultAsync(el => el.Id == restaurantId);

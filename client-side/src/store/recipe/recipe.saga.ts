@@ -33,14 +33,14 @@ export function* onFetchRecipes() {
 
 
 //Recipe Ratings Saga
-export const fetchRecipeSRatingsFromApi = async () => {
+export const fetchRecipesRatingsFromApi = async () => {
    const response = await Recipes.listRecipeRatings();
    return response;
 }
 
 export function* fetchRecipesRatingsAsync() {
    try {
-      const recipesRatings = yield* call(fetchRecipeSRatingsFromApi);
+      const recipesRatings = yield* call(fetchRecipesRatingsFromApi);
       yield* put(fetchRecipeRatingsSuccess(recipesRatings));
    } catch (error) {
       yield put(fetchRecipeRatingsFailed(error as Error));
@@ -52,7 +52,6 @@ export function* onFetchRecipesRatings() {
 }
 
 //Recipe Search
-
 export function* fetchRecipesSearchAsync() {
    try {
       const searchString = yield* select(selectSearchParams)

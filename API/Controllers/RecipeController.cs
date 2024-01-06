@@ -18,18 +18,21 @@ namespace API.Controllers
       }
       
       [HttpGet(Name = "GetRecipes")]
-      public async Task<ActionResult<RecipeDto>> GetRecipes([FromQuery] RecipeParams recipeParams)
+      public async Task<ActionResult<PagedList<RecipeDto>>> GetRecipes([FromQuery] PaginationParams paginationParams, [FromQuery] RecipeParams recipeParams)
       {
          var query = _context.Recipes
          .Search(recipeParams.Search)
          .Sort(recipeParams.SortBy)
          .OrderByCookTime(recipeParams.OrderBy)
          .AsQueryable();
-
       
-        var recipes = await query.ToListAsync();
+        var recipeDtos = query.MapRecipesToDto();
 
-        return Ok(recipes.MapRecipesToDto());
+        var pagedList = await PagedList<RecipeDto>.ToPagedList(recipeDtos, paginationParams.PageNumber, paginationParams.PageSize);
+
+        Response.AddPaginationHeader(pagedList.MetaData);
+
+        return Ok(pagedList);
       }
 
       [HttpGet(":id")]

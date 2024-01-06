@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(FoodieContext))]
-    [Migration("20231214234538_InitialMigration")]
+    [Migration("20240106213959_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />

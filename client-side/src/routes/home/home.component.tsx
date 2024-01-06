@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <HomeContainer>
       <FeaturedContainer>
-        <FeaturedTitle>Featured recipe</FeaturedTitle>
+        <FeaturedTitle>Featured recipes</FeaturedTitle>
         <FeaturedImage src="https://i.ibb.co/mhxQWT4/board-veg.jpg" />
       </FeaturedContainer>
       <WelcomeContainer>

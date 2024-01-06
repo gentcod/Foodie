@@ -25,7 +25,7 @@ export const FeaturedTitle = styled.p`
 
 export const FeaturedImage = styled.img`
    width: 100%;
-   height: 50rem;
+   height: 30rem;
    object-fit: cover;
    object-position: center;
    border-radius: 2rem;
