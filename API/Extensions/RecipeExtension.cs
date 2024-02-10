@@ -11,7 +11,7 @@ namespace API.Extensions
 
          var keywordLower = keyword.ToLower();
 
-         return query.Where(rec => rec.Name.ToLower().Contains(keywordLower));
+         return query.Where(rec => rec.Ingredients.ToLower().Contains(keywordLower));
       }
 
       public static IQueryable<Recipe> Sort(this IQueryable<Recipe> query, string sortBy)

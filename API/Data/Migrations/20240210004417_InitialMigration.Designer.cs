@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(FoodieContext))]
-    [Migration("20240106213959_InitialMigration")]
+    [Migration("20240210004417_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -85,6 +85,9 @@ namespace API.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Category")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("CookTime")
                         .HasColumnType("INTEGER");

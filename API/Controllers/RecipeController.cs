@@ -18,7 +18,7 @@ namespace API.Controllers
       }
       
       [HttpGet(Name = "GetRecipes")]
-      public async Task<ActionResult<PagedList<RecipeDto>>> GetRecipes([FromQuery] PaginationParams paginationParams, [FromQuery] RecipeParams recipeParams)
+      public async Task<ActionResult<PagedList<RecipeDto>>> GetRecipes([FromQuery] RecipeParams recipeParams)
       {
          var query = _context.Recipes
          .Search(recipeParams.Search)
@@ -28,7 +28,7 @@ namespace API.Controllers
       
         var recipeDtos = query.MapRecipesToDto();
 
-        var pagedList = await PagedList<RecipeDto>.ToPagedList(recipeDtos, paginationParams.PageNumber, paginationParams.PageSize);
+        var pagedList = await PagedList<RecipeDto>.ToPagedList(recipeDtos, recipeParams.PageNumber, recipeParams.PageSize);
 
         Response.AddPaginationHeader(pagedList.MetaData);
 
