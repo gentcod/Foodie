@@ -1,10 +1,9 @@
 using API.Models;
 using API.HelperFunctions;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
-   public static class DbInitializer
+    public static class DbInitializer
     {
        public static void Initialize(FoodieContext context)
        {

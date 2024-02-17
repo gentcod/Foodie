@@ -30,6 +30,7 @@ namespace API.HelperFunctions
             CookTime = rec.CookTime,
             DateAdded =  DateTime.Now,
             Origin = rec.Origin,
+            Category = rec.Category,
          }).ToList();
       }
    }

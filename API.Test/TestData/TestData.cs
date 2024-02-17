@@ -29,7 +29,8 @@ public class TestContextData
                 Origin = "Food1 Origin",
                 Rating = 5,
                 DateAdded = DateTime.Now,
-                RecipeRatings = new List<RecipeRating>()
+                RecipeRatings = new List<RecipeRating>(),
+                Category = "Food1 Category"
             },
 
             new() {
@@ -42,7 +43,8 @@ public class TestContextData
                 Origin = "Food2 Origin",
                 Rating = 4.5,
                 DateAdded = DateTime.Now,
-                RecipeRatings = new List<RecipeRating>()
+                RecipeRatings = new List<RecipeRating>(),
+                Category = "Food2 Category"
             }
         };
 

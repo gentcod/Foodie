@@ -11,7 +11,7 @@ namespace API.Extensions
 
          var keywordLower = keyword.ToLower();
 
-         return query.Where(rec => rec.Name.ToLower().Contains(keywordLower));
+         return query.Where(rec => rec.Ingredients.ToLower().Contains(keywordLower));
       }
 
       public static IQueryable<Recipe> Sort(this IQueryable<Recipe> query, string sortBy)
@@ -34,7 +34,7 @@ namespace API.Extensions
          return query.OrderBy(rec => rec.CookTime);
       }
 
-      public static List<RecipeDto> MapRecipesToDto(this List<Recipe> recipes)
+      public static IQueryable<RecipeDto> MapRecipesToDto(this IQueryable<Recipe> recipes)
       {
          return recipes.Select(rec => new RecipeDto
          {
@@ -47,7 +47,7 @@ namespace API.Extensions
             DateAdded = rec.DateAdded.ToString("dddd, dd MMMM yyyy"),
             Origin = rec.Origin,
             Rating = rec.Rating,
-         }).ToList();
+         });
       }
 
       public static RecipeDto MapRecipeToDto(this Recipe recipe)

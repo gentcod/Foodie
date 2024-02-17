@@ -1,11 +1,8 @@
 namespace API.Models
 {
-   public class RestaurantRating
+    public class RestaurantRating : Rating
    {
-      public int Id { get; set; }
       public int RestaurantId { get; set; }
       public Restaurant Restaurant { get; set; }
-      public int RatingNum { get; set; }
-      public string Comment { get; set; }
    }
 }

@@ -12,5 +12,6 @@ namespace API.Models
       public string Origin { get; set; }
       public double Rating { get; set; }
       public List<RecipeRating> RecipeRatings { get; set;}
+      public required string Category { get; set; }
    }
 }
