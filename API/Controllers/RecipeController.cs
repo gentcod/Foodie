@@ -1,5 +1,4 @@
 using API.Data;
-using API.Models;
 using API.RequestHelpers;
 using API.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace API.Controllers
 {
-   public class RecipeController : BaseApiController
+    public class RecipeController : BaseApiController
    {
       private readonly FoodieContext _context;
       public RecipeController(FoodieContext context)

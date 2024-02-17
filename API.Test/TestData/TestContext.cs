@@ -1,4 +1,6 @@
-﻿using API.Data;
+﻿using System.Collections.Specialized;
+using System.Net;
+using API.Data;
 using API.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,6 +48,25 @@ public static class TestDBInitializer
     }
 }
 
+public class TestHttpResponseHandler
+{
+    public HttpStatusCode StatusCode { get; set; }
+    public NameValueCollection Headers { get; } = new NameValueCollection();
+    public string Content { get; set; }
+
+    public void Handle(HttpWebResponse response)
+    {
+        StatusCode = response.StatusCode;
+        Headers.Clear();
+        Headers.Add(response.Headers);
+        
+        using (var reader = new StreamReader(response.GetResponseStream()))
+        {
+            Content = reader.ReadToEnd();
+        }
+    }
+}
+
 /// <summary>
 /// This initiliazes the in-memory DB connection and it initializes the DB context data.
 /// </summary>
@@ -62,6 +83,8 @@ public class DbContextFactory
         dbContext.Database.EnsureCreated();
 
         TestDBInitializer.Intialize(dbContext);
+
+        var handler = new TestHttpResponseHandler();
 
         return dbContext;
     }
