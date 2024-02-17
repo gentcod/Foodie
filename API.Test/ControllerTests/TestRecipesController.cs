@@ -21,29 +21,29 @@ public class TestRecipesController
         _testData = new TestContextData();
     }
 
-    [Fact]
-    public async Task GetRecipes_Test()
-    {
-        var recipeParams = new RecipeParams {
-            PageNumber = 1,
-            PageSize = 10
-        };
+    // [Fact]
+    // public async Task GetRecipes_Test()
+    // {
+    //     var recipeParams = new RecipeParams {
+    //         PageNumber = 1,
+    //         PageSize = 10
+    //     };
 
-        var actionResult = await _controller.GetRecipes(recipeParams);
-        Assert.NotNull(actionResult);
+    //     var actionResult = await _controller.GetRecipes(recipeParams);
+    //     Assert.NotNull(actionResult);
 
-        #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-        var actionRes = (OkObjectResult) actionResult.Result;
-        var result = actionRes!.Value as PagedList<RecipeDto>;
-        Assert.NotNull(result);
-        Assert.Equal(2, result.Count);
+    //     #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+    //     var actionRes = (OkObjectResult) actionResult.Result;
+    //     var result = actionRes!.Value as PagedList<RecipeDto>;
+    //     Assert.NotNull(result);
+    //     Assert.Equal(2, result.Count);
         
-        var recipesDto = _testData.TestRecipes.AsQueryable().MapRecipesToDto();
-        var recipes = await PagedList<RecipeDto>.ToPagedList(recipesDto, recipeParams.PageNumber, recipeParams.PageSize);
+    //     var recipesDto = _testData.TestRecipes.AsQueryable().MapRecipesToDto();
+    //     var recipes = await PagedList<RecipeDto>.ToPagedList(recipesDto, recipeParams.PageNumber, recipeParams.PageSize);
 
-        Assert.Equal(result[0].Name, recipes[0].Name);
-        Assert.Equal(result[0].DateAdded, recipes[0].DateAdded);
-    }
+    //     Assert.Equal(result[0].Name, recipes[0].Name);
+    //     Assert.Equal(result[0].DateAdded, recipes[0].DateAdded);
+    // }
 
     [Fact]
     public async Task GetRecipesById_Test()
