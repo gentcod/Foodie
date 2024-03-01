@@ -1,12 +1,34 @@
 using API.Models;
 using API.HelperFunctions;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Data
 {
     public static class DbInitializer
     {
-       public static void Initialize(FoodieContext context)
+       public static async Task Initialize(FoodieContext context, UserManager<User> userManager)
        {
+            
+            if (!userManager.Users.Any()) {
+                var user = new User
+                {
+                    UserName = "bob",
+                    Email = "bob@test.com"
+                };
+
+                await userManager.CreateAsync(user, "Pa$$w0rd");
+                await userManager.AddToRoleAsync(user, "Member");
+                
+                var admin = new User
+                {
+                    Name = "gentcodAdmin",
+                    Email = "gentcod@gmail.com",
+                };
+
+                await userManager.CreateAsync(admin, "Pa$$w0rd");
+                await userManager.AddToRolesAsync(admin, ["Member", "Admin"]);
+            }
+
             if (context.Recipes.Any()) return;
 
             var retrievedDataRecipes = new DevDataRecipes();
@@ -19,21 +41,8 @@ namespace API.Data
 
             var restaurants = retrievedDataRestaurants.RetrievedRestaurants;
 
-            if (context.Users.Any()) return;
-
-            var users = new List<User>
-            {
-                new User
-                {
-                    Name = "Oyefule",
-                    Password = "Pa$$w0rd",
-                    Email = "oyefule@gmail.com",
-                }
-            };
-
             context.Recipes.AddRange(recipes);
             context.Restaurants.AddRange(restaurants);
-            context.Users.AddRange(users);
             context.SaveChanges();
        }
     }

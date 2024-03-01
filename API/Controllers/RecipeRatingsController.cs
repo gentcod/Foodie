@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using API.RequestHelpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -53,6 +54,7 @@ namespace API.Controllers
             return Ok(recipeRatingDto);
         }
 
+        [Authorize]
         [HttpPost("AddRating")]
         public async Task<ActionResult<RecipeRatingsDto>> AddRating(RatingDto ratingDto, [BindRequired][FromQuery]int recipeId)
         {

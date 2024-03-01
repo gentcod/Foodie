@@ -28,7 +28,7 @@ namespace API.HelperFunctions
             ImageSrc = rec.ImageSrc,
             Description = rec.Description,
             CookTime = rec.CookTime,
-            DateAdded =  DateTime.Now,
+            DateAdded =  DateTime.Now.ToUniversalTime(),
             Origin = rec.Origin,
             Category = rec.Category,
          }).ToList();
