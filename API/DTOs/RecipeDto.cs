@@ -13,5 +13,7 @@ namespace API.DTOs
       public string DateAdded { get; set; }
       public string Origin { get; set; }
       public double Rating { get; set; }
+      public string Category { get; set; }
+      public Boolean Featured { get; set; }
    }
 }

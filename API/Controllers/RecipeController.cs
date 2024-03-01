@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.DTOs;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using API.Models;
 
 namespace API.Controllers
 {
@@ -34,10 +35,22 @@ namespace API.Controllers
         return Ok(pagedList);
       }
 
-      [HttpGet(":id")]
-      public async Task<ActionResult<RecipeDto>> GetRecipeById([BindRequired][FromQuery]int recipeId)
+      [HttpGet("featured", Name = "featured")]
+      public async Task<ActionResult<RecipeDto>> GetFeaturedRecipes()
       {
-         var recipe = await _context.Recipes.FirstOrDefaultAsync(rec => rec.Id == recipeId);
+         var query = _context.Recipes.Featured().AsQueryable();
+
+         var featuredRecipesQuery = query.MapRecipesToDto();
+
+         var featuredRecipes = await featuredRecipesQuery.ToListAsync();
+
+         return Ok(featuredRecipes);
+      }
+
+      [HttpGet("RecipeById")]
+      public async Task<ActionResult<RecipeDto>> GetRecipeById([BindRequired][FromQuery]int id)
+      {
+         var recipe = await _context.Recipes.FirstOrDefaultAsync(rec => rec.Id == id);
 
          if (recipe == null) return NotFound();
 

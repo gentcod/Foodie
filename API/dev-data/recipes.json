@@ -3,7 +3,7 @@
       "Name": "Jollof Rice",
       "Ingredients": "2 cups long-grain Rice, 1 cup tomato paste, 1/2 cup onions;(chopped), 1/4 cup red bell peppers;(chopped), 1/4 cup green bell peppers;(chopped), 1/4 cup vegetable oil, 2 tablespoons curry powder, 1 teaspoon thyme, 1 teaspoon salt, 1/2 teaspoon black pepper, 3 cups chicken broth, bullion Cubes",
       "Description": "Jollof rice is a popular Nigerian dish made with rice, tomato paste, onions, peppers, and spices. It is often served with fried chicken or fish.",
-      "ImageSrc": "https://i.ibb.co/xGLGJqX/jollof-rice.webp",
+      "ImageSrc": "https://i.ibb.co/gtHjVJW/jollof-rice.jpg",
       "CookTime": 45,
       "Origin": "Nigeria",
       "Category": "African"
@@ -12,7 +12,7 @@
       "Name": "Egusi Soup",
       "Ingredients": "1 cup egusi seeds, ground 1/2 cup onions,;(chopped), 1/4 cup tomatoes,;(chopped), 1/4 cup red bell peppers,;(chopped), 1/4 cup vegetable oil, 1 tablespoon curry powder, 1 teaspoon thyme, 1 teaspoon salt, 1/2 teaspoon black pepper, 3 cups chicken broth",
       "Description": "Egusi soup is a popular Nigerian dish made with egusi seeds, onions, tomatoes, peppers, and spices. It is often served with fufu or rice.",
-      "ImageSrc": "",
+      "ImageSrc": "https://i.ibb.co/rpFghgc/egusi.jpg",
       "CookTime": 30,
       "Origin": "Nigeria",
       "Category": "African"
@@ -21,7 +21,7 @@
       "Name": "Akara",
       "Ingredients": "1 cup black-eyed peas (soaked overnight), 1 onion;(chopped), 1 red bell pepper;(chopped), 1/4 cup vegetable oil, 1 teaspoon salt, 1/2 teaspoon black pepper",
       "Description": "Description: Akara is a popular Nigerian fritter made with black-eyed peas, onions, peppers, and spices. It is often served with bread or yam.",
-      "ImageSrc": "",
+      "ImageSrc": "https://i.ibb.co/94g1DsS/akara.jpg",
       "CookTime": 20,
       "Origin": "Nigeria",
       "Category": "African"
@@ -30,16 +30,16 @@
       "Name": "Moi Moi",
       "Ingredients": "1 cup black-eyed peas, soaked overnight, 1 onion; chopped, 1 red bell pepper; chopped, 1/4 cup vegetable oil, 1 teaspoon salt, 1/2 teaspoon black pepper, 3 eggs, 1/2 cup crayfish (optional), 1 bouillon cube (optional), 4 cups water (or enough to blend smoothly)",
       "Description": "Moi Moi is a delicious Nigerian steamed bean pudding made from a blend of black-eyed peas, peppers, onions, and spices. It's a popular and versatile dish that can be enjoyed for breakfast, lunch, or dinner. It's often served with tomato stew, pepper sauce, or fried plantains.",
-      "ImageSrc": "https://example.com/images/moimoi.jpg",
+      "ImageSrc": "https://i.ibb.co/zFBNLYL/moi-moi.jpg",
       "CookTime": 60,
-      "Origin": "Nigeria",
+      "Origin": "Nigeria (Yoruba)",
       "Category": "African"
    },
    {
       "Name": "Nigerian Fried Rice",
       "Ingredients": "2 cups cooked long-grain rice (preferably leftover), 1/2 cup palm oil (or vegetable oil), 1 medium onion,;(chopped), 1/2 cup red bell pepper,;(chopped), 1/4 cup green bell pepper,;(chopped), 2 cloves garlic; minced, 1 cup mixed vegetables (e.g., peas, carrots, corn), 1/2 cup cooked protein (e.g., chicken, beef, shrimp), 1/4 cup diced onion (optional), 2 tablespoons soy sauce, 1 tablespoon oyster sauce (optional), 1/2 teaspoon curry powder, 1/2 teaspoon thyme, 1/4 teaspoon black pepper, Salt to taste",
       "Description": "Nigerian Fried Rice is a delicious and flavorful dish made with cooked rice, vegetables, protein, and spices. It's a popular dish in Nigeria and often served with stew, grilled meat, or plantains.",
-      "ImageSrc": "https://example.com/images/nigerian-fried-rice.jpg",
+      "ImageSrc": "https://i.ibb.co/0FXsPpW/fried-rice.jpg",
       "CookTime": 50,
       "Origin": "Nigeria",
       "Category": "African"
@@ -48,34 +48,34 @@
       "Name": "Efo Riro",
       "Ingredients": "2 bunches of spinach or other leafy greens (washed an; chopped), 1/2 cup palm oil, 1 onion;(chopped), 2 tomatoes;(chopped), 2 red bell peppers;(chopped), 2 scotch bonnet peppers;(chopped), 1 tablespoon locust beans (iru), 2 tablespoons crayfish, 1 teaspoon ground crayfish, 400g assorted meat and fish (optional), 1/2 teaspoon salt, 1/4 teaspoon black pepper, 2 stock cubes, Water (as needed)",
       "Description": "Efo riro is a savory, spicy, and hearty Nigerian stew made with leafy greens, assorted meats and fish, and a blend of rich spices. It's a popular dish in Yoruba cuisine and often served with rice, fufu, or pounded yam.",
-      "ImageSrc": "https://www.myactivekitchen.com/wp-content/uploads/2015/06/Efo-Riro-4.jpg",
+      "ImageSrc": "https://i.ibb.co/6gdj6Vd/download.webp",
       "CookTime": 50,
-      "Origin": "Nigeria",
+      "Origin": "Nigeria (Yoruba)",
       "Category": "African"
    },
    {
       "Name": "Ikokore",
       "Ingredients": "500g water yam (peeled and grated), 1 cup palm oil, 1 medium onion;(chopped), 4 habanero peppers;(chopped), 2 large smoked mackerel (deboned and shredded), 1 cup smoked prawns;(chopped), 1 cup periwinkles (cleaned), 1 cup smoked fish (deboned and shredded), 2 tablespoons crayfish powder, 1 tablespoon locust beans, 1/2 teaspoon salt, 1/4 teaspoon black pepper",
       "Description": "Ikokore is a hearty and flavorful Nigerian dish from the Ijebu region, made with grated water yam, assorted seafood, and a rich palm oil sauce. It is typically served with a side of eba or fufu.",
-      "ImageSrc": "https://www.sisijemimah.com/wp-content/uploads/2015/08/ikokore-ifokore-recipe-540x405.jpg",
+      "ImageSrc": "https://i.ibb.co/c6WMBxV/ikokore.jpg",
       "CookTime": 50,
-      "Origin": "Nigeria",
+      "Origin": "Nigeria (Yoruba)",
       "Category": "African"
    },
    {
       "Name": "Abacha",
       "Ingredients": "1 pound cod, cooked and shredded, 1 cup onions; chopped, 1 red bell pepper; chopped, 1/4 cup vegetable oil, 1 teaspoon salt, 1/2 teaspoon black pepper",
       "Description": "Abacha is a popular Nigerian salad made with cod, onions, peppers, and spices. It is often served with rice or fufu.",
-      "ImageSrc": "",
+      "ImageSrc": "https://i.ibb.co/0Ds9bNH/abacha.jpg",
       "CookTime": 20,
-      "Origin": "Nigeria",
+      "Origin": "Nigeria (Igbo)",
       "Category": "African"
    },
    {
       "Name": "Spaghetti Carbonara",
       "Ingredients": "1 pound spaghetti, 4 ounces pancetta (diced), 4 large eggs, 1 cup grated Parmesan cheese, 1/4 cu; chopped fresh parsley, Freshly ground black pepper",
       "Description": "A rich and creamy pasta dish made with eggs, pancetta, Parmesan cheese, and black pepper.",
-      "ImageSrc": "https://example.com/images/spaghetti-carbonara.jpg",
+      "ImageSrc": "https://i.ibb.co/yXdM0hH/caborana.jpg",
       "CookTime": 30,
       "Origin": "Italy",
       "Category": "Foriegn"
@@ -84,7 +84,7 @@
       "Name": "Penne Arrabbiata",
       "Ingredients": "1 pound penne pasta, 1/4 cup olive oil, 4 cloves garlic;(minced), 1 teaspoon red pepper flakes, 1 can (28 ounces) crushed tomatoes, 1/2 cu; chopped fresh basil, salt and freshly ground black pepper to taste",
       "Description": "A spicy pasta dish made with garlic, red pepper flakes, tomatoes, and basil.",
-      "ImageSrc": "https://example.com/images/penne-arrabbiata.jpg",
+      "ImageSrc": "https://i.ibb.co/Bc2SS49/penne.jpg",
       "CookTime": 20,
       "Origin": "Italy",
       "Category": "Foriegn"
@@ -93,7 +93,7 @@
       "Name": "Baked Ziti",
       "Ingredients": "1 pound ziti pasta, 1 pound ground beef, 1 jar (28 ounces) marinara sauce, 1 cup ricotta cheese, 1 cup shredded mozzarella cheese, 1/2 cup grated Parmesan cheese, 1/4 cu; chopped fresh parsley, Salt and freshly ground black pepper to taste",
       "Description": "A hearty pasta dish made with ground beef, marinara sauce, ricotta, mozzarella, and Parmesan cheeses.",
-      "ImageSrc": "https://example.com/images/baked-ziti.jpg",
+      "ImageSrc": "https://i.ibb.co/Zx5B2S0/ziti.jpg",
       "CookTime": 45,
       "Origin": "Italy",
       "Category": "Foriegn"
@@ -102,7 +102,7 @@
       "Name": "Fettuccine Alfredo",
       "Ingredients": "1 pound fettuccine pasta, 1/2 cup butter, 1 cup heavy cream, 1 cup grated Parmesan cheese, Salt and freshly ground black pepper to taste",
       "Description": "A classic pasta dish made with butter, cream, and Parmesan cheese.",
-      "ImageSrc": "https://example.com/images/fettuccine-alfredo.jpg",
+      "ImageSrc": "https://i.ibb.co/k6N3sh7/alfredo.jpg",
       "CookTime": 20,
       "Origin": "Italy",
       "Category": "Foriegn"
@@ -111,7 +111,7 @@
       "Name": "Lasagna",
       "Ingredients": "1 box lasagna noodles, 1 pound ground beef, 1 jar (28 ounces) marinara sauce, 1 container (15 ounces) ricotta cheese, 1 cup shredded mozzarella cheese, 1/2 cup grated Parmesan cheese, 1 egg, Salt and freshly ground black pepper to taste",
       "Description": "A layered pasta dish made with ground beef, marinara sauce, ricotta, mozzarella, and Parmesan cheeses.",
-      "ImageSrc": "https://example.com/images/lasagna.jpg",
+      "ImageSrc": "https://i.ibb.co/fSgKVX9/lasagna.jpg",
       "CookTime": 60,
       "Origin": "Italy",
       "Category": "Foriegn"
@@ -120,7 +120,7 @@
       "Name": "Jeera Rice",
       "Ingredients": "2 cups basmati rice, 2 tablespoons cumin seeds, 4 cloves, 2 green cardamom pods, 1 cinnamon stick, 4 black peppercorns, 4 cups water, 1 tablespoon salt, 2 tablespoons vegetable oil",
       "Description": "A fragrant and flavorful rice dish made with cumin seeds, whole spices, and basmati rice.",
-      "ImageSrc": "https://example.com/images/jeera-rice.jpg",
+      "ImageSrc": "https://i.ibb.co/FX1CNRm/jeera.jpg",
       "CookTime": 30,
       "Origin": "India",
       "Category": "Foriegn"
@@ -129,7 +129,7 @@
       "Name": "Biryani",
       "Ingredients": "2 cups basmati rice, 1 pound boneless chicken thighs, cut into bite-sized pieces, 1 onion, thinly sliced, 2 cloves garlic; minced, 1 tablespoon ginger-garlic paste, 1 teaspoon turmeric powder, 1 teaspoon coriander powder, 1 teaspoon cumin powder, 1/2 teaspoon red chili powder, 1/4 teaspoon garam masala, 2 tablespoons yogurt, 1/4 cu; chopped cilantro, 1/4 cu; chopped mint, 1/4 cup milk, 3 tablespoons vegetable oil, Salt to taste",
       "Description": "A layered rice dish made with chicken, spices, yogurt, and herbs.",
-      "ImageSrc": "https://example.com/images/biryani.jpg",
+      "ImageSrc": "https://i.ibb.co/KDnZkky/biryani.jpg",
       "CookTime": 60,
       "Origin": "India",
       "Category": "Foriegn"
@@ -138,7 +138,7 @@
       "Name": "Paella",
       "Ingredients": "2 cups bomba rice, 1 pound chicken thighs, boneless and skinless, 1 pound shrimp, peeled and deveined, 1/2 pound chorizo sausage, sliced, 1 onion; chopped, 1 red bell pepper; chopped, 2 cloves garlic; minced, 1 (14.5-ounce) can diced tomatoes, 1 teaspoon saffron threads, 4 cups chicken broth, 1/4 cup olive oil, Salt and pepper to taste",
       "Description": "A Spanish rice dish made with seafood, chicken, chorizo, vegetables, and saffron.",
-      "ImageSrc": "https://example.com/images/paella.jpg",
+      "ImageSrc": "https://i.ibb.co/jhLmzdJ/paella.jpg",
       "CookTime": 45,
       "Origin": "Spain",
       "Category": "Foriegn"
@@ -147,7 +147,7 @@
       "Name": "Rice Pilaf",
       "Ingredients": "1 cup long-grain rice, 1 tablespoon butter, 1 onion; chopped, 1/2 cup carrots, diced, 1/2 cup celery, diced, 2 cups chicken broth, 1/4 teaspoon salt, 1/4 teaspoon black pepper, 1/4 cu; chopped parsley",
       "Description": "A simple rice dish made with rice, vegetables, and broth.",
-      "ImageSrc": "https://example.com/images/rice-pilaf.jpg",
+      "ImageSrc": "https://i.ibb.co/1R4hy2Q/rice-pilaf.jpg",
       "CookTime": 30,
       "Origin": "Middle East",
       "Category": "Foriegn"
@@ -156,7 +156,7 @@
       "Name": "Amala",
       "Ingredients": "4 cups yam flour (elubo), 4 cups water, 1/2 teaspoon salt, Optional: 1 tablespoon palm oil",
       "Description": "Amala is a popular Nigerian dish made from yam flour. It is typically served with a variety of soups and stews.",
-      "ImageSrc": "https://example.com/images/amala.jpg",
+      "ImageSrc": "https://i.ibb.co/v4Fdxzm/amala.jpg",
       "CookTime": 30,
       "Origin": "Nigeria",
       "Category": "African"
@@ -165,7 +165,7 @@
       "Name": "Chocolate Chip Cookies",
       "Ingredients": "1 cup (2 sticks) unsalted butter; softened, 3/4 cup granulated sugar, 3/4 cup packed light brown sugar, 1 large egg, 1 teaspoon pure vanilla extract, 2 1/4 cups all-purpose flour, 1 teaspoon baking soda, 1/2 teaspoon salt, 1 cup semisweet chocolate chips",
       "Description": "A classic chewy cookie made with butter, sugar, chocolate chips, and a hint of vanilla.",
-      "ImageSrc": "https://example.com/images/chocolate-chip-cookies.jpg",
+      "ImageSrc": "https://i.ibb.co/FwwZ4k1/choc-coookie.jpg",
       "CookTime": 15,
       "Origin": "United States",
       "Category": "Pastry"
@@ -174,7 +174,7 @@
       "Name": "Apple Pie",
       "Ingredients": "For the crust: 2 1/2 cups all-purpose flour, 1 teaspoon salt, 2 sticks unsalted butter, chilled and cut into pieces, 1/2 cup ice water. For the filling: 6 Granny Smith apples, peeled, cored, and sliced, 3/4 cup granulated sugar, 2 tablespoons all-purpose flour, 1 teaspoon ground cinnamon, 1/4 teaspoon ground nutmeg, 1/4 teaspoon salt, 1 tablespoon lemon juice.",
       "Description": "A classic American pie made with a flaky crust and a sweet and tart apple filling.",
-      "ImageSrc": "https://example.com/images/apple-pie.jpg",
+      "ImageSrc": "https://i.ibb.co/QFMf65H/apple-pie.jpg",
       "CookTime": 60,
       "Origin": "United States",
       "Category": "Pastry"
@@ -183,7 +183,7 @@
       "Name": "Croissants",
       "Ingredients": "3 cups all-purpose flour, 1 teaspoon salt, 1 tablespoon sugar, 1 1/4 cups cold water, 1/4 cup cold milk, 2 1/4 teaspoons active dry yeast, 1 cup (2 sticks) unsalted butter, cold",
       "Description": "A buttery, flaky pastry made with layers of dough and butter.",
-      "ImageSrc": "https://example.com/images/croissants.jpg",
+      "ImageSrc": "https://i.ibb.co/hg9myd8/croissant.jpg",
       "CookTime": 120,
       "Origin": "France",
       "Category": "Pastry"
@@ -192,7 +192,7 @@
       "Name": "Chocolate Cake",
       "Ingredients": "2 cups all-purpose flour, 1 cup unsweetened cocoa powder, 1 1/2 teaspoons baking soda, 1/2 teaspoon baking powder, 1/2 teaspoon salt, 1 3/4 cups granulated sugar, 1 1/4 cups (2 1/2 sticks) unsalted butter; softened, 3 large eggs, 1 cup buttermilk, 1 teaspoon pure vanilla extract, 1 cup boiling water",
       "Description": "A rich and moist cake made with chocolate, butter, and sugar.",
-      "ImageSrc": "https://example.com/images/chocolate-cake.jpg",
+      "ImageSrc": "https://i.ibb.co/2580bLx/choc-cake.jpg",
       "CookTime": 30,
       "Origin": "United States",
       "Category": "Pastry"
@@ -201,7 +201,7 @@
       "Name": "Cheese Danish",
       "Ingredients": "For the dough, 1 cup (2 sticks) unsalted butter; softened, 1/2 cup granulated sugar, 1 large egg, 1 teaspoon pure vanilla extract, 2 1/2 cups all-purpose flour, 1/2 teaspoon salt, For the filling:, 8 ounces cream cheese; softened, 1/4 cup granulated sugar, 1 large egg yolk, 1 teaspoon pure vanilla extract",
       "Description": "A sweet pastry made with a buttery dough and a creamy cheese filling.",
-      "ImageSrc": "https://example.com/images/cheese-danish.jpg",
+      "ImageSrc": "https://i.ibb.co/YBhxdFC/danish.jpg",
       "CookTime": 30,
       "Origin": "Denmark",
       "Category": "Pastry"
@@ -210,7 +210,7 @@
       "Name": "Vegetarian Chili",
       "Ingredients": "1 tablespoon olive oil, 1 onion; chopped, 2 cloves garlic; minced, 1 red bell pepper; chopped, 1 green bell pepper; chopped, 1 jalapeno pepper; seeded and chopped (optional), 1 cup kidney beans, rinsed and drained, 1 cup black beans, rinsed and drained, 1 (15-ounce) can diced tomatoes, undrained, 1 (15-ounce) can corn, drained, 1 (15-ounce) can black beans, rinsed and drained (optional), 1 cup vegetable broth, 1 tablespoon chili powder, 1 teaspoon cumin, 1/2 teaspoon smoked paprika, 1/4 teaspoon salt, 1/4 teaspoon black pepper, Optional toppings: shredded cheese, sour cream, avocado; chopped cilantro",
       "Description": "A hearty and flavorful vegetarian chili packed with beans, vegetables, and spices. Perfect for a cozy night in!",
-      "ImageSrc": "https://example.com/images/vegetarian-chili.jpg",
+      "ImageSrc": "https://i.ibb.co/bWnrscM/veg-chili.jpg",
       "CookTime": 30,
       "Origin": "Mexico",
       "Category": "Vegetarian"
@@ -219,7 +219,7 @@
       "Name": "Lentil Soup",
       "Ingredients": "1 tablespoon olive oil, 1 onion; chopped, 2 cloves garli; minced, 1 carrot; chopped, 1 celery stalk; chopped, 1 cup green lentils, rinsed, 4 cups vegetable broth, 1 (14.5-ounce) can diced tomatoes, undrained, 1 tablespoon lemon juice, 1 teaspoon dried thyme, 1/2 teaspoon salt, 1/4 teaspoon black pepper, Optional toppings: crusty bread; chopped fresh parsley",
       "Description": "A warming and nutritious lentil soup with a simple lemon flavor. A great source of protein and fiber!",
-      "ImageSrc": "https://example.com/images/lentil-soup.jpg",
+      "ImageSrc": "https://i.ibb.co/8NNHGSZ/lentil.jpg",
       "CookTime": 45,
       "Origin": "Middle East (adapted)",
       "Category": "Vegetarian"
@@ -228,7 +228,7 @@
       "Name": "Veggie Burgers",
       "Ingredients": "1 cup cooked black beans, mashed, 1 cup cooked brown rice, 1/2 cup grated carrot, 1/4 cu; chopped red onion, 1/4 cu; chopped bell pepper, 2 tablespoons flaxseed meal mixed with 3 tablespoons water, 1 tablespoon olive oil, 1 teaspoon dried oregano, 1/2 teaspoon cumin, 1/4 teaspoon salt, 1/4 teaspoon black pepper, Burger buns, lettuce, tomato, onion, and your favorite burger toppings",
       "Description": "Satisfying and delicious veggie burgers that are easy to make and customize with your favorite flavors!",
-      "ImageSrc": "https://example.com/images/veggie-burgers.jpg",
+      "ImageSrc": "https://i.ibb.co/DRTT5Jd/veggie-burger.jpg",
       "CookTime": 30,
       "Origin": "United States",
       "Category": "Vegetarian"
@@ -237,9 +237,243 @@
       "Name": "Thai Curry with Vegetables",
       "Ingredients": "1 tablespoon coconut oil, 1 tablespoon green curry paste, 1 (13.5-ounce) can coconut milk, 1 cup vegetable broth, 1 bell pepper; chopped, 1 broccoli floret; chopped, 1 zucchini; chopped, 1 cup snow peas, 1 tablespoon soy sauce, 1 tablespoon lime juice, 1/2 teaspoon brown sugar, 1/4 teaspoon red pepper flakes (optional), Cooked rice, for serving",
       "Description": "A vibrant and flavorful Thai curry packed with vegetables and creamy coconut sauce. Serve over rice for a satisfying meal!",
-      "ImageSrc": "https://example.com/images/thai-curry-vegetables.jpg",
+      "ImageSrc": "https://i.ibb.co/K23rJ1Y/thai-curry.jpg",
       "CookTime": 20,
       "Origin": "Thailand (adapted)",
       "Category": "Vegetarian"
-    }
+    },
+    {
+      "Name": "Miyan Taushe",
+      "Ingredients": "1 cup peanuts, roasted and ground, 1 onion; chopped, 1 tomato; chopped, 1 scotch bonnet pepper (optional), 1/2 teaspoon dried thyme, 1 teaspoon salt, 1/2 cup vegetable oil, 3 cups water, Meat or fish (optional)",
+      "Description": "A creamy and flavorful peanut soup, often served with tuwo shinkafa (rice pudding) or fufu.",
+      "ImageSrc": "https://i.ibb.co/kXytk79/taushe.jpg",
+      "CookTime": 45,
+      "Origin": "Nigeria (Hausa)",
+      "Category": "African"
+    },
+    {
+      "Name": "One-Pan Lemon Garlic Chicken and Veggies",
+      "Ingredients": "4 boneless, skinless chicken breasts, 1 tablespoon olive oil, 1 tablespoon lemon juice, 1 teaspoon dried oregano, 1/2 teaspoon garlic powder, 1/2 teaspoon salt, 1/4 teaspoon black pepper, 1 red bell pepper, sliced, 1 yellow bell pepper, sliced, 1 zucchini, chopped, 1 red onion, sliced",
+      "Description": "A simple and flavorful dish with juicy chicken and colorful veggies, all cooked on one pan for easy cleanup.",
+      "ImageSrc": "https://i.ibb.co/GkYn7WB/lemon-chicken.jpg",
+      "CookTime": 30,
+      "Origin": "Mediterranean",
+      "Category": "Quick"
+    },
+    {
+      "Name": "Creamy Tomato Pasta with Spinach and Sun-dried Tomatoes",
+      "Ingredients": "1 pound pasta of choice, 1 tablespoon olive oil, 1 clove garlic, minced, 1 (14.5 oz) can diced tomatoes, undrained, 1/2 cup heavy cream, 1/4 cup crumbled feta cheese, 1/4 cup chopped sun-dried tomatoes, 1 cup baby spinach, 1/4 teaspoon salt, 1/4 teaspoon black pepper",
+      "Description": "A quick and satisfying pasta dish with a creamy tomato sauce, spinach, and sun-dried tomatoes for a burst of flavor.",
+      "ImageSrc": "https://i.ibb.co/3CJpxMn/creamy-pasta.jpg",
+      "CookTime": 20,
+      "Origin": "Italian",
+      "Category": "Quick"
+    },
+    {
+      "Name": "Spicy Black Bean Burgers",
+      "Ingredients": "1 (15 oz) can black beans, drained and rinsed, 1/2 cup cooked brown rice, 1/4 cup chopped red onion, 1/4 cup chopped bell pepper, 1 tablespoon olive oil, 1 teaspoon chili powder, 1/2 teaspoon cumin, 1/4 teaspoon smoked paprika, 1/4 teaspoon garlic powder, 1/4 teaspoon salt, 1/4 teaspoon black pepper, Hamburger buns, Lettuce, tomato, onion, and your favorite burger toppings",
+      "Description": "Vegetarian burgers packed with protein and flavor, perfect for a healthy and satisfying meal.",
+      "ImageSrc": "https://i.ibb.co/s9Xw4GD/bean-burgers.jpg",
+      "CookTime": 30,
+      "Origin": "Mexican",
+      "Category": "Quick"
+    },
+    {
+      "Name": "Easy Shrimp Stir-Fry with Noodles",
+      "Ingredients": "1 pound shrimp, peeled and deveined, 1 tablespoon soy sauce, 1 tablespoon cornstarch, 1 tablespoon vegetable oil, 1 onion, sliced, 1 bell pepper, sliced, 1 cup broccoli florets, 1/2 cup carrots, sliced, 1/4 cup chopped ginger, 2 cloves garlic, minced, 1/4 cup chicken broth, 1 tablespoon oyster sauce, 1 tablespoon brown sugar, 1/2 teaspoon sesame oil, 8 oz noodles of choice",
+      "Description": "A quick and healthy stir-fry with succulent shrimp, colorful veggies, and a flavorful sauce, perfect for a weeknight meal.",
+      "ImageSrc": "https://i.ibb.co/ypMxPVq/shrimp-fry.jpg",
+      "CookTime": 20,
+      "Origin": "Asian",
+      "Category": "Quick"
+    },
+    {
+      "Name": "Cheesy Baked Eggs with Avocado Toast",
+      "Ingredients": "2 slices bread, toasted, 1/2 avocado, mashed, 2 eggs, 1/4 cup diced tomato, 1/4 cup crumbled feta cheese, 1 tablespoon chopped fresh cilantro, Salt and pepper to taste",
+      "Description": "A simple and delicious breakfast or brunch option with creamy baked eggs, avocado toast, and fresh flavors.",
+      "ImageSrc": "https://i.ibb.co/z7JyCJk/avacado-toast.jpg",
+      "CookTime": 20,
+      "Origin": "Mexican (inspired)",
+      "Category": "Quick"
+    },
+    {
+      "Name": "Ofe Onugbu",
+      "Ingredients": "Onugbu leaves (washed and pounded), assorted meats (beef, chicken, goat), crayfish, stockfish, palm oil, onions, bell peppers, spices (salt, pepper, bouillon), cocoyam (optional)",
+      "Description": "A classic Igbo soup with a unique bitter flavor, balanced by protein and spices. Often served with fufu, pounded yam, or rice.",
+      "ImageSrc": "https://i.ibb.co/3ywyc8V/onugbi.jpg",
+      "CookTime": 40,
+      "Origin": "Nigeria (Igbo)",
+      "Category": "African"
+    },
+    {
+      "Name": "Nkwobi",
+      "Ingredients": "Goat meat (pre-cooked), palm oil, onions, scotch bonnet pepper, ehuru seeds, utazi leaves, spices (salt, pepper, bouillon cube)",
+      "Description": "A fiery and flavorful goat meat dish cooked in palm oil with aromatic spices and herbs. Best enjoyed with chilled drinks.",
+      "ImageSrc": "https://i.ibb.co/7zhpZZ9/nkwobi.jpg",
+      "CookTime": 60,
+      "Origin": "Nigeria (Igbo)",
+      "Category": "African"
+    },
+    {
+      "Name": "Akidi",
+      "Ingredients": "Black-eyed peas (soaked overnight), onion, pepper, salt, vegetable oil",
+      "Description": "Savory and crispy bean balls, perfect for a quick snack or appetizer. They can be enjoyed plain or dipped in pepper sauce.",
+      "ImageSrc": "https://i.ibb.co/WcgrtG0/akidi.jpg",
+      "CookTime": 30,
+      "Origin": "Nigeria (Igbo)",
+      "Category": "Snack"
+    },
+    {
+      "Name": "Onigbajo",
+      "Ingredients": "Corn (fresh or frozen), coconut flakes, palm oil, salt",
+      "Description": "A simple and satisfying snack made with roasted corn and coconut flakes. You can add spices like chili powder or paprika for an extra kick.",
+      "ImageSrc": "",
+      "CookTime": 15,
+      "Origin": "Nigeria (Igbo)",
+      "Category": "African"
+    },
+    {
+      "Name": "Chin Chin",
+      "Ingredients": "Flour, sugar, milk, eggs, baking powder, nutmeg, vegetable oil",
+      "Description": "Sweet and fluffy doughnuts, perfect for a sweet treat or dessert. They can be enjoyed plain or sprinkled with powdered sugar.",
+      "ImageSrc": "https://i.ibb.co/5KDT8Nh/chin-chin.jpg",
+      "CookTime": 30,
+      "Origin": "Nigeria",
+      "Category": "Snack"
+    },
+    {
+      "Name": "Agege Bread",
+      "Ingredients": "Flour, milk, butter, sugar, yeast, eggs, nutmeg, vanilla extract",
+      "Description": "Soft and sweet bread with a unique flavor profile. Enjoyed for breakfast, snack, or dessert.",
+      "ImageSrc": "https://i.ibb.co/wcG46tT/agege.jpg",
+      "CookTime": 60,
+      "Origin": "Nigeria (Yoruba)",
+      "Category": "Pastry"
+    },
+    {
+      "Name": "Orisirisi",
+      "Ingredients": "Assorted meats (beef, chicken, goat, etc.), palm oil, onions, bell peppers, tomatoes, spices (salt, pepper, bouillon cube), scotch bonnet pepper (optional)",
+      "Description": "A flavorful grilled medley of various meats seasoned with aromatic spices. Perfect for special occasions or shared meals.",
+      "ImageSrc": "https://i.ibb.co/jrJV76c/orisiris.jpg",
+      "CookTime": 60,
+      "Origin": "Nigeria (Yoruba)",
+      "Category": "African"
+    },
+    {
+      "Name": "Ekuru",
+      "Ingredients": "Groundnuts (soaked and blended), onions, tomatoes, crayfish, spinach (optional), spices (salt, pepper, bouillon cube)",
+      "Description": "A creamy and savory peanut soup, often enjoyed with bread or pounded yam. A good source of protein and healthy fats.",
+      "ImageSrc": "https://i.ibb.co/DfR5mpy/ekuru.jpg",
+      "CookTime": 30,
+      "Origin": "Nigeria (Yoruba)",
+      "Category": "Vegetarian"
+    },
+    {
+      "Name": "Puff Puff",
+      "Ingredients": "Flour, sugar, milk, yeast, eggs, nutmeg, vegetable oil",
+      "Description": "Deep-fried dough balls that are light and fluffy inside, perfect for a sweet snack or dessert. Can be enjoyed plain or sprinkled with powdered sugar.",
+      "ImageSrc": "https://i.ibb.co/m0nCrGk/puff-puff.jpg",
+      "CookTime": 20,
+      "Origin": "Nigeria (Yoruba)",
+      "Category": "Snack"
+    },
+    {
+      "Name": "Dodo",
+      "Ingredients": "Plantains (ripe or unripe), vegetable oil, salt",
+      "Description": "Thinly sliced plantains fried in oil until crispy, resulting in a salty and satisfying snack. Can be enjoyed plain or dipped in pepper sauce.",
+      "ImageSrc": "https://i.ibb.co/QmDwd4z/dodo.jpg",
+      "CookTime": 30,
+      "Origin": "Nigeria (Yoruba)",
+      "Category": "Quick"
+    },
+    {
+      "Name": "Masa",
+      "Ingredients": "2 cups rice (soaked for 4 hours), 1 chopped onion, 1 scotch bonnet pepper (optional), 1 teaspoon nutmeg, 1 teaspoon cloves, 1/2 teaspoon cinnamon, 1/4 teaspoon ginger, 1 teaspoon salt, 1/2 cup vegetable oil, Water",
+      "Description": "A savory and aromatic rice pudding, often served with suya (skewered meat) or grilled fish.",
+      "ImageSrc": "https://i.ibb.co/gM5h00j/masa.jpg",
+      "CookTime": 60,
+      "Origin": "Nigeria (Hausa)",
+      "Category": "African"
+    },
+    {
+      "Name": "Danwake",
+      "Ingredients": "2 cups all-purpose flour, 1 cup sugar, 1 teaspoon baking powder, 1/2 teaspoon salt, 1 egg, 1/2 cup milk, 1/4 cup vegetable oil (for frying), Powdered sugar (for dusting)",
+      "Description": "Sweet and fluffy doughnuts, perfect for a snack or dessert.",
+      "ImageSrc": "https://i.ibb.co/PxgbJKZ/danwake.jpg",
+      "CookTime": 30,
+      "Origin": "Nigeria (Hausa)",
+      "Category": "Pastry"
+    },
+    {
+      "Name": "Suya",
+      "Ingredients": "1kg beef or chicken (cut into cubes), 1/2 cup ground peanuts, 1/4 cup cayenne pepper, 1/4 cup ginger powder, 1/4 cup garlic powder, 1 teaspoon onion powder, 1/2 teaspoon salt, 1/4 cup vegetable oil, Skewers",
+      "Description": "Spicy and flavorful skewered meat, often served with salad and onions.",
+      "ImageSrc": "https://i.ibb.co/sRnf5KT/dolores.jpg",
+      "CookTime": 20,
+      "Origin": "Nigeria (Hausa)",
+      "Category": "African"
+    },
+    {
+      "Name": "Kunu Aya",
+      "Ingredients": "1 cup tiger nuts (soaked overnight), 1/2 cup dates (pitted), 1/4 cup ginger, 1/4 cup cloves, 1/2 teaspoon nutmeg, Water, Sugar (optional)",
+      "Description": "A refreshing and nutritious drink, often enjoyed during Ramadan.",
+      "ImageSrc": "https://i.ibb.co/Y7bFRZK/kunu.jpg",
+      "CookTime": 30,
+      "Origin": "Nigeria (Hausa)",
+      "Category": "Vegetarian"
+    },
+    {
+      "Name": "Fura da Nunu",
+      "Ingredients": "1 cup millet flour, Sugar (to taste), Milk (optional), Nunu (sour yogurt drink)",
+      "Description": "A popular street food consisting of fermented millet pudding served with a sour yogurt drink. Add milk for a richer flavor.",
+      "ImageSrc": "https://i.ibb.co/rtjSLHt/fura-da.jpg",
+      "CookTime": 30,
+      "Origin": "Nigeria (Hausa)",
+      "Category": "Vegetarian"
+    },
+    {
+      "Name": "Classic Beef Tacos",
+      "Ingredients": "1 pound ground beef, 1 tablespoon taco seasoning, 1/2 onion, chopped, 1 cup shredded lettuce, 1/2 cup diced tomatoes, 1/4 cup shredded cheddar cheese, 6 taco shells, Optional toppings: sour cream, salsa, guacamole",
+      "Description": "A timeless Mexican recipe with seasoned ground beef, fresh toppings, and crispy taco shells. Perfect for a quick and satisfying meal.",
+      "ImageSrc": "https://i.ibb.co/26m3Bf7/classic-taco.jpg",
+      "CookTime": 30,
+      "Origin": "Mexico",
+      "Category": "Quick"
+    },
+    {
+      "Name": "Spicy Shrimp Tacos with Mango Salsa",
+      "Ingredients": "1 pound shrimp, peeled and deveined, 1 tablespoon chili powder, 1/2 teaspoon cumin, 1/4 teaspoon paprika, 1/4 cup mango salsa, 1/4 cup chopped cilantro, 3 limes, juiced, 6 corn tortillas, Optional toppings: avocado slices, crumbled feta cheese",
+      "Description": "A vibrant and flavorful taco filled with spicy shrimp and a refreshing mango salsa. Perfect for a light and healthy meal.",
+      "ImageSrc": "https://i.ibb.co/t8Yz7Tr/shrimp-taco.jpg",
+      "CookTime": 25,
+      "Origin": "Mexico",
+      "Category": "Quick"
+    },
+    {
+      "Name": "Black Bean and Corn Tacos with Chipotle Cream",
+      "Ingredients": "1 (15 oz) can black beans, drained and rinsed, 1 cup frozen corn, 1/2 onion, chopped, 1 bell pepper, chopped, 1 tablespoon taco seasoning, 1/2 cup sour cream, 1 tablespoon chipotle peppers in adobo sauce, 6 flour tortillas, Optional toppings: pico de gallo, avocado slices",
+      "Description": "A delicious and protein-packed vegetarian taco option with black beans, corn, and a creamy chipotle sauce. Perfect for a satisfying and healthy meal.",
+      "ImageSrc": "https://i.ibb.co/sjMfyhT/chipotie.jpg",
+      "CookTime": 30,
+      "Origin": "Fusion",
+      "Category": "Vegetarian"
+    },
+    {
+      "Name": "Korean BBQ Chicken Tacos with Kimchi Slaw",
+      "Ingredients": "1 pound boneless, skinless chicken thighs, 1/4 cup soy sauce, 2 tablespoons brown sugar, 1 tablespoon garlic powder, 1 tablespoon ginger powder, 1/2 teaspoon sesame oil, 1 cup kimchi, shredded, 1/2 cup shredded carrots, 1/4 cup chopped green onions, 6 flour tortillas, Optional toppings: sesame seeds, sriracha sauce",
+      "Description": "A fun and flavorful fusion taco with Korean-inspired chicken and a crunchy kimchi slaw. Perfect for adventurous eaters looking for a unique twist.",
+      "ImageSrc": "https://i.ibb.co/4sHt5wT/kimchi.jpg",
+      "CookTime": 35,
+      "Origin": "Fusion",
+      "Category": "Foreign"
+    },
+    {
+      "Name": "Fish Tacos with Baja Sauce",
+      "Ingredients": "1 pound white fish fillets, 1/2 cup flour, 1 egg, 1/2 cup breadcrumbs, 1/4 cup vegetable oil, 1/2 cup mayonnaise, 1/4 cup sour cream, 1 tablespoon lime juice, 1 tablespoon chopped cilantro, 6 corn tortillas, Optional toppings: shredded cabbage, avocado slices",
+      "Description": "Light and crispy fish tacos with a creamy Baja sauce. Perfect for a refreshing and flavorful meal.",
+      "ImageSrc": "https://i.ibb.co/CBHhw3S/fish-taco.jpg",
+      "CookTime": 30,
+      "Origin": "Mexico",
+      "Category": "Quick"
+    }              
 ]

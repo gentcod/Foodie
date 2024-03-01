@@ -5,6 +5,7 @@ using API.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -41,7 +42,8 @@ namespace API.Controllers
             return Ok(restaurantRatingsDto);
         }
 
-         [HttpPost("AddRating")]
+        [Authorize]
+        [HttpPost("AddRating")]
         public async Task<ActionResult<Restaurant>> AddRating(RatingDto ratingDto, [BindRequired][FromQuery]int restaurantId)
         {
             if (ratingDto.RatingNum < 1 || ratingDto.RatingNum > 5) return BadRequest(new ProblemDetails { Title = "Rating number is out of rating" });

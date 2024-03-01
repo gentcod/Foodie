@@ -13,5 +13,6 @@ namespace API.Models
       public double Rating { get; set; }
       public List<RecipeRating> RecipeRatings { get; set;}
       public required string Category { get; set; }
+      public Boolean Featured { get; set; } = false;
    }
 }

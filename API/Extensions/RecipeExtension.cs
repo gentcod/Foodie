@@ -3,7 +3,7 @@ using API.Models;
 
 namespace API.Extensions
 {
-   public static class RecipeExtension
+    public static class RecipeExtension
    {
       public static IQueryable<Recipe> Search(this IQueryable<Recipe> query, string keyword)
       {
@@ -11,7 +11,7 @@ namespace API.Extensions
 
          var keywordLower = keyword.ToLower();
 
-         return query.Where(rec => rec.Ingredients.ToLower().Contains(keywordLower));
+         return query.Where(rec => rec.Name.ToLower().Contains(keywordLower) || rec.Ingredients.ToLower().Contains(keywordLower));
       }
 
       public static IQueryable<Recipe> Sort(this IQueryable<Recipe> query, string sortBy)
@@ -34,6 +34,11 @@ namespace API.Extensions
          return query.OrderBy(rec => rec.CookTime);
       }
 
+      public static IQueryable<Recipe> Featured(this IQueryable<Recipe> query)
+      {
+         return query.Where(rec => rec.Featured == true);
+      }
+
       public static IQueryable<RecipeDto> MapRecipesToDto(this IQueryable<Recipe> recipes)
       {
          return recipes.Select(rec => new RecipeDto
@@ -43,10 +48,12 @@ namespace API.Extensions
             Ingredients = rec.Ingredients,
             Description = rec.Description,
             ImageSrc = rec.ImageSrc,
-            CookTime = $"{rec.CookTime.ToString()} mins",
+            CookTime = $"{rec.CookTime} mins",
             DateAdded = rec.DateAdded.ToString("dddd, dd MMMM yyyy"),
             Origin = rec.Origin,
             Rating = rec.Rating,
+            Category = rec.Category,
+            Featured = rec.Featured,
          });
       }
 
@@ -59,12 +66,27 @@ namespace API.Extensions
             Ingredients = recipe.Ingredients,
             Description = recipe.Description,
             ImageSrc = recipe.ImageSrc,
-            CookTime = $"{recipe.CookTime.ToString()} mins",
+            CookTime = $"{recipe.CookTime} mins",
             DateAdded = recipe.DateAdded.ToString("dddd, dd MMMM yyyy"),
             Origin = recipe.Origin,
             Rating = recipe.Rating,
+            Category = recipe.Category,
+            Featured = recipe.Featured,
          };
       }
 
+// TODO: Write extension func to add featured flag to some recipes
+      public static IQueryable<Recipe> MarkRecipeAsFeatured(this IQueryable<Recipe> recipes) {
+         var randomNum = new Random();
+         var recipeList = recipes.ToList();
+         for (int i = 0; i <= 4; i++) {
+            recipeList[randomNum.Next(1,recipes.Count())].Featured = true;
+         };
+
+         var modRecipes = recipeList.AsQueryable();
+
+         return modRecipes;
+         
+      }
    }
 }
