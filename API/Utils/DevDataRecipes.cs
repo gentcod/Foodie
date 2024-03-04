@@ -3,6 +3,9 @@ using API.Models;
 
 namespace API.HelperFunctions
 {
+   /// <summary>
+   /// This class helps to read a stream of data from a json file with fields that match the Recipe Object. It returns a list of Recipes
+   /// </summary>
    public class DevDataRecipes
    {
       public List<Recipe> RetrievedRecipes { get; set; } = RetrieveDataFromJson();

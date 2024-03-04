@@ -21,8 +21,8 @@ namespace API.Data
                 
                 var admin = new User
                 {
-                    Name = "gentcodAdmin",
-                    Email = "gentcod@gmail.com",
+                    UserName = "gentcodAdmin",
+                    Email = "admin@gmail.com",
                 };
 
                 await userManager.CreateAsync(admin, "Pa$$w0rd");

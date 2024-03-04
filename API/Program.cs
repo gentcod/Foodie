@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using API.Data;
 using API.Middleware;
 using API.Models;
+using API.Token;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ builder.Services.AddControllers().AddJsonOptions(opt =>
 {
     opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => 
 {
@@ -50,21 +52,18 @@ string connString;
 if (builder.Environment.IsDevelopment()) connString = pgConnectionString;
 else connString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<FoodieContext>(opt =>
-{
+builder.Services.AddDbContext<FoodieContext>(opt => {
     // opt.UseSqlite(sqlliteConnString);
     opt.UseNpgsql(connString);
 });
 builder.Services.AddCors();
-builder.Services.AddIdentityCore<User>(opt => 
-{
+builder.Services.AddIdentityCore<User>(opt => {
     opt.User.RequireUniqueEmail = true;
 })
     .AddRoles<Role>()
     .AddEntityFrameworkStores<FoodieContext>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(opt => 
-    {
+    .AddJwtBearer(opt => {
         opt.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = false,
@@ -72,10 +71,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.
-                GetBytes(builder.Configuration["JWTSettings:TokenKey"]))
+                GetBytes(builder.Configuration["JWT:TokenKey"]))
         };
     });
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<JwtTokenGenerator>();
 
 var app = builder.Build();
 
@@ -90,8 +90,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseCors(opt => 
-{
+app.UseCors(opt => {
     opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
 });
 
