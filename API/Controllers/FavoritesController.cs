@@ -1,12 +1,14 @@
 using API.Data;
 using API.Models;
 using API.RequestHelpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
+   [Authorize]
    public class FavoritesController : BaseApiController
    {
       private readonly FoodieContext _context;
@@ -17,9 +19,9 @@ namespace API.Controllers
       }
 
       [HttpGet(Name = "GetFavorites")]
-      public async Task<ActionResult<Favorites>> GetFavorites([BindRequired][FromQuery]string userId)
+      public async Task<ActionResult<Favorites>> GetFavorites()
       {
-         Favorites favorites = await RetrieveFavorites(userId);
+         Favorites favorites = await RetrieveFavorites(GetUserId());
 
          if (favorites == null) {
             //Todo implement getting cookie data
@@ -32,7 +34,7 @@ namespace API.Controllers
       [HttpPost("AddRecipe")]
       public async Task<ActionResult<Favorites>> AddNewFavoriteRecipe([BindRequired][FromQuery]FavoriteRecipeParams favoriteRecipeParams)
       {
-         var favorites = await InitializeFavorites(favoriteRecipeParams.UserId);
+         var favorites = await InitializeFavorites(GetUserId());
 
          var recipe = await _context.Recipes.FindAsync(favoriteRecipeParams.RecipeId);
          if (recipe == null) return NotFound();
@@ -48,7 +50,7 @@ namespace API.Controllers
       [HttpPost("AddRestaurant")]
       public async Task<ActionResult<Favorites>> AddNewFavoriteRestaurant([BindRequired][FromQuery]FavoriteRestaurantParams favoriteRecipeParams)
       {
-         var favorites = await InitializeFavorites(favoriteRecipeParams.UserId);
+         var favorites = await InitializeFavorites(GetUserId());
 
          var restaurant = await _context.Restaurants.FindAsync(favoriteRecipeParams.RestaurantId);
          if (restaurant == null) return NotFound();
@@ -59,6 +61,11 @@ namespace API.Controllers
          if (result != null) return CreatedAtRoute("GetFavorites", favorites);
 
          return BadRequest(new ProblemDetails { Title = "Problem adding Favorite" });
+      }
+
+      private string GetUserId()
+      {
+         return User.Identity?.Name ?? Request.Cookies["buyerId"];
       }
 
       private async Task<Favorites> InitializeFavorites(string userId)

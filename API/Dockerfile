@@ -1,15 +1,13 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
-WORKDIR /App
-
-# Copy everything
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine3.18 AS build-env
+WORKDIR /app
+EXPOSE 5000
 COPY . ./
-# Restore as distinct layers
 RUN dotnet restore
-# Build and publish a release
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Release -o main
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
-WORKDIR /App
-COPY --from=build-env /App/out .
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine3.18 AS build-runtime
+WORKDIR /app
+COPY --from=build-env /app/main .
+COPY appsettings.json .
 ENTRYPOINT ["dotnet", "API.dll"]
