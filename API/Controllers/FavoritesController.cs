@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-   [Authorize]
    public class FavoritesController : BaseApiController
    {
       private readonly FoodieContext _context;

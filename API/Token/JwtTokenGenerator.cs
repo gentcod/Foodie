@@ -1,10 +1,11 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 
 namespace API.Token
 {
@@ -15,18 +16,12 @@ namespace API.Token
 
         public async Task<string> CreateToken(User user) 
         {
-            var payload = new Payload
-            {
-                Id = Guid.NewGuid(),
-                Username = user.UserName,
-                Email = user.Email
-            };
-
             //claims
             var claims = new List<Claim>
             {
-                new(ClaimTypes.Name, user.Name),
-                new("payload", JsonConvert.SerializeObject(payload))
+                new(ClaimTypes.NameIdentifier, user.UserId),
+                new(ClaimTypes.Email, user.Email),
+                new(ClaimTypes.Expiration, JsonSerializer.Serialize(DateTime.Now.AddHours(12)), ClaimValueTypes.Date),
             };
 
             var roles = await _userManager.GetRolesAsync(user);
@@ -49,14 +44,34 @@ namespace API.Token
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public Payload VerifyToken(string token)
+        public ClaimsPrincipal VerifyToken(string token)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var jsonToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
-            var payloadStr = jsonToken.Claims.FirstOrDefault(el => el.Type == "payload").Value;
-            var payload = JsonConvert.DeserializeObject(payloadStr) as Payload;
-
-            return payload;
+            try
+            {
+                var validationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:TokenKey"]))
+                };
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var principalClaims = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
+                
+                return principalClaims;
+            }
+            catch (SecurityTokenExpiredException)
+            {
+                throw new Exception("Expired token");
+            }
+            catch (SecurityTokenInvalidSignatureException)
+            {
+                throw new Exception("Invalid token signature");
+            }
+            catch (Exception)
+            {
+                throw new Exception("Token validation failed");
+            }
         }
     }
 }

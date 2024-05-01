@@ -12,6 +12,7 @@ namespace API.Data
             if (!userManager.Users.Any()) {
                 var user = new User
                 {
+                    UserId = Guid.NewGuid().ToString(),
                     UserName = "bob",
                     Email = "bob@test.com"
                 };
@@ -21,6 +22,7 @@ namespace API.Data
                 
                 var admin = new User
                 {
+                    UserId = Guid.NewGuid().ToString(),
                     UserName = "gentcodAdmin",
                     Email = "admin@gmail.com",
                 };

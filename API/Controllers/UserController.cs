@@ -3,11 +3,13 @@ using API.DTOs;
 using API.Models;
 using API.RequestHelpers;
 using API.Token;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+
     public class UserController(FoodieContext context, UserManager<User> userManager, JwtTokenGenerator tokenGenerator) : BaseApiController
     {
         private readonly FoodieContext _context = context;
@@ -25,14 +27,14 @@ namespace API.Controllers
             var token = await _tokenGenerator.CreateToken(user);
             var userDto = new UserDto
             {
-                Username = user.UserName,
                 Name = user.Name,
+                Username = user.UserName,
                 Email = user.Email,
             };
 
             return new {
-                User = userDto,
                 AccessToken = token,
+                User = userDto,
             };
         }
     }

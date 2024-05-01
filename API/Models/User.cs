@@ -4,6 +4,7 @@ namespace API.Models
 {
    public class User : IdentityUser<int>
     {     
+        public string UserId { get; set; }
         public string Name { get; set; }
     }
 }
