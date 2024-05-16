@@ -1,8 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
 using System.Security.Claims;
 using System.Text;
-using System.Text.Json;
 using API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -19,9 +17,9 @@ namespace API.Token
             //claims
             var claims = new List<Claim>
             {
-                new(ClaimTypes.NameIdentifier, user.UserId),
                 new(ClaimTypes.Email, user.Email),
-                new(ClaimTypes.Expiration, JsonSerializer.Serialize(DateTime.Now.AddHours(12)), ClaimValueTypes.Date),
+                new(ClaimTypes.Name, user.UserId),
+                new(ClaimTypes.Expiration, DateTime.Now.AddHours(12).ToString()),
             };
 
             var roles = await _userManager.GetRolesAsync(user);
@@ -30,7 +28,7 @@ namespace API.Token
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
             
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:TokenKey"]));
+            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_config["JWT:TokenKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
 
             var token = new JwtSecurityToken(
@@ -41,37 +39,39 @@ namespace API.Token
                 signingCredentials: creds
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            return tokenHandler.WriteToken(token);
         }
 
-        public ClaimsPrincipal VerifyToken(string token)
-        {
-            try
-            {
-                var validationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:TokenKey"]))
-                };
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var principalClaims = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
+        //public ClaimsPrincipal VerifyToken(string token)
+        //{
+        //    try
+        //    {
+        //        var validationParameters = new TokenValidationParameters
+        //        {
+        //            ValidateIssuer = false,
+        //            ValidateAudience = false,
+        //            ValidateIssuerSigningKey = true,
+        //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:TokenKey"]))
+        //        };
+        //        var tokenHandler = new JwtSecurityTokenHandler();
+        //        var principalClaims = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
                 
-                return principalClaims;
-            }
-            catch (SecurityTokenExpiredException)
-            {
-                throw new Exception("Expired token");
-            }
-            catch (SecurityTokenInvalidSignatureException)
-            {
-                throw new Exception("Invalid token signature");
-            }
-            catch (Exception)
-            {
-                throw new Exception("Token validation failed");
-            }
-        }
+        //        return principalClaims;
+        //    }
+        //    catch (SecurityTokenExpiredException)
+        //    {
+        //        throw new Exception("Expired token");
+        //    }
+        //    catch (SecurityTokenInvalidSignatureException)
+        //    {
+        //        throw new Exception("Invalid token signature");
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw new Exception("Token validation failed");
+        //    }
+        //}
     }
 }

@@ -1,10 +1,6 @@
 using System.Net;
-using System.Security.Claims;
 using System.Text.Json;
 using API.Token;
-using DotNetEnv;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Middleware;
@@ -51,8 +47,8 @@ public class AuthMiddleware : IMiddleware
             }
 
             var accessToken = authFields[1];
-            var claimsPrincipal = _tokenGenerator.VerifyToken(accessToken);
-            await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+            //var claimsPrincipal = _tokenGenerator.VerifyToken(accessToken);
+            //await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
             await next(context);
         }
         catch (Exception ex)

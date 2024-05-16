@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
 
-    public class UserController(FoodieContext context, UserManager<User> userManager, JwtTokenGenerator tokenGenerator) : BaseApiController
+    public class AccountController(FoodieContext context, UserManager<User> userManager, JwtTokenGenerator tokenGenerator) : BaseApiController
     {
         private readonly FoodieContext _context = context;
         private readonly UserManager<User> _usermanager = userManager;

@@ -52,7 +52,7 @@ public class TestHttpResponseHandler
 {
     public HttpStatusCode StatusCode { get; set; }
     public NameValueCollection Headers { get; } = new NameValueCollection();
-    public string Content { get; set; }
+    public string? Content { get; set; }
 
     public void Handle(HttpWebResponse response)
     {

@@ -4,7 +4,6 @@ using API.Data;
 using API.Middleware;
 using API.Models;
 using API.Token;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -65,31 +64,25 @@ builder.Services.AddIdentityCore<User>(opt =>
 })
     .AddRoles<Role>()
     .AddEntityFrameworkStores<FoodieContext>();
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-})
-    .AddCookie()
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
     {
+        Console.WriteLine(builder.Configuration["JWT:TokenKey"]);
         opt.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = false,
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.
-                GetBytes(builder.Configuration["JWT:TokenKey"]))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.
+                GetBytes(builder.Configuration["JWT:TokenKey"])),
         };
+        opt.UseSecurityTokenValidators = true;
+        //opt.TokenHandlers.Add(new BearerTokenHandler());
     });
-builder.Services.AddAuthorization(opt =>
-{
-    opt.AddPolicy("UserOnly", policy => policy.RequireClaim("UserId"));
-});
+builder.Services.AddAuthorization();
 builder.Services.AddScoped<JwtTokenGenerator>();
-builder.Services.AddTransient<AuthMiddleware>();
+// builder.Services.AddTransient<AuthMiddleware>();
 
 var app = builder.Build();
 
@@ -111,21 +104,22 @@ app.UseCors(opt =>
     opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
 });
 
+app.UseHttpsRedirection();
+
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
-app.MapWhen(context => context.Request.Path.StartsWithSegments("/api/v1/bookmarks"),
-    selectedRouteApp =>
-    {
-        selectedRouteApp.UseMiddleware<AuthMiddleware>();
-        selectedRouteApp.UseEndpoints(endpoints => endpoints.MapControllers());
-        // You can add more middleware or configure pipeline for selected routes here
-    }
-);
+// app.MapWhen(context => context.Request.Path.StartsWithSegments("/api/v1/bookmarks"),
+//     selectedRouteApp =>
+//     {
+//         selectedRouteApp.UseMiddleware<AuthMiddleware>();
+//         selectedRouteApp.UseEndpoints(endpoints => endpoints.MapControllers());
+//         // You can add more middleware or configure pipeline for selected routes here
+//     }
+// );
 
 var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<FoodieContext>();
