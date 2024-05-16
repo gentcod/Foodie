@@ -1,13 +1,29 @@
+using API.DTOs;
 using API.Models;
 
-namespace API.Extensions
+namespace API.Extensions;
+public static class FavoritesExtension
 {
-    public static class FavoritesExtension
+    public static IQueryable<FavoritesDto> MapFavoritesToDto(this IQueryable<Favorites> favorites)
     {
-        // public static IQueryable<Favorites> GetFavouriteRecipes(this IQueryable<Favorites> favorites)
-        // {
-        //      favorites.Include(b => b.Recipes)
-        //           .ThenInclude(r => r.Recipe)
-        // }
+        return favorites.Select(fav => new FavoritesDto
+        {
+            Id = fav.Id,
+            UserId = fav.UserId,
+            TotalFavRecipes = fav.TotalFavRecipes,
+            TotalFavRestaurants = fav.TotalFavRestaurants,
+            Recipes = fav.Recipes.Select(rec => new EmbeddedDto
+            {
+                Id = rec.Id,
+                Name = rec.Recipe.Name,
+                ImageSrc = rec.Recipe.ImageSrc,
+            }).ToList(),
+            Restaurants = fav.Restaurants.Select(rec => new EmbeddedDto
+            {
+                Id = rec.Id,
+                Name = rec.Restaurant.Name,
+                ImageSrc = rec.Restaurant.ImgSrc,
+            }).ToList(),
+        });
     }
 }

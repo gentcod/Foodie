@@ -262,7 +262,6 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FavoritesNum = table.Column<int>(type: "integer", nullable: false),
                     RecipeId = table.Column<int>(type: "integer", nullable: false),
                     FavoritesId = table.Column<int>(type: "integer", nullable: false)
                 },

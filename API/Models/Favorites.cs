@@ -1,65 +1,62 @@
 using API.Models.References;
 
-namespace API.Models
+namespace API.Models;
+public class Favorites
 {
-   public class Favorites
+    public int Id { get; set; }
+    public int TotalFavRecipes { get; set; }
+    public int TotalFavRestaurants { get; set; }
+    public string UserId { get; set; }
+    public List<FavoriteRecipe> Recipes { get; set; }
+    public List<FavoriteRestaurant> Restaurants { get; set; }
+
+    public void AddFavoriteRecipe(Recipe recipe)
     {
-        public int Id { get; set; }
-        public int TotalFavRecipes { get; set; }
-        public int TotalFavRestaurants { get; set; }
+        if (Recipes == null) Recipes = new List<FavoriteRecipe>();
 
-        public string UserId { get; set; }
-        public List<FavoriteRecipe> Recipes { get; set; }
-        public List<FavoriteRestaurant> Restaurants { get; set; }
+        var favorite = Recipes.FirstOrDefault(el => el.RecipeId == recipe.Id);
+        if (favorite != null) return;
 
-        public void AddFavoriteRecipe(Recipe recipe)
+        Recipes.Add(new FavoriteRecipe
         {
-            if (Recipes == null) Recipes = new List<FavoriteRecipe>();
+            RecipeId = recipe.Id,
+            Recipe = recipe,
+            FavoritesId = Id,
+        });
 
-            var favorite = Recipes.FirstOrDefault(el => el.RecipeId == recipe.Id);
-            if (favorite != null) return;
-        
-            Recipes.Add(new FavoriteRecipe 
-            {
-                RecipeId = recipe.Id, 
-                Recipe = recipe,
-                FavoritesId = Id,
-            });
+        TotalFavRecipes = Recipes.Count();
+    }
 
-            TotalFavRecipes = Recipes.Count();
-        }
+    public void RemoveFavoriteRecipe(int recipeId)
+    {
+        var favorite = Recipes.FirstOrDefault(el => el.RecipeId == recipeId);
+        if (favorite == null) return;
 
-        public void RemoveFavoriteRecipe(int recipeId)
+        Recipes.Remove(favorite);
+    }
+
+    public void AddFavoriteRestaurant(Restaurant restaurant)
+    {
+        if (Restaurants == null) Restaurants = new List<FavoriteRestaurant>();
+
+        var bookmark = Restaurants.FirstOrDefault(el => el.RestaurantId == restaurant.Id);
+        if (bookmark != null) return;
+
+        Restaurants.Add(new FavoriteRestaurant
         {
-            var favorite = Recipes.FirstOrDefault(el => el.RecipeId == recipeId);
-            if(favorite == null) return;
+            RestaurantId = restaurant.Id,
+            Restaurant = restaurant,
+            FavoritesId = Id,
+        });
 
-            Recipes.Remove(favorite);
-        }
+        TotalFavRestaurants = Restaurants.Count();
+    }
 
-        public void AddFavoriteRestaurant(Restaurant restaurant)
-        {
-            if (Restaurants == null) Restaurants = new List<FavoriteRestaurant>();
+    public void RemoveFavoriteRestaurant(int restaurantId)
+    {
+        var favorite = Restaurants.FirstOrDefault(el => el.RestaurantId == restaurantId);
+        if (favorite == null) return;
 
-            var bookmark = Restaurants.FirstOrDefault(el => el.RestaurantId == restaurant.Id);
-            if (bookmark != null) return;
-        
-            Restaurants.Add(new FavoriteRestaurant 
-            {
-                RestaurantId = restaurant.Id, 
-                Restaurant = restaurant,
-                FavoritesId = Id,
-            });
-
-            TotalFavRestaurants = Restaurants.Count();
-        }
-
-        public void RemoveFavoriteRestaurant(int restaurantId)
-        {
-            var favorite = Restaurants.FirstOrDefault(el => el.RestaurantId == restaurantId);
-            if(favorite == null) return;
-
-            Restaurants.Remove(favorite);
-        }
+        Restaurants.Remove(favorite);
     }
 }

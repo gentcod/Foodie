@@ -3,40 +3,38 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-namespace API.Token
+namespace API.Token;
+public class BearerTokenHandler : TokenHandler
 {
-    public class BearerTokenHandler : TokenHandler
+    private readonly JwtSecurityTokenHandler _tokenHandler = new();
+
+    public override Task<TokenValidationResult> ValidateTokenAsync(string token, TokenValidationParameters validationParameters)
     {
-        private readonly JwtSecurityTokenHandler _tokenHandler = new();
-
-        public override Task<TokenValidationResult> ValidateTokenAsync(string token, TokenValidationParameters validationParameters)
+        try
         {
-            try
+            _tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
+
+            if (validatedToken is not JwtSecurityToken jwtSecurityToken)
+                return Task.FromResult(new TokenValidationResult() { IsValid = false });
+
+            return Task.FromResult(new TokenValidationResult
             {
-                _tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
+                IsValid = true,
+                ClaimsIdentity = new ClaimsIdentity(jwtSecurityToken.Claims, JwtBearerDefaults.AuthenticationScheme),
+                SecurityToken = validatedToken,
+            });
+        }
 
-                if (validatedToken is not JwtSecurityToken jwtSecurityToken)
-                    return Task.FromResult(new TokenValidationResult() { IsValid = false });
-
-                return Task.FromResult(new TokenValidationResult
-                {
-                    IsValid = true,
-                    ClaimsIdentity = new ClaimsIdentity(jwtSecurityToken.Claims, JwtBearerDefaults.AuthenticationScheme),
-
-                    // If you do not add SecurityToken to the result, then our validator will fire, return a positive result, 
-                    // but the authentication, in general, will fail.
-                    SecurityToken = jwtSecurityToken,
-                });
-            }
-
-            catch (Exception e)
+        catch (Exception e)
+        {
+            return Task.FromResult(new TokenValidationResult
             {
-                return Task.FromResult(new TokenValidationResult
-                {
-                    IsValid = false,
-                    Exception = e,
-                });
-            }
+                IsValid = false,
+                Exception = e,
+            });
         }
     }
 }
+
+
+// TODO: Implement Validation Response

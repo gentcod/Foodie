@@ -7,35 +7,33 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace API.Controllers;
+public class AccountController(FoodieContext context, UserManager<User> userManager, JwtTokenGenerator tokenGenerator) : BaseApiController
 {
+    private readonly FoodieContext _context = context;
+    private readonly UserManager<User> _usermanager = userManager;
+    private readonly JwtTokenGenerator _tokenGenerator = tokenGenerator;
 
-    public class AccountController(FoodieContext context, UserManager<User> userManager, JwtTokenGenerator tokenGenerator) : BaseApiController
+    [HttpPost("login")]
+    public async Task<ActionResult<object>> Login(UserLoginDto loginDto)
     {
-        private readonly FoodieContext _context = context;
-        private readonly UserManager<User> _usermanager = userManager;
-        private readonly JwtTokenGenerator _tokenGenerator = tokenGenerator;
+        var user = await _usermanager.FindByEmailAsync(loginDto.Email);
+        var authenticated = await _usermanager.CheckPasswordAsync(user, loginDto.Password);
 
-        [HttpPost("login")]
-        public async Task<ActionResult<object>> Login(UserLoginDto loginDto)
+        if (user == null || !authenticated) return Unauthorized(new ProblemDetails { Title = "User account does not exist" });
+
+        var token = await _tokenGenerator.CreateToken(user);
+        var userDto = new UserDto
         {
-            var user = await _usermanager.FindByEmailAsync(loginDto.Email);
-            var authenticated = await _usermanager.CheckPasswordAsync(user, loginDto.Password);
+            Name = user.Name,
+            Username = user.UserName,
+            Email = user.Email,
+        };
 
-            if (user == null || !authenticated) return Unauthorized(new ProblemDetails { Title = "User account does not exist" });
-
-            var token = await _tokenGenerator.CreateToken(user);
-            var userDto = new UserDto
-            {
-                Name = user.Name,
-                Username = user.UserName,
-                Email = user.Email,
-            };
-
-            return new {
-                AccessToken = token,
-                User = userDto,
-            };
-        }
+        return new
+        {
+            AccessToken = token,
+            User = userDto,
+        };
     }
 }

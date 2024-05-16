@@ -1,4 +1,6 @@
+using System.Net;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Data;
 using API.Middleware;
@@ -6,6 +8,7 @@ using API.Models;
 using API.Token;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -67,7 +70,6 @@ builder.Services.AddIdentityCore<User>(opt =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
     {
-        Console.WriteLine(builder.Configuration["JWT:TokenKey"]);
         opt.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = false,
@@ -77,8 +79,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.
                 GetBytes(builder.Configuration["JWT:TokenKey"])),
         };
-        opt.UseSecurityTokenValidators = true;
-        //opt.TokenHandlers.Add(new BearerTokenHandler());
+        // opt.UseSecurityTokenValidators = true;
+        opt.TokenHandlers.Add(new BearerTokenHandler());
     });
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<JwtTokenGenerator>();

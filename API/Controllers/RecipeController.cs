@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.DTOs;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using API.Models;
 
 namespace API.Controllers
 {
@@ -18,17 +17,18 @@ namespace API.Controllers
       }
       
       [HttpGet(Name = "GetRecipes")]
-      public async Task<ActionResult<PagedList<RecipeDto>>> GetRecipes([FromQuery] RecipeParams recipeParams)
+      public async Task<ActionResult<PagedList<ListedRecipeDto>>> GetRecipes([FromQuery] RecipeParams recipeParams)
       {
          var query = _context.Recipes
          .Search(recipeParams.Search)
          .Sort(recipeParams.SortBy)
          .OrderByCookTime(recipeParams.OrderBy)
+         .FilterByCategory(recipeParams.Category)
          .AsQueryable();
       
         var recipeDtos = query.MapRecipesToDto();
 
-        var pagedList = await PagedList<RecipeDto>.ToPagedList(recipeDtos, recipeParams.PageNumber, recipeParams.PageSize);
+        var pagedList = await PagedList<ListedRecipeDto>.ToPagedList(recipeDtos, recipeParams.PageNumber, recipeParams.PageSize);
 
         Response.AddPaginationHeader(pagedList.MetaData);
 
@@ -47,10 +47,10 @@ namespace API.Controllers
          return Ok(featuredRecipes);
       }
 
-      [HttpGet("RecipeById")]
-      public async Task<ActionResult<RecipeDto>> GetRecipeById([BindRequired][FromQuery]int id)
+      [HttpGet("{recipeId}")]
+      public async Task<ActionResult<RecipeDto>> GetRecipeById([BindRequired]int recipeId)
       {
-         var recipe = await _context.Recipes.FirstOrDefaultAsync(rec => rec.Id == id);
+         var recipe = await _context.Recipes.FirstOrDefaultAsync(rec => rec.Id == recipeId);
 
          if (recipe == null) return NotFound();
 

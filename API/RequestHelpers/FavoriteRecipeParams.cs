@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace API.RequestHelpers
+namespace API.RequestHelpers;
+public class FavoriteRecipeParams
 {
-   public class FavoriteRecipeParams
-    {
-        [BindRequired]
-        public int RecipeId { get; set; }
-    }
+    [BindRequired]
+    public int RecipeId { get; set; }
 }

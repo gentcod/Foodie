@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace API.Models
+namespace API.Models;
+public class User : IdentityUser<int>
 {
-   public class User : IdentityUser<int>
-    {     
-        public string UserId { get; set; }
-        public string Name { get; set; }
-    }
+    public string UserId { get; set; }
+    public string Name { get; set; }
 }
