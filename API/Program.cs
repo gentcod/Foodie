@@ -51,9 +51,10 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-string connString;
-if (builder.Environment.IsDevelopment()) connString = pgConnectionString;
-else connString = builder.Configuration.GetConnectionString("DefaultConnection");
+//string connString;
+//if (builder.Environment.IsDevelopment()) connString = pgConnectionString;
+//else connString = builder.Configuration.GetConnectionString("DefaultConnection");
+string connString = pgConnectionString;
 
 builder.Services.AddDbContext<FoodieContext>(opt =>
 {

@@ -22,7 +22,7 @@ public class TestBookmarksController
    public async void GetBookMarks_Test()
    {
       var userId = "testUser1";
-      var actionResult = await _controller.GetBookMark(userId);
+      var actionResult = await _controller.GetBookMark();
       Assert.NotNull(actionResult);
       
       #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
@@ -39,7 +39,6 @@ public class TestBookmarksController
    {
       var bookmarkParams = new BookmarkParams
       {
-         UserId = "testAddUser",
          RecipeId = 1
       };
 

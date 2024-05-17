@@ -28,11 +28,11 @@ namespace API.Controllers
       
         var recipeDtos = query.MapRecipesToDto();
 
-        var pagedList = await PagedList<ListedRecipeDto>.ToPagedList(recipeDtos, recipeParams.PageNumber, recipeParams.PageSize);
+        var paginatedResponse = await PagedList<ListedRecipeDto>.ToPagedList(recipeDtos, recipeParams.PageNumber, recipeParams.PageSize);
 
-        Response.AddPaginationHeader(pagedList.MetaData);
+        Response.AddPaginationHeader(paginatedResponse.MetaData);
 
-        return Ok(pagedList);
+        return Ok(paginatedResponse);
       }
 
       [HttpGet("featured", Name = "featured")]

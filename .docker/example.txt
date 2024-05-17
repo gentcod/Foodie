@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_USER=ENV_VALUE
+      - POSTGRES_PASSWORD=ENV_VALUE
+      - POSTGRES_DB=ENV_VALUE
+    ports:
+      - "5432"
+    networks:
+      - preferredname-network
+  api:
+    restart: unless-stopped 
+    build:
+      context: ../API
+      dockerfile: Dockerfile
+    networks:
+      - preferredname-network
+    environment:
+      - ENV_NAME=Host=postgres;Port=5432;Database=ENV_VALUE;Username=ENV_VALUE;Password=ENV_VALUE
+      - ASPNETCORE_URLS=http://+:5000
+    depends_on:
+      postgres:
+        condition: service_completed_successfully
+  proxy:
+    restart: unless-stopped 
+    build: 
+      context: ../proxy
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    depends_on: 
+      api:
+        condition: service_completed_successfully
+    networks:
+    - preferredname-network
+networks: 
+  preferredname-network:
+    driver: bridge
