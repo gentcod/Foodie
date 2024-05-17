@@ -1,54 +1,32 @@
 using API.DTOs;
 using API.Models;
 
-namespace API.Extensions
+namespace API.Extensions;
+public static class RestaurantExtension
 {
-   public static class RestaurantExtension
+   public static IQueryable<RestaurantDto> MapRestaurantsToDto(this IQueryable<Restaurant> restaurants)
    {
-      public static IEnumerable<RestaurantDto> MapBearingToRestaurant( this List<Bearing> bearings, List<Restaurant> restaurants)
+      return restaurants.Select(res => new RestaurantDto
       {
-         var restaurantsDto = bearings.Join(
-         restaurants,
-         bearing => bearing,
-         restaurant => restaurant.Geolocation,
-         (bearing, restaurant) => new RestaurantDto
-         {
-            Id = restaurant.Id,
-            Name = restaurant.Name,
-            Location = restaurant.Location,
-            ImgSrc = restaurant.ImgSrc,
-            Rating = restaurant.Rating,
-            Geolocation = bearing,
-         }
-         );
+         Id = res.Id,
+         Name = res.Name,
+         Location = res.Location,
+         ImgSrc = res.ImgSrc,
+         Rating = res.Rating,
+         Geolocation = res.Geolocation,
+      });
+   }
 
-         return restaurantsDto;
-      }
-
-      public static List<RestaurantDto> MapRestaurantsToDto(this List<Restaurant> restaurants)
+   public static RestaurantDto MapRestaurantToDto(this Restaurant restaurant)
+   {
+      return new RestaurantDto
       {
-         return restaurants.Select(res => new RestaurantDto
-         {
-            Id = res.Id,
-            Name = res.Name,
-            Location = res.Location,
-            ImgSrc = res.ImgSrc,
-            Rating = res.Rating,
-            Geolocation = res.Geolocation,
-         }).ToList();
-      }
-
-      public static RestaurantDto MapRestaurantToDto(this Restaurant restaurant)
-      {
-         return new RestaurantDto
-         {
-            Id = restaurant.Id,
-            Name = restaurant.Name,
-            Location = restaurant.Location,
-            ImgSrc = restaurant.ImgSrc,
-            Rating = restaurant.Rating,
-            Geolocation = restaurant.Geolocation,
-         };
-      }
+         Id = restaurant.Id,
+         Name = restaurant.Name,
+         Location = restaurant.Location,
+         ImgSrc = restaurant.ImgSrc,
+         Rating = restaurant.Rating,
+         Geolocation = restaurant.Geolocation,
+      };
    }
 }

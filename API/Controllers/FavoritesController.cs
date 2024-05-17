@@ -1,104 +1,118 @@
+using System.Security.Claims;
 using API.Data;
+using API.Extensions;
 using API.Models;
 using API.RequestHelpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Controllers
+namespace API.Controllers;
+
+[Authorize]
+public class FavoritesController(FoodieContext context) : BaseApiController
 {
-   public class FavoritesController : BaseApiController
+   private readonly FoodieContext _context = context;
+
+   [HttpGet(Name = "GetFavorites")]
+   public async Task<ActionResult<Favorites>> GetFavorites()
    {
-      private readonly FoodieContext _context;
-      public FavoritesController(FoodieContext context)
+      Favorites favorites = await RetrieveFavorites(GetUserId());
+
+      if (favorites == null)
       {
-         _context = context;
+         return NotFound();
+      };
 
-      }
+      IEnumerable<Favorites> enumerable = [favorites];
+      var favoritesResult = enumerable.AsQueryable();
 
-      [HttpGet(Name = "GetFavorites")]
-      public async Task<ActionResult<Favorites>> GetFavorites([BindRequired][FromQuery]string userId)
+      return Ok(favoritesResult.MapFavoritesToDto());
+   }
+
+   [HttpPost("AddRecipe")]
+   public async Task<ActionResult<Favorites>> AddNewFavoriteRecipe([BindRequired][FromQuery] FavoriteRecipeParams favoriteRecipeParams)
+   {
+      var favorites = await InitializeFavorites(GetUserId());
+
+      var recipe = await _context.Recipes.FindAsync(favoriteRecipeParams.RecipeId);
+      if (recipe == null) return NotFound();
+
+      if (favorites.Recipes != null)
       {
-         Favorites favorites = await RetrieveFavorites(userId);
-
-         if (favorites == null) {
-            //Todo implement getting cookie data
-            return NotFound();
-         };
-
-         return Ok(favorites);
-      }
-
-      [HttpPost("AddRecipe")]
-      public async Task<ActionResult<Favorites>> AddNewFavoriteRecipe([BindRequired][FromQuery]FavoriteRecipeParams favoriteRecipeParams)
-      {
-         var favorites = await InitializeFavorites(favoriteRecipeParams.UserId);
-
-         var recipe = await _context.Recipes.FindAsync(favoriteRecipeParams.RecipeId);
-         if (recipe == null) return NotFound();
-
-         favorites.AddFavoriteRecipe(recipe);
-
-         var result = _context.SaveChangesAsync();
-         if (result != null) return CreatedAtRoute("GetFavorites", favorites);
-
-         return BadRequest(new ProblemDetails { Title = "Problem adding Favorite" });
-      }
-
-      [HttpPost("AddRestaurant")]
-      public async Task<ActionResult<Favorites>> AddNewFavoriteRestaurant([BindRequired][FromQuery]FavoriteRestaurantParams favoriteRecipeParams)
-      {
-         var favorites = await InitializeFavorites(favoriteRecipeParams.UserId);
-
-         var restaurant = await _context.Restaurants.FindAsync(favoriteRecipeParams.RestaurantId);
-         if (restaurant == null) return NotFound();
-
-         favorites.AddFavoriteRestaurant(restaurant);
-
-         var result = _context.SaveChangesAsync();
-         if (result != null) return CreatedAtRoute("GetFavorites", favorites);
-
-         return BadRequest(new ProblemDetails { Title = "Problem adding Favorite" });
-      }
-
-      private async Task<Favorites> InitializeFavorites(string userId)
-      {
-         var favorites = await RetrieveFavorites(userId);
-         if (favorites == null) favorites = CreateFavorites();
-
-         return favorites;
-      }
-
-      private async Task<Favorites> RetrieveFavorites(string userId)
-      {
-         if (string.IsNullOrEmpty(userId))
+         var existingBookmark = favorites.Recipes.FirstOrDefault(rec => rec.RecipeId == recipe.Id);
+         if (existingBookmark != null) return BadRequest(new ProblemDetails
          {
-            Response.Cookies.Delete("userId");
-            return null;
-         }
-
-         return await _context.Favorites
-                  .Include(b => b.Recipes)
-                  .ThenInclude(r => r.Recipe)
-                  .Include(f => f.Restaurants)
-                  .ThenInclude(r => r.Restaurant)
-                  .FirstOrDefaultAsync(rec => rec.UserId == userId);
+            Detail = "Recipe has been previously added to Favorites"
+         });
       }
 
-      private Favorites CreateFavorites()
+      favorites.AddFavoriteRecipe(recipe);
+
+      IEnumerable<Favorites> enumerable = [favorites];
+      var favoritesResult = enumerable.AsQueryable();
+
+      var result = _context.SaveChangesAsync();
+      if (result != null) return CreatedAtRoute("GetFavorites", favoritesResult.MapFavoritesToDto());
+
+      return BadRequest(new ProblemDetails { Title = "Problem adding Favorite" });
+   }
+
+   [HttpPost("AddRestaurant")]
+   public async Task<ActionResult<Favorites>> AddNewFavoriteRestaurant([BindRequired][FromQuery] FavoriteRestaurantParams favoriteRecipeParams)
+   {
+      var favorites = await InitializeFavorites(GetUserId());
+
+      var restaurant = await _context.Restaurants.FindAsync(favoriteRecipeParams.RestaurantId);
+      if (restaurant == null) return NotFound();
+
+      if (favorites.Recipes != null)
       {
-         var userId = User.Identity?.Name;
-         if (string.IsNullOrEmpty(userId))
+         var existingBookmark = favorites.Restaurants.FirstOrDefault(rec => rec.RestaurantId == restaurant.Id);
+         if (existingBookmark != null) return BadRequest(new ProblemDetails
          {
-            userId = Guid.NewGuid().ToString();
-            var cookieOptions = new CookieOptions { IsEssential = true, Expires = DateTime.Now.AddDays(30) };
-            Response.Cookies.Append("userId", userId, cookieOptions);
-         }
-
-         var favorites = new Favorites { UserId = userId };
-         // _context.Favorites.Add(favorites); //To be removed when user authentication is resolved
-
-         return favorites;
+            Detail = "Restaurant has been previously added to Favorites"
+         });
       }
+
+      favorites.AddFavoriteRestaurant(restaurant);
+
+      IEnumerable<Favorites> enumerable = [favorites];
+      var favoritesResult = enumerable.AsQueryable();
+
+      var result = _context.SaveChangesAsync();
+      if (result != null) return CreatedAtRoute("GetFavorites", favoritesResult.MapFavoritesToDto());
+
+      return BadRequest(new ProblemDetails { Title = "Problem adding Favorite" });
+   }
+
+   private string GetUserId()
+   {
+      var userIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
+      return userIdClaim.Value;
+   }
+
+   private async Task<Favorites> InitializeFavorites(string userId)
+   {
+      var favorites = await RetrieveFavorites(userId) ?? CreateFavorites(userId);
+      return favorites;
+   }
+
+   private async Task<Favorites> RetrieveFavorites(string userId)
+   {
+      return await _context.Favorites
+               .Include(b => b.Recipes)
+               .ThenInclude(r => r.Recipe)
+               .Include(f => f.Restaurants)
+               .ThenInclude(r => r.Restaurant)
+               .FirstOrDefaultAsync(rec => rec.UserId == userId);
+   }
+
+   private Favorites CreateFavorites(string userId)
+   {
+      var favorites = new Favorites { UserId = userId };
+      _context.Favorites.Add(favorites);
+      return favorites;
    }
 }

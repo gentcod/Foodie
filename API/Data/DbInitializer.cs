@@ -12,6 +12,7 @@ namespace API.Data
             if (!userManager.Users.Any()) {
                 var user = new User
                 {
+                    UserId = Guid.NewGuid().ToString(),
                     UserName = "bob",
                     Email = "bob@test.com"
                 };
@@ -21,8 +22,9 @@ namespace API.Data
                 
                 var admin = new User
                 {
-                    Name = "gentcodAdmin",
-                    Email = "gentcod@gmail.com",
+                    UserId = Guid.NewGuid().ToString(),
+                    UserName = "gentcodAdmin",
+                    Email = "admin@gmail.com",
                 };
 
                 await userManager.CreateAsync(admin, "Pa$$w0rd");

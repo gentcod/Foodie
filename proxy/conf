@@ -1,0 +1,19 @@
+server {
+   server_name localhost;
+
+   listen 80;
+   # listen [::]:80;
+
+   # SSL configuration
+   # listen 443 ssl
+   # listen [::]:443 ssl
+
+   location / {
+      proxy_pass http://api:5000;
+      # proxy_set_header Connection 'upgrade';
+      # proxy_set_header Host $host;
+      proxy_http_version 1.1;
+      # proxy_cache_bypass $http_upgrade;
+      # try_files $uri $uri/ =404;
+   }
+}
