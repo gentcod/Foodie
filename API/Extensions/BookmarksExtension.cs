@@ -7,14 +7,14 @@ public static class BookmarksExtension
 {
     public static IQueryable<BookmarksDto> MapBookmarksToDto(this IQueryable<Bookmarks> bookmarks)
     {
-        return bookmarks.Select(fav => new BookmarksDto
+        return bookmarks.Select(book => new BookmarksDto
         {
-            Id = fav.Id,
-            UserId = fav.UserId,
-            TotalBookmarks = fav.TotalBookmarks,
-            Recipes = fav.Recipes.Select(rec => new EmbeddedDto
+            Id = book.Id,
+            UserId = book.UserId,
+            TotalBookmarks = book.TotalBookmarks,
+            Recipes = book.Recipes.Select(rec => new EmbeddedDto
             {
-                Id = rec.Id,
+                Id = rec.RecipeId,
                 Name = rec.Recipe.Name,
                 ImageSrc = rec.Recipe.ImageSrc,
             }).ToList(),

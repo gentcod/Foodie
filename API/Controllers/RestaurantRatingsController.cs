@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Authorization;
+using API.RequestHelpers;
 
 namespace API.Controllers;
 public class RestaurantRatingsController : BaseApiController
@@ -18,37 +19,54 @@ public class RestaurantRatingsController : BaseApiController
     }
 
     [HttpGet(Name = "restaurantRating")]
-    public async Task<ActionResult<RestaurantRatingsDto>> GetRestaurantRatings()
+    public async Task<ActionResult> GetRestaurantRatings()
     {
         var restaurants = await _context.Restaurants.ToListAsync();
         var restaurantsRatings = await _context.RestaurantRatings.ToListAsync();
 
         var restaurantsRatingsDto = restaurantsRatings.MapRestaurantsRatingsToDto(restaurants);
 
-        return Ok(restaurantsRatingsDto);
+        return Ok(ApiSuccessResponse<IEnumerable<RestaurantRatingsDto>>.Response(
+            "success",
+            "Recipes ratings fetched successfully",
+            restaurantsRatingsDto
+        ));
     }
 
-    [HttpGet(":id")]
-    public async Task<ActionResult<RestaurantRatingsDto>> GetRestaurantRatingsById([BindRequired][FromQuery] int restaurantId)
+    [HttpGet("{restaurantId}")]
+    public async Task<ActionResult> GetRestaurantRatingsById([BindRequired] int restaurantId)
     {
         var restaurant = await _context.Restaurants.FirstOrDefaultAsync(el => el.Id == restaurantId);
-        if (restaurant == null) return BadRequest(new ProblemDetails { Title = "Restaurant not found" });
+        if (restaurant == null) return BadRequest(ApiErrorResponse.Response(
+            "error",
+            "Restaurant not found"
+        ));
 
         var restaurantRatings = await _context.RestaurantRatings.Where(el => el.RestaurantId == restaurantId).ToListAsync();
 
         var restaurantRatingsDto = restaurantRatings.MapRestaurantRatingsToDto(restaurant);
 
-        return Ok(restaurantRatingsDto);
+        return Ok(ApiSuccessResponse<IEnumerable<RestaurantRatingsDto>>.Response(
+            "success",
+            "Recipe ratings fetched successfully",
+            restaurantRatingsDto
+        ));
     }
 
     [Authorize]
     [HttpPost("AddRating")]
     public async Task<ActionResult<Restaurant>> AddRating(RatingDto ratingDto, [BindRequired][FromQuery] int restaurantId)
     {
-        if (ratingDto.RatingNum < 1 || ratingDto.RatingNum > 5) return BadRequest(new ProblemDetails { Title = "Rating number is out of rating" });
+        if (ratingDto.RatingNum < 1 || ratingDto.RatingNum > 5) return BadRequest(ApiErrorResponse.Response(
+            "error",
+            "Rating number is out of range"
+        ));
 
         var restaurant = await _context.Restaurants.FindAsync(restaurantId);
-        if (restaurant == null) return BadRequest(new ProblemDetails { Title = "Restaurant not found" });
+        if (restaurant == null) return BadRequest(ApiErrorResponse.Response(
+            "error",
+            "Restaurant not found"
+        ));
 
         var restaurantRatings = await _context.RestaurantRatings.Where(el => el.RestaurantId == restaurantId).ToListAsync();
         restaurantRatings ??= new List<RestaurantRating>();
@@ -64,8 +82,16 @@ public class RestaurantRatingsController : BaseApiController
 
         _context.Restaurants.Update(restaurant);
         var result = _context.SaveChangesAsync();
-        if (result != null) return CreatedAtRoute("restaurantRating", restaurantRatings.MapRestaurantRatingsToDto(restaurant));
+        var response = ApiSuccessResponse<IEnumerable<RestaurantRatingsDto>>.Response(
+            "success",
+            "Restaurant rating added successfully",
+            restaurantRatings.MapRestaurantRatingsToDto(restaurant)
+        );
+        if (result != null) return CreatedAtRoute("restaurantRating", response);
 
-        return BadRequest(new ProblemDetails { Title = "Problem adding Restaurant Rating" });
+        return BadRequest(ApiErrorResponse.Response(
+            "error",
+            "Problem adding Restaurant Rating"
+        ));
     }
 }

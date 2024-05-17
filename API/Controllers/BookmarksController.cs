@@ -1,4 +1,5 @@
 using API.Data;
+using API.DTOs;
 using API.Extensions;
 using API.Models;
 using API.RequestHelpers;
@@ -22,53 +23,70 @@ public class BookmarksController : BaseApiController
 
 
     [HttpGet(Name = "GetBookmark")]
-    public async Task<ActionResult<Bookmarks>> GetBookMark()
+    public async Task<ActionResult> GetBookMark()
     {
         var userId = GetUserId();
         Bookmarks bookmarks = await RetrieveBookmarks(userId);
 
-        if (bookmarks == null) return NotFound(new ProblemDetails
-        {
-            Detail = "Bookmarked Recipes could not be found"
-        });
+        if (bookmarks == null) return NotFound(ApiErrorResponse.Response(
+            "error",
+            "No bookmarks found"
+        ));
 
         IEnumerable<Bookmarks> enumerable = [bookmarks];
         var bookmarksResult = enumerable.AsQueryable();
-        var respomse = bookmarksResult.MapBookmarksToDto();
-        return Ok(respomse);
+        var data = bookmarksResult.MapBookmarksToDto();
+
+        return Ok(ApiSuccessResponse<IQueryable<BookmarksDto>>.Response(
+            "success",
+            "Bookmarks have been fetched successfully",
+            data
+        ));
     }
 
     [HttpPost("AddBookmark")]
-    public async Task<ActionResult<Bookmarks>> AddNewBookMark([BindRequired][FromQuery] BookmarkParams bookmarkParam)
+    public async Task<ActionResult> AddNewBookMark([BindRequired][FromQuery] BookmarkParams bookmarkParam)
     {
         var userId = GetUserId();
         var bookmarks = await RetrieveBookmarks(userId);
         bookmarks ??= CreateBookmarks(userId);
 
         var recipe = await _context.Recipes.FindAsync(bookmarkParam.RecipeId);
-        if (recipe == null) return NotFound();
+        if (recipe == null) return BadRequest(ApiErrorResponse.Response(
+            "error",
+            "Recipe not found"
+        ));
 
         if (bookmarks.Recipes != null)
         {
             var existingBookmark = bookmarks.Recipes.FirstOrDefault(rec => rec.RecipeId == recipe.Id);
-            if (existingBookmark != null) return BadRequest(new ProblemDetails
-            {
-                Detail = "Recipe has been previously bookmarks"
-            });
+            if (existingBookmark != null) return BadRequest(ApiErrorResponse.Response(
+                "error",
+                "Recipe has been previously bookmarked"
+            ));
         }
 
         bookmarks.AddBookmark(recipe);
 
         IEnumerable<Bookmarks> enumerable = [bookmarks];
         var bookmarksResult = enumerable.AsQueryable();
+        var data = bookmarksResult.MapBookmarksToDto();
+
+        var response = ApiSuccessResponse<IQueryable<BookmarksDto>>.Response(
+            "success",
+            "Bookmark has been added successfully",
+            data
+        );
 
         var result = await _context.SaveChangesAsync() > 0;
-        if (result) return CreatedAtRoute("GetBookmark", bookmarksResult.MapBookmarksToDto());
+        if (result) return CreatedAtRoute("GetBookmark", response);
 
-        return BadRequest(new ProblemDetails
-        {
-            Detail = "Problem creating bookmark"
-        });
+        return BadRequest(
+            ApiErrorResponse.Response(
+                "error",
+                "Problem adding bookmark"
+            )
+        );
     }
 
     // private async Task<string> GetUserId()
