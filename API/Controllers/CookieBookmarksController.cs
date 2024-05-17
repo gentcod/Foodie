@@ -1,4 +1,6 @@
 using API.Data;
+using API.DTOs;
+using API.Extensions;
 using API.Models;
 using API.RequestHelpers;
 using Microsoft.AspNetCore.Mvc;
@@ -21,8 +23,22 @@ public class CookieBookmarksController : BaseApiController
    {
       Bookmarks bookmarks = RetrieveCookiesBookmarks(GetUserId());
 
-      if (bookmarks == null) return NotFound(new ProblemDetails { Title = "Bookmarked Recipes could not be found" });
-      return Ok(bookmarks);
+      if (bookmarks == null) return NotFound(ApiErrorResponse.Response(
+            "error",
+            "Bookmarked Recipes could not be found"
+        ));
+
+        IEnumerable<Bookmarks> enumerable = [bookmarks];
+        var bookmarksResult = enumerable.AsQueryable();
+        var data = bookmarksResult.MapBookmarksToDto();
+
+        var response = ApiSuccessResponse<IQueryable<BookmarksDto>>.Response(
+            "success",
+            "Bookmarks have been fetched successfully",
+            data
+        );
+
+        return Ok(response);
    }
 
    [HttpPost("AddCookieBookmark")]
@@ -41,7 +57,6 @@ public class CookieBookmarksController : BaseApiController
          return BadRequest(new ProblemDetails { Title = "Problem creating bookmark" });
       }
       return CreatedAtRoute("GetBookmark", cookieBookmark);
-
    }
 
    private string GetUserId()

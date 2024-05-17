@@ -8,16 +8,12 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace API.Controllers
 {
-    public class RecipeController : BaseApiController
+    public class RecipeController(FoodieContext context) : BaseApiController
    {
-      private readonly FoodieContext _context;
-      public RecipeController(FoodieContext context)
-      {
-         _context = context;
-      }
-      
-      [HttpGet(Name = "GetRecipes")]
-      public async Task<ActionResult<PagedList<ListedRecipeDto>>> GetRecipes([FromQuery] RecipeParams recipeParams)
+      private readonly FoodieContext _context = context;
+
+        [HttpGet(Name = "GetRecipes")]
+      public async Task<ActionResult> GetRecipes([FromQuery] RecipeParams recipeParams)
       {
          var query = _context.Recipes
          .Search(recipeParams.Search)
@@ -32,11 +28,15 @@ namespace API.Controllers
 
         Response.AddPaginationHeader(paginatedResponse.MetaData);
 
-        return Ok(paginatedResponse);
+        return Ok(ApiSuccessResponse<PagedList<ListedRecipeDto>>.Response(
+            "success",
+            "Recipes fetched successfully",
+            paginatedResponse
+         ));
       }
 
       [HttpGet("featured", Name = "featured")]
-      public async Task<ActionResult<RecipeDto>> GetFeaturedRecipes()
+      public async Task<ActionResult> GetFeaturedRecipes()
       {
          var query = _context.Recipes.Featured().AsQueryable();
 
@@ -44,17 +44,28 @@ namespace API.Controllers
 
          var featuredRecipes = await featuredRecipesQuery.ToListAsync();
 
-         return Ok(featuredRecipes);
+         return Ok(ApiSuccessResponse<List<ListedRecipeDto>>.Response(
+            "success",
+            "Featured recipes fetched successfully",
+            featuredRecipes
+         ));
       }
 
       [HttpGet("{recipeId}")]
-      public async Task<ActionResult<RecipeDto>> GetRecipeById([BindRequired]int recipeId)
+      public async Task<ActionResult> GetRecipeById([BindRequired]int recipeId)
       {
          var recipe = await _context.Recipes.FirstOrDefaultAsync(rec => rec.Id == recipeId);
 
-         if (recipe == null) return NotFound();
+         if (recipe == null) return NotFound(ApiErrorResponse.Response(
+            "error",
+            "Recipe not found"
+         ));
 
-         return Ok(recipe.MapRecipeToDto());
+         return Ok(ApiSuccessResponse<RecipeDto>.Response(
+            "success",
+            "Recipe fetched successfully",
+            recipe.MapRecipeToDto()
+         ));
       }
    }
 }

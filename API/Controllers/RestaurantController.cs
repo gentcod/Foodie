@@ -16,7 +16,7 @@ public class RestaurantController : BaseApiController
     }
 
     [HttpGet(Name = "GetRestaurants")]
-    public async Task<ActionResult<PagedList<RestaurantDto>>> GetRestaurants([FromQuery]PaginationParams paginationParams)
+    public async Task<ActionResult> GetRestaurants([FromQuery]PaginationParams paginationParams)
     {
         var restaurants = _context.Restaurants.Include(el => el.Geolocation).AsQueryable();
 
@@ -25,17 +25,28 @@ public class RestaurantController : BaseApiController
 
         Response.AddPaginationHeader(paginatedResponse.MetaData);
 
-        return Ok(paginatedResponse);
+        return Ok(ApiSuccessResponse<PagedList<RestaurantDto>>.Response(
+            "success",
+            "Recipes fetched successfully",
+            paginatedResponse
+        ));
     }
 
     [HttpGet("{restaurantId}")]
-    public async Task<ActionResult<RestaurantDto>> GetRestaurantById([BindRequired] int restaurantId)
+    public async Task<ActionResult> GetRestaurantById([BindRequired] int restaurantId)
     {
         var restaurant = await _context.Restaurants.Include(el => el.Geolocation)
               .FirstOrDefaultAsync(res => res.Id == restaurantId);
 
-        if (restaurant == null) return NotFound();
+        if (restaurant == null) return NotFound(ApiErrorResponse.Response(
+            "error",
+            "Restaurant not found"
+        ));
 
-        return Ok(restaurant.MapRestaurantToDto());
+        return Ok(ApiSuccessResponse<RestaurantDto>.Response(
+            "success",
+            "Restaurant fetched successfully",
+            restaurant.MapRestaurantToDto()
+         ));
     }
 }
