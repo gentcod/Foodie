@@ -12,18 +12,22 @@ public static class FavoritesExtension
             UserId = fav.UserId,
             TotalFavRecipes = fav.TotalFavRecipes,
             TotalFavRestaurants = fav.TotalFavRestaurants,
-            Recipes = fav.Recipes.Select(rec => new EmbeddedDto
+            Recipes = fav.Recipes != null ? 
+            fav.Recipes.Select(rec => new EmbeddedDto
             {
-                Id = rec.Id,
+                Id = rec.RecipeId,
                 Name = rec.Recipe.Name,
                 ImageSrc = rec.Recipe.ImageSrc,
-            }).ToList(),
-            Restaurants = fav.Restaurants.Select(rec => new EmbeddedDto
+            }).ToList()
+            : new List<EmbeddedDto>(),
+            Restaurants = fav.Restaurants != null ?
+            fav.Restaurants.Select(rec => new EmbeddedDto
             {
-                Id = rec.Id,
+                Id = rec.RestaurantId,
                 Name = rec.Restaurant.Name,
                 ImageSrc = rec.Restaurant.ImgSrc,
-            }).ToList(),
+            }).ToList()
+            : new List<EmbeddedDto>(),
         });
     }
 }
