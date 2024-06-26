@@ -25,8 +25,7 @@ public class BookmarksController : BaseApiController
     [HttpGet(Name = "GetBookmark")]
     public async Task<ActionResult> GetBookMark()
     {
-        var userId = GetUserId();
-        Bookmarks bookmarks = await RetrieveBookmarks(userId);
+        Bookmarks bookmarks = await RetrieveBookmarks(GetUserId());
 
         if (bookmarks == null) return NotFound(ApiErrorResponse.Response(
             "error",
@@ -44,12 +43,11 @@ public class BookmarksController : BaseApiController
         ));
     }
 
-    [HttpPost("AddBookmark")]
-    public async Task<ActionResult> AddNewBookMark([BindRequired][FromQuery] BookmarkParams bookmarkParam)
+    [HttpPost("add")]
+    public async Task<ActionResult> Add([BindRequired][FromQuery] BookmarkParams bookmarkParam)
     {
-        var userId = GetUserId();
-        var bookmarks = await RetrieveBookmarks(userId);
-        bookmarks ??= CreateBookmarks(userId);
+        var bookmarks = await RetrieveBookmarks(GetUserId());
+        bookmarks ??= CreateBookmarks(GetUserId());
 
         var recipe = await _context.Recipes.FindAsync(bookmarkParam.RecipeId);
         if (recipe == null) return BadRequest(ApiErrorResponse.Response(
@@ -67,19 +65,20 @@ public class BookmarksController : BaseApiController
         }
 
         bookmarks.AddBookmark(recipe);
-
-        IEnumerable<Bookmarks> enumerable = [bookmarks];
-        var bookmarksResult = enumerable.AsQueryable();
-        var data = bookmarksResult.MapBookmarksToDto();
-
-        var response = ApiSuccessResponse<IQueryable<BookmarksDto>>.Response(
-            "success",
-            "Bookmark has been added successfully",
-            data
-        );
-
         var result = await _context.SaveChangesAsync() > 0;
-        if (result) return CreatedAtRoute("GetBookmark", response);
+        if (result)
+        {
+            IEnumerable<Bookmarks> enumerable = [bookmarks];
+            var bookmarksResult = enumerable.AsQueryable();
+            var data = bookmarksResult.MapBookmarksToDto();
+
+            var response = ApiSuccessResponse<IQueryable<BookmarksDto>>.Response(
+                "success",
+                "Bookmark has been added successfully",
+                data
+            );
+            return CreatedAtRoute("GetBookmark", response);
+        }
 
         return BadRequest(
             ApiErrorResponse.Response(
@@ -89,13 +88,48 @@ public class BookmarksController : BaseApiController
         );
     }
 
-    // private async Task<string> GetUserId()
-    // {
-    //     var emailClaim = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email);
-    //     var email = emailClaim.Value;
-    //     var user = await _context.Users.FirstOrDefaultAsync(user => user.Email == email);
-    //     return user.UserId;
-    // }
+    [HttpPost("remove")]
+    public async Task<ActionResult> Remove([BindRequired][FromQuery] BookmarkParams bookmarkParam)
+    {
+        Bookmarks bookmarks = await RetrieveBookmarks(GetUserId());
+
+        if (bookmarks == null) return NotFound(ApiErrorResponse.Response(
+            "error",
+            "No bookmarks found"
+        ));
+
+        var recipe = bookmarks.Recipes.FirstOrDefault(rec => rec.RecipeId == bookmarkParam.RecipeId);
+        if (recipe == null) return NotFound(
+            ApiErrorResponse.Response(
+                "error",
+                "Recipe is not bookmarked"
+            )
+        );
+
+        bookmarks.RemoveBookmark(bookmarkParam.RecipeId);
+        var result = await _context.SaveChangesAsync() > 0;
+        if (result)
+        {
+            IEnumerable<Bookmarks> enumerable = [bookmarks];
+            var bookmarksResult = enumerable.AsQueryable();
+            var data = bookmarksResult.MapBookmarksToDto();
+
+            return Ok(
+            ApiSuccessResponse<IQueryable<BookmarksDto>>.Response(
+                "success",
+                "Bookmark has been removed successfully",
+                data
+            )
+        );
+        }
+
+        return BadRequest(
+            ApiErrorResponse.Response(
+                "error",
+                "Problem removing bookmark"
+            )
+        );
+    }
 
     private string GetUserId()
     {

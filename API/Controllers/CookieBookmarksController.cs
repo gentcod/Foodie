@@ -12,20 +12,19 @@ public class CookieBookmarksController : BaseApiController
 {
    private readonly FoodieContext _context;
 
-
    public CookieBookmarksController(FoodieContext context)
    {
       _context = context;
    }
 
    [HttpGet(Name = "GetCookieBookmark")]
-   public ActionResult<Bookmarks> GetCookiesBookMarks()
+   public ActionResult GetCookiesBookMarks()
    {
       Bookmarks bookmarks = RetrieveCookiesBookmarks(GetUserId());
 
       if (bookmarks == null) return NotFound(ApiErrorResponse.Response(
             "error",
-            "Bookmarked Recipes could not be found"
+            "No bookmarks found"
         ));
 
         IEnumerable<Bookmarks> enumerable = [bookmarks];
@@ -41,8 +40,8 @@ public class CookieBookmarksController : BaseApiController
         return Ok(response);
    }
 
-   [HttpPost("AddCookieBookmark")]
-   public async Task<ActionResult<Bookmarks>> AddNewCookiesBookMark([BindRequired][FromQuery] BookmarkParams bookmarkParam)
+   [HttpPost("add")]
+   public async Task<ActionResult> Add([BindRequired][FromQuery] BookmarkParams bookmarkParam)
    {
       var bookmarks = RetrieveCookiesBookmarks(GetUserId());
       bookmarks ??= CreateCookiesBookmarks(GetUserId());
@@ -52,12 +51,51 @@ public class CookieBookmarksController : BaseApiController
 
       bookmarks.AddBookmark(recipe);
       var cookieBookmark = UpdateCookiesBookmark(bookmarks);
-      if (cookieBookmark == null)
-      {
-         return BadRequest(new ProblemDetails { Title = "Problem creating bookmark" });
-      }
-      return CreatedAtRoute("GetBookmark", cookieBookmark);
+      if (cookieBookmark == null) return BadRequest(
+         ApiErrorResponse.Response(
+            "error",
+            "Problem adding bookmark"
+         )
+      );
+      
+      IEnumerable<Bookmarks> enumerable = [bookmarks];
+      var bookmarksResult = enumerable.AsQueryable();
+      var data = bookmarksResult.MapBookmarksToDto();
+
+      return CreatedAtRoute("GetBookmark", data);
    }
+
+   [HttpPost("remove")]
+   public ActionResult Remove([BindRequired][FromQuery] BookmarkParams bookmarkParam)
+   {
+      Bookmarks bookmarks = RetrieveCookiesBookmarks(GetUserId());
+
+      if (bookmarks == null) return NotFound(ApiErrorResponse.Response(
+         "error",
+         "No bookmarks found"
+      ));
+
+      bookmarks.RemoveBookmark(bookmarkParam.RecipeId);
+
+      var cookieBookmark = UpdateCookiesBookmark(bookmarks);
+      if (cookieBookmark == null) return BadRequest(
+         ApiErrorResponse.Response(
+            "error",
+            "Problem removing bookmark"
+         )
+      );
+      
+      IEnumerable<Bookmarks> enumerable = [bookmarks];
+      var bookmarksResult = enumerable.AsQueryable();
+      var data = bookmarksResult.MapBookmarksToDto();
+      return Ok(
+         ApiSuccessResponse<IQueryable<BookmarksDto>>.Response(
+            "success",
+            "Bookmark has been added successfully",
+            data
+         )
+      );
+    }
 
    private string GetUserId()
    {
@@ -106,6 +144,4 @@ public class CookieBookmarksController : BaseApiController
       return bookmark;
 
    }
-
-   //TODO: Handle DB transaction to delete user cookie bookmarks after specific time from database
 }
