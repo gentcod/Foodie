@@ -9,7 +9,6 @@ public static class BookmarksExtension
     {
         return bookmarks.Select(book => new BookmarksDto
         {
-            Id = book.Id,
             UserId = book.UserId,
             TotalBookmarks = book.TotalBookmarks,
             Recipes = book.Recipes.Select(rec => new EmbeddedDto

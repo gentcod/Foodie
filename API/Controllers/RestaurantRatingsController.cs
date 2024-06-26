@@ -54,7 +54,7 @@ public class RestaurantRatingsController : BaseApiController
     }
 
     [Authorize]
-    [HttpPost("AddRating")]
+    [HttpPost("add")]
     public async Task<ActionResult<Restaurant>> AddRating(RatingDto ratingDto, [BindRequired][FromQuery] int restaurantId)
     {
         if (ratingDto.RatingNum < 1 || ratingDto.RatingNum > 5) return BadRequest(ApiErrorResponse.Response(
@@ -95,3 +95,5 @@ public class RestaurantRatingsController : BaseApiController
         ));
     }
 }
+
+// TODO: Return Ratings for Recipe and Restaurant as PagedList

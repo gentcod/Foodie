@@ -18,13 +18,16 @@ public class AccountController(FoodieContext context, UserManager<User> userMana
     public async Task<ActionResult<ApiSuccessResponse<object>>> Login(UserLoginDto loginDto)
     {
         var user = await _userManager.FindByEmailAsync(loginDto.Email);
-        var authenticated = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+        if (user == null) return Unauthorized(ApiErrorResponse.Response(
+            "error",
+            "User account does not exist"
+        ));
 
-        if (user == null || !authenticated) return Unauthorized(new ProblemDetails
-        {
-            Title = "error",
-            Detail = "User account does not exist",
-        });
+        var authenticated = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+        if (!authenticated) return Unauthorized(ApiErrorResponse.Response(
+            "error",
+            "Wrong credentials."
+        ));
 
         var token = await _tokenGenerator.CreateToken(user);
         var userDto = new UserDto

@@ -35,12 +35,12 @@ public static class RecipeExtension
 
     public static IQueryable<Recipe> FilterByCategory(this IQueryable<Recipe> query, string category)
     {
-        if (category == null) return query.OrderBy(rec => rec.Id);
+      if (category == null) return query.OrderBy(rec => rec.Id);
 
-        return query.Where(rec => (category != "foreign" ? rec.Category.ToLower().Contains(category) : !rec.Origin.ToLower().Contains("nigeria")));
+      return query.Where(rec => (category != "foreign" ? rec.Category.ToLower().Contains(category) : !rec.Origin.ToLower().Contains("nigeria")));
     }
 
-    public static IQueryable<Recipe> Featured(this IQueryable<Recipe> query)
+   public static IQueryable<Recipe> Featured(this IQueryable<Recipe> query)
    {
       return query.Where(rec => rec.Featured == true);
    }

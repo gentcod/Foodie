@@ -3,7 +3,6 @@ public class ApiSuccessResponse<T>
 {
     public ApiSuccessResponse(string status, string message, T data)
     {
-
         Status = status;
         Message = message;
         Data = data;

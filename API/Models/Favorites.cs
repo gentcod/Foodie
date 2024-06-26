@@ -24,7 +24,7 @@ public class Favorites
             FavoritesId = Id,
         });
 
-        TotalFavRecipes = Recipes.Count();
+        TotalFavRecipes = Recipes.Count;
     }
 
     public void RemoveFavoriteRecipe(int recipeId)
@@ -33,6 +33,7 @@ public class Favorites
         if (favorite == null) return;
 
         Recipes.Remove(favorite);
+        TotalFavRecipes = Recipes.Count;
     }
 
     public void AddFavoriteRestaurant(Restaurant restaurant)
@@ -49,7 +50,7 @@ public class Favorites
             FavoritesId = Id,
         });
 
-        TotalFavRestaurants = Restaurants.Count();
+        TotalFavRestaurants = Restaurants.Count;
     }
 
     public void RemoveFavoriteRestaurant(int restaurantId)
@@ -58,5 +59,6 @@ public class Favorites
         if (favorite == null) return;
 
         Restaurants.Remove(favorite);
+        TotalFavRestaurants = Restaurants.Count;
     }
 }

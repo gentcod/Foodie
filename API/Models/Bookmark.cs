@@ -23,7 +23,7 @@ public class Bookmarks
             BookmarksId = Id,
         });
 
-        TotalBookmarks = Recipes.Count();
+        TotalBookmarks = Recipes.Count;
     }
 
     public void RemoveBookmark(int recipeId)
@@ -32,5 +32,6 @@ public class Bookmarks
         if (bookmark == null) return;
 
         Recipes.Remove(bookmark);
+        TotalBookmarks = Recipes.Count;
     }
 }

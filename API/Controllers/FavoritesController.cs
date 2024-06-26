@@ -37,12 +37,12 @@ public class FavoritesController(FoodieContext context) : BaseApiController
       ));
    }
 
-   [HttpPost("AddRecipe")]
-   public async Task<ActionResult<Favorites>> AddNewFavoriteRecipe([BindRequired][FromQuery] FavoriteRecipeParams favoriteRecipeParams)
+   [HttpPost("add/recipe")]
+   public async Task<ActionResult<Favorites>> AddNewFavoriteRecipe([BindRequired][FromQuery] FavoriteRecipeParams favRecParams)
    {
       var favorites = await InitializeFavorites(GetUserId());
 
-      var recipe = await _context.Recipes.FindAsync(favoriteRecipeParams.RecipeId);
+      var recipe = await _context.Recipes.FindAsync(favRecParams.RecipeId);
       if (recipe == null) return BadRequest(ApiErrorResponse.Response(
          "error",
          "Recipe not found"
@@ -58,19 +58,20 @@ public class FavoritesController(FoodieContext context) : BaseApiController
       }
 
       favorites.AddFavoriteRecipe(recipe);
-
-      IEnumerable<Favorites> enumerable = [favorites];
-      var favoritesResult = enumerable.AsQueryable();
-      var data = favoritesResult.MapFavoritesToDto();
-
-      var response = ApiSuccessResponse<IQueryable<FavoritesDto>>.Response(
-         "success",
-         "Recipe has been added to Favorites successfully",
-         data
-      );
-
       var result = _context.SaveChangesAsync();
-      if (result != null) return CreatedAtRoute("GetFavorites", response);
+      if (result != null)
+      {
+         IEnumerable<Favorites> enumerable = [favorites];
+         var favoritesResult = enumerable.AsQueryable();
+         var data = favoritesResult.MapFavoritesToDto();
+
+         var response = ApiSuccessResponse<IQueryable<FavoritesDto>>.Response(
+            "success",
+            "Recipe has been added to Favorites successfully",
+            data
+         );
+         return CreatedAtRoute("GetFavorites", response);
+      }
 
       return BadRequest(ApiErrorResponse.Response(
          "error",
@@ -78,12 +79,12 @@ public class FavoritesController(FoodieContext context) : BaseApiController
       ));
    }
 
-   [HttpPost("AddRestaurant")]
-   public async Task<ActionResult> AddNewFavoriteRestaurant([BindRequired][FromQuery] FavoriteRestaurantParams favoriteRecipeParams)
+   [HttpPost("add/restaurant")]
+   public async Task<ActionResult> AddNewFavoriteRestaurant([BindRequired][FromQuery] FavoriteRestaurantParams favResParams)
    {
       var favorites = await InitializeFavorites(GetUserId());
 
-      var restaurant = await _context.Restaurants.FindAsync(favoriteRecipeParams.RestaurantId);
+      var restaurant = await _context.Restaurants.FindAsync(favResParams.RestaurantId);
       if (restaurant == null) return BadRequest(ApiErrorResponse.Response(
          "error",
          "Restaurant not found"
@@ -100,23 +101,112 @@ public class FavoritesController(FoodieContext context) : BaseApiController
 
       favorites.AddFavoriteRestaurant(restaurant);
 
-      IEnumerable<Favorites> enumerable = [favorites];
-      var favoritesResult = enumerable.AsQueryable();
-      var data = favoritesResult.MapFavoritesToDto();
-
-      var response = ApiSuccessResponse<IQueryable<FavoritesDto>>.Response(
-         "success",
-         "Restaurant has been added to Favorites successfully",
-         data
-      );
-
       var result = _context.SaveChangesAsync();
-      if (result != null) return CreatedAtRoute("GetFavorites", response);
+      if (result != null)
+      {
+         IEnumerable<Favorites> enumerable = [favorites];
+         var favoritesResult = enumerable.AsQueryable();
+         var data = favoritesResult.MapFavoritesToDto();
 
-      return BadRequest( ApiErrorResponse.Response(
+         var response = ApiSuccessResponse<IQueryable<FavoritesDto>>.Response(
+            "success",
+            "Restaurant has been added to Favorites successfully",
+            data
+         );
+         return CreatedAtRoute("GetFavorites", response);
+      }
+
+      return BadRequest(ApiErrorResponse.Response(
          "error",
          "Problem adding restaurant to Favorite"
       ));
+   }
+
+
+   [HttpPost("remove/recipe")]
+   public async Task<ActionResult> RemoveRecipe([BindRequired][FromQuery] FavoriteRecipeParams favRecParams)
+   {
+      var favorites = await RetrieveFavorites(GetUserId());
+
+      if (favorites == null) return NotFound(ApiErrorResponse.Response(
+          "error",
+          "No favorites found"
+      ));
+
+      var recipe = favorites.Recipes.FirstOrDefault(rec => rec.RecipeId == favRecParams.RecipeId);
+      if (recipe == null) return NotFound(
+          ApiErrorResponse.Response(
+             "error",
+             "Recipe is not in favorites"
+          )
+      );
+
+      favorites.RemoveFavoriteRecipe(favRecParams.RecipeId);
+      var result = await _context.SaveChangesAsync() > 0;
+      if (result)
+      {
+         IEnumerable<Favorites> enumerable = [favorites];
+         var favoritesResult = enumerable.AsQueryable();
+         var data = favoritesResult.MapFavoritesToDto();
+
+         return Ok(
+         ApiSuccessResponse<IQueryable<FavoritesDto>>.Response(
+             "success",
+             "Favorite has been removed successfully",
+             data
+         )
+     );
+      }
+
+      return BadRequest(
+          ApiErrorResponse.Response(
+              "error",
+              "Problem adding Favorite"
+          )
+      );
+   }
+
+   [HttpPost("remove/restaurant")]
+   public async Task<ActionResult> RemoveRestaurant([BindRequired][FromQuery] FavoriteRestaurantParams favResParams)
+   {
+      var favorites = await RetrieveFavorites(GetUserId());
+
+      if (favorites == null) return NotFound(ApiErrorResponse.Response(
+          "error",
+          "No favorites found"
+      ));
+
+      var recipe = favorites.Restaurants.FirstOrDefault(rec => rec.RestaurantId == favResParams.RestaurantId);
+      if (recipe == null) return NotFound(
+          ApiErrorResponse.Response(
+             "error",
+             "Restaurant is not in favorites"
+          )
+      );
+
+      favorites.RemoveFavoriteRestaurant(favResParams.RestaurantId);
+      var result = await _context.SaveChangesAsync() > 0;
+      if (result)
+      {
+         IEnumerable<Favorites> enumerable = [favorites];
+         var favoritesResult = enumerable.AsQueryable();
+         var data = favoritesResult.MapFavoritesToDto();
+
+         return Ok(
+         ApiSuccessResponse<IQueryable<FavoritesDto>>.Response(
+             "success",
+             "Favorite has been removed successfully",
+             data
+         )
+     );
+      }
+
+      return BadRequest(
+          ApiErrorResponse.Response(
+              "error",
+              "Problem adding Favorite"
+          )
+      );
    }
 
    private string GetUserId()
