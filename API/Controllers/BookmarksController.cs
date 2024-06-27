@@ -31,12 +31,10 @@ public class BookmarksController : BaseApiController
             "error",
             "No bookmarks found"
         ));
+        
+        var data = bookmarks.MapBookmarksToDto();
 
-        IEnumerable<Bookmarks> enumerable = [bookmarks];
-        var bookmarksResult = enumerable.AsQueryable();
-        var data = bookmarksResult.MapBookmarksToDto();
-
-        return Ok(ApiSuccessResponse<IQueryable<BookmarksDto>>.Response(
+        return Ok(ApiSuccessResponse<BookmarksDto>.Response(
             "success",
             "Bookmarks have been fetched successfully",
             data
@@ -68,11 +66,9 @@ public class BookmarksController : BaseApiController
         var result = await _context.SaveChangesAsync() > 0;
         if (result)
         {
-            IEnumerable<Bookmarks> enumerable = [bookmarks];
-            var bookmarksResult = enumerable.AsQueryable();
-            var data = bookmarksResult.MapBookmarksToDto();
+            var data = bookmarks.MapBookmarksToDto();
 
-            var response = ApiSuccessResponse<IQueryable<BookmarksDto>>.Response(
+            var response = ApiSuccessResponse<BookmarksDto>.Response(
                 "success",
                 "Bookmark has been added successfully",
                 data
@@ -110,17 +106,15 @@ public class BookmarksController : BaseApiController
         var result = await _context.SaveChangesAsync() > 0;
         if (result)
         {
-            IEnumerable<Bookmarks> enumerable = [bookmarks];
-            var bookmarksResult = enumerable.AsQueryable();
-            var data = bookmarksResult.MapBookmarksToDto();
+            var data = bookmarks.MapBookmarksToDto();
 
             return Ok(
-            ApiSuccessResponse<IQueryable<BookmarksDto>>.Response(
-                "success",
-                "Bookmark has been removed successfully",
-                data
-            )
-        );
+                ApiSuccessResponse<BookmarksDto>.Response(
+                    "success",
+                    "Bookmark has been removed successfully",
+                    data
+                )
+            );
         }
 
         return BadRequest(

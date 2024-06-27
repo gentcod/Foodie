@@ -4,39 +4,36 @@ using API.Models;
 namespace API.Extensions;
 public static class RecipeRatingsExtension
 {
-    public static IEnumerable<RecipeRatingsDto> MapRecipesRatingsToDto(this List<RecipeRating> recipesRatings, List<Recipe> recipes)
+    public static IQueryable<ListedRecipeRatingsDto> MapRecipesRatingsToDto(this IQueryable<RecipeRatings> recipesRatings)
     {
-        return recipesRatings.Select(rec => new RecipeRatingsDto
+        return recipesRatings.Select(rec => new ListedRecipeRatingsDto
         {
-            RatingId = rec.Id,
-            RecipeName = recipes.Find(el => el.Id == rec.RecipeId).Name,
-            RecipeImgSrc = recipes.Find(el => el.Id == rec.RecipeId).ImageSrc,
-            Rating = recipes.Find(el => el.Id == rec.RecipeId).Rating,
-            Comment = rec.Comment,
+            RecipeId = rec.RecipeId,
+            RecipeName = rec.Recipe.Name,
+            ImageSrc = rec.Recipe.ImageSrc,
+            RatingNum = rec.Recipe.RatingNum,
+            TotalRatings = rec.TotalRatings
         });
     }
 
-    //
-    public static IEnumerable<RecipeRatingsDto> MapRecipeRatingsToDto(this List<RecipeRating> recipesRatings, Recipe recipe)
+    public static RecipeRatingsDto MapRecipeRatingsToDto(this RecipeRatings recipesRatings, Recipe recipe)
     {
-        return recipesRatings.Select(rec => new RecipeRatingsDto
+        return new RecipeRatingsDto
         {
-            RatingId = rec.Id,
-            RecipeName = recipe.Name,
-            RecipeImgSrc = recipe.ImageSrc,
-            Rating = recipe.Rating,
-            Comment = rec.Comment,
-        });
-    }
-
-    public static IEnumerable<RecipeRatingsDto> MapRecipesRatingsAggregatorToDto(this List<RecipeRating> recipesRatings, List<Recipe> recipes)
-    {
-        return recipesRatings.Select(rec => new RecipeRatingsDto
-        {
-            RatingId = rec.Id,
-            RecipeName = recipes.Find(el => el.Id == rec.RecipeId).Name,
-            RecipeImgSrc = recipes.Find(el => el.Id == rec.RecipeId).ImageSrc,
-            Rating = recipes.Find(el => el.Id == rec.RecipeId).Rating,
-        }).DistinctBy(rec => rec.RecipeName);
+            RecipeId = recipesRatings.RecipeId,
+            RecipeName = recipe!.Name,
+            ImageSrc = recipe.ImageSrc,
+            RatingNum = recipe.RatingNum,
+            TotalRatings = recipesRatings.TotalRatings,
+            Ratings = recipesRatings.Ratings != null ?
+            recipe.RecipeRatings.Ratings.Select(rating => new RecipeRatingDto
+            {
+                RatingId = rating.Id,
+                UserId = rating.UserId,
+                RatingNum = rating.RatingNum,
+                Comment = rating.Comment,
+            }).ToList()
+            : [],
+        };
     }
 }

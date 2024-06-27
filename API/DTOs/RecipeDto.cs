@@ -12,7 +12,7 @@ namespace API.DTOs
       public string CookTime { get; set; }
       public string DateAdded { get; set; }
       public string Origin { get; set; }
-      public double Rating { get; set; }
+      public double RatingNum { get; set; }
       public string Category { get; set; }
       public Boolean Featured { get; set; }
    }

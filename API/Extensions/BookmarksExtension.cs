@@ -5,18 +5,18 @@ using API.Models.References;
 namespace API.Extensions;
 public static class BookmarksExtension
 {
-    public static IQueryable<BookmarksDto> MapBookmarksToDto(this IQueryable<Bookmarks> bookmarks)
+    public static BookmarksDto MapBookmarksToDto(this Bookmarks bookmarks)
     {
-        return bookmarks.Select(book => new BookmarksDto
+        return  new BookmarksDto
         {
-            UserId = book.UserId,
-            TotalBookmarks = book.TotalBookmarks,
-            Recipes = book.Recipes.Select(rec => new EmbeddedDto
+            UserId = bookmarks.UserId,
+            TotalBookmarks = bookmarks.TotalBookmarks,
+            Recipes = bookmarks.Recipes.Select(rec => new EmbeddedDto
             {
                 Id = rec.RecipeId,
                 Name = rec.Recipe.Name,
                 ImageSrc = rec.Recipe.ImageSrc,
             }).ToList(),
-        });
+        };
     }
 }

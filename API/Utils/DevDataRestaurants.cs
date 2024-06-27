@@ -27,7 +27,7 @@ public class DevDataRestaurants
       {
          Name = rec.Name,
          Location = rec.Location,
-         ImgSrc = rec.ImgSrc,
+         ImageSrc = rec.ImageSrc,
          Geolocation = new Bearing
          {
             Latitude = rec.Geolocation.Latitude,

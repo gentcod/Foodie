@@ -88,6 +88,43 @@ namespace API.Data.Migrations
                     b.ToTable("Favorites");
                 });
 
+            modelBuilder.Entity("API.Models.Rating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("text");
+
+                    b.Property<int>("RatingNum")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("RecipeRatingsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("RestaurantRatingsId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipeRatingsId");
+
+                    b.HasIndex("RestaurantRatingsId");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("Rating");
+                });
+
             modelBuilder.Entity("API.Models.Recipe", b =>
                 {
                     b.Property<int>("Id")
@@ -123,7 +160,7 @@ namespace API.Data.Migrations
                     b.Property<string>("Origin")
                         .HasColumnType("text");
 
-                    b.Property<double>("Rating")
+                    b.Property<double>("RatingNum")
                         .HasColumnType("double precision");
 
                     b.HasKey("Id");
@@ -131,7 +168,7 @@ namespace API.Data.Migrations
                     b.ToTable("Recipes");
                 });
 
-            modelBuilder.Entity("API.Models.RecipeRating", b =>
+            modelBuilder.Entity("API.Models.RecipeRatings", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -139,18 +176,16 @@ namespace API.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Comment")
-                        .HasColumnType("text");
-
-                    b.Property<int>("RatingNum")
+                    b.Property<int>("RecipeId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("RecipeId")
+                    b.Property<int>("TotalRatings")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RecipeId");
+                    b.HasIndex("RecipeId")
+                        .IsUnique();
 
                     b.ToTable("RecipeRatings");
                 });
@@ -235,7 +270,7 @@ namespace API.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ImgSrc")
+                    b.Property<string>("ImageSrc")
                         .HasColumnType("text");
 
                     b.Property<string>("Location")
@@ -244,7 +279,7 @@ namespace API.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<double>("Rating")
+                    b.Property<double>("RatingNum")
                         .HasColumnType("double precision");
 
                     b.HasKey("Id");
@@ -252,7 +287,7 @@ namespace API.Data.Migrations
                     b.ToTable("Restaurants");
                 });
 
-            modelBuilder.Entity("API.Models.RestaurantRating", b =>
+            modelBuilder.Entity("API.Models.RestaurantRatings", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -260,18 +295,16 @@ namespace API.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Comment")
-                        .HasColumnType("text");
-
-                    b.Property<int>("RatingNum")
+                    b.Property<int>("RestaurantId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("RestaurantId")
+                    b.Property<int>("TotalRatings")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RestaurantId");
+                    b.HasIndex("RestaurantId")
+                        .IsUnique();
 
                     b.ToTable("RestaurantRatings");
                 });
@@ -504,11 +537,28 @@ namespace API.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("API.Models.RecipeRating", b =>
+            modelBuilder.Entity("API.Models.Rating", b =>
+                {
+                    b.HasOne("API.Models.RecipeRatings", null)
+                        .WithMany("Ratings")
+                        .HasForeignKey("RecipeRatingsId");
+
+                    b.HasOne("API.Models.RestaurantRatings", null)
+                        .WithMany("Ratings")
+                        .HasForeignKey("RestaurantRatingsId");
+
+                    b.HasOne("API.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("API.Models.RecipeRatings", b =>
                 {
                     b.HasOne("API.Models.Recipe", "Recipe")
-                        .WithMany("RecipeRatings")
-                        .HasForeignKey("RecipeId")
+                        .WithOne("RecipeRatings")
+                        .HasForeignKey("API.Models.RecipeRatings", "RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -570,11 +620,11 @@ namespace API.Data.Migrations
                     b.Navigation("Restaurant");
                 });
 
-            modelBuilder.Entity("API.Models.RestaurantRating", b =>
+            modelBuilder.Entity("API.Models.RestaurantRatings", b =>
                 {
                     b.HasOne("API.Models.Restaurant", "Restaurant")
-                        .WithMany("RestaurantRatings")
-                        .HasForeignKey("RestaurantId")
+                        .WithOne("RestaurantRatings")
+                        .HasForeignKey("API.Models.RestaurantRatings", "RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -649,11 +699,21 @@ namespace API.Data.Migrations
                     b.Navigation("RecipeRatings");
                 });
 
+            modelBuilder.Entity("API.Models.RecipeRatings", b =>
+                {
+                    b.Navigation("Ratings");
+                });
+
             modelBuilder.Entity("API.Models.Restaurant", b =>
                 {
                     b.Navigation("Geolocation");
 
                     b.Navigation("RestaurantRatings");
+                });
+
+            modelBuilder.Entity("API.Models.RestaurantRatings", b =>
+                {
+                    b.Navigation("Ratings");
                 });
 #pragma warning restore 612, 618
         }

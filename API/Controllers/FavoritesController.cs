@@ -26,11 +26,9 @@ public class FavoritesController(FoodieContext context) : BaseApiController
          "No favorites found"
       ));
 
-      IEnumerable<Favorites> enumerable = [favorites];
-      var favoritesResult = enumerable.AsQueryable();
-      var data = favoritesResult.MapFavoritesToDto();
+      var data = favorites.MapFavoritesToDto();
 
-      return Ok(ApiSuccessResponse<IQueryable<FavoritesDto>>.Response(
+      return Ok(ApiSuccessResponse<FavoritesDto>.Response(
          "success",
          "Favorites have been fetched successfully",
          data
@@ -61,11 +59,9 @@ public class FavoritesController(FoodieContext context) : BaseApiController
       var result = _context.SaveChangesAsync();
       if (result != null)
       {
-         IEnumerable<Favorites> enumerable = [favorites];
-         var favoritesResult = enumerable.AsQueryable();
-         var data = favoritesResult.MapFavoritesToDto();
+         var data = favorites.MapFavoritesToDto();
 
-         var response = ApiSuccessResponse<IQueryable<FavoritesDto>>.Response(
+         var response = ApiSuccessResponse<FavoritesDto>.Response(
             "success",
             "Recipe has been added to Favorites successfully",
             data
@@ -104,11 +100,9 @@ public class FavoritesController(FoodieContext context) : BaseApiController
       var result = _context.SaveChangesAsync();
       if (result != null)
       {
-         IEnumerable<Favorites> enumerable = [favorites];
-         var favoritesResult = enumerable.AsQueryable();
-         var data = favoritesResult.MapFavoritesToDto();
+         var data = favorites.MapFavoritesToDto();
 
-         var response = ApiSuccessResponse<IQueryable<FavoritesDto>>.Response(
+         var response = ApiSuccessResponse<FavoritesDto>.Response(
             "success",
             "Restaurant has been added to Favorites successfully",
             data
@@ -145,12 +139,10 @@ public class FavoritesController(FoodieContext context) : BaseApiController
       var result = await _context.SaveChangesAsync() > 0;
       if (result)
       {
-         IEnumerable<Favorites> enumerable = [favorites];
-         var favoritesResult = enumerable.AsQueryable();
-         var data = favoritesResult.MapFavoritesToDto();
+         var data = favorites.MapFavoritesToDto();
 
          return Ok(
-         ApiSuccessResponse<IQueryable<FavoritesDto>>.Response(
+         ApiSuccessResponse<FavoritesDto>.Response(
              "success",
              "Favorite has been removed successfully",
              data
@@ -188,12 +180,10 @@ public class FavoritesController(FoodieContext context) : BaseApiController
       var result = await _context.SaveChangesAsync() > 0;
       if (result)
       {
-         IEnumerable<Favorites> enumerable = [favorites];
-         var favoritesResult = enumerable.AsQueryable();
-         var data = favoritesResult.MapFavoritesToDto();
+         var data = favorites.MapFavoritesToDto();
 
          return Ok(
-         ApiSuccessResponse<IQueryable<FavoritesDto>>.Response(
+         ApiSuccessResponse<FavoritesDto>.Response(
              "success",
              "Favorite has been removed successfully",
              data

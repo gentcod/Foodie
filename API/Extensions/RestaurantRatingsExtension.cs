@@ -4,25 +4,36 @@ using API.DTOs;
 namespace API.Extensions;
 public static class RestaurantRatingsExtension
 {
-    public static IEnumerable<RestaurantRatingsDto> MapRestaurantsRatingsToDto(this List<RestaurantRating> restaurantRatings, List<Restaurant> restaurants)
+    public static IQueryable<ListedRestaurantRatingsDto> MapRestaurantsRatingsToDto(this IQueryable<RestaurantRatings> restaurantsRatings)
     {
-        return restaurantRatings.Select(rec => new RestaurantRatingsDto
+        return restaurantsRatings.Select(rec => new ListedRestaurantRatingsDto
         {
-            RatingId = rec.Id,
-            RestaurantName = restaurants.Find(el => el.Id == rec.RestaurantId).Name,
-            RatingNum = rec.RatingNum,
-            Comment = rec.Comment,
+            RestaurantId = rec.RestaurantId,
+            RestaurantName = rec.Restaurant.Name,
+            ImageSrc = rec.Restaurant.ImageSrc,
+            RatingNum = rec.Restaurant.RatingNum,
+            TotalRatings = rec.TotalRatings
         });
     }
 
-    public static IEnumerable<RestaurantRatingsDto> MapRestaurantRatingsToDto(this List<RestaurantRating> restaurantRatings, Restaurant restaurant)
+    public static RestaurantRatingsDto MapRestaurantRatingsToDto(this RestaurantRatings restaurantRatings, Restaurant restaurant)
     {
-        return restaurantRatings.Select(rec => new RestaurantRatingsDto
+        return new RestaurantRatingsDto
         {
-            RatingId = rec.Id,
+            RestaurantId = restaurantRatings.RestaurantId,
             RestaurantName = restaurant.Name,
-            RatingNum = rec.RatingNum,
-            Comment = rec.Comment,
-        });
+            ImageSrc = restaurant.ImageSrc,
+            RatingNum = restaurant.RatingNum,
+            TotalRatings = restaurantRatings.TotalRatings,
+            Ratings = restaurantRatings.Ratings != null ?
+            restaurantRatings.Ratings.Select(rating => new RestaurantRatingDto
+            {
+                RatingId = rating.Id,
+                UserId = rating.UserId,
+                RatingNum = rating.RatingNum,
+                Comment = rating.Comment,
+            }).ToList()
+            : [],
+        };
     }
 }

@@ -11,8 +11,8 @@ public static class RestaurantExtension
          Id = res.Id,
          Name = res.Name,
          Location = res.Location,
-         ImgSrc = res.ImgSrc,
-         Rating = res.Rating,
+         ImageSrc = res.ImageSrc,
+         RatingNum = res.RatingNum,
          Geolocation = res.Geolocation,
       });
    }
@@ -24,8 +24,8 @@ public static class RestaurantExtension
          Id = restaurant.Id,
          Name = restaurant.Name,
          Location = restaurant.Location,
-         ImgSrc = restaurant.ImgSrc,
-         Rating = restaurant.Rating,
+         ImageSrc = restaurant.ImageSrc,
+         RatingNum = restaurant.RatingNum,
          Geolocation = restaurant.Geolocation,
       };
    }
