@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -99,7 +99,7 @@ namespace API.Data.Migrations
                     CookTime = table.Column<int>(type: "integer", nullable: false),
                     DateAdded = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Origin = table.Column<string>(type: "text", nullable: true),
-                    Rating = table.Column<double>(type: "double precision", nullable: false),
+                    RatingNum = table.Column<double>(type: "double precision", nullable: false),
                     Category = table.Column<string>(type: "text", nullable: true),
                     Featured = table.Column<bool>(type: "boolean", nullable: false)
                 },
@@ -116,8 +116,8 @@ namespace API.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
                     Location = table.Column<string>(type: "text", nullable: true),
-                    ImgSrc = table.Column<string>(type: "text", nullable: true),
-                    Rating = table.Column<double>(type: "double precision", nullable: false)
+                    ImageSrc = table.Column<string>(type: "text", nullable: true),
+                    RatingNum = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -288,9 +288,8 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RecipeId = table.Column<int>(type: "integer", nullable: false),
-                    RatingNum = table.Column<int>(type: "integer", nullable: false),
-                    Comment = table.Column<string>(type: "text", nullable: true)
+                    TotalRatings = table.Column<int>(type: "integer", nullable: false),
+                    RecipeId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -357,9 +356,8 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RestaurantId = table.Column<int>(type: "integer", nullable: false),
-                    RatingNum = table.Column<int>(type: "integer", nullable: false),
-                    Comment = table.Column<string>(type: "text", nullable: true)
+                    TotalRatings = table.Column<int>(type: "integer", nullable: false),
+                    RestaurantId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -370,6 +368,39 @@ namespace API.Data.Migrations
                         principalTable: "Restaurants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rating",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<string>(type: "text", nullable: true),
+                    UserId1 = table.Column<int>(type: "integer", nullable: true),
+                    RatingNum = table.Column<int>(type: "integer", nullable: false),
+                    Comment = table.Column<string>(type: "text", nullable: true),
+                    RecipeRatingsId = table.Column<int>(type: "integer", nullable: true),
+                    RestaurantRatingsId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rating", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rating_AspNetUsers_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Rating_RecipeRatings_RecipeRatingsId",
+                        column: x => x.RecipeRatingsId,
+                        principalTable: "RecipeRatings",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Rating_RestaurantRatings_RestaurantRatingsId",
+                        column: x => x.RestaurantRatingsId,
+                        principalTable: "RestaurantRatings",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
@@ -455,14 +486,31 @@ namespace API.Data.Migrations
                 column: "RestaurantId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Rating_RecipeRatingsId",
+                table: "Rating",
+                column: "RecipeRatingsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rating_RestaurantRatingsId",
+                table: "Rating",
+                column: "RestaurantRatingsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rating_UserId1",
+                table: "Rating",
+                column: "UserId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RecipeRatings_RecipeId",
                 table: "RecipeRatings",
-                column: "RecipeId");
+                column: "RecipeId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RestaurantRatings_RestaurantId",
                 table: "RestaurantRatings",
-                column: "RestaurantId");
+                column: "RestaurantId",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -496,22 +544,25 @@ namespace API.Data.Migrations
                 name: "FavoriteRestaurant");
 
             migrationBuilder.DropTable(
-                name: "RecipeRatings");
-
-            migrationBuilder.DropTable(
-                name: "RestaurantRatings");
+                name: "Rating");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Bookmarks");
 
             migrationBuilder.DropTable(
                 name: "Favorites");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "RecipeRatings");
+
+            migrationBuilder.DropTable(
+                name: "RestaurantRatings");
 
             migrationBuilder.DropTable(
                 name: "Recipes");

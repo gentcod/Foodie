@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Authorization;
 using API.RequestHelpers;
+using System.Security.Claims;
 
 namespace API.Controllers;
 public class RestaurantRatingsController : BaseApiController
@@ -19,36 +20,49 @@ public class RestaurantRatingsController : BaseApiController
     }
 
     [HttpGet(Name = "restaurantRating")]
-    public async Task<ActionResult> GetRestaurantRatings()
+    public async Task<ActionResult> GetRestaurantRatings([FromQuery] PaginationParams paginationParams)
     {
-        var restaurants = await _context.Restaurants.ToListAsync();
-        var restaurantsRatings = await _context.RestaurantRatings.ToListAsync();
+        var query = _context.RestaurantRatings.Include(r => r.Restaurant).AsQueryable();
+        var restaurantsRatingsDto = query.MapRestaurantsRatingsToDto();
 
-        var restaurantsRatingsDto = restaurantsRatings.MapRestaurantsRatingsToDto(restaurants);
+        var paginatedResponse = await PagedList<ListedRestaurantRatingsDto>.ToPagedList(
+            restaurantsRatingsDto, 
+            paginationParams.PageNumber, 
+            paginationParams.PageSize
+        );
 
-        return Ok(ApiSuccessResponse<IEnumerable<RestaurantRatingsDto>>.Response(
+        Response.AddPaginationHeader(paginatedResponse.MetaData);
+
+        return Ok(ApiSuccessResponse<PagedList<ListedRestaurantRatingsDto>>.Response(
             "success",
-            "Recipes ratings fetched successfully",
-            restaurantsRatingsDto
+            "Restaurants ratings fetched successfully",
+            paginatedResponse
         ));
     }
 
     [HttpGet("{restaurantId}")]
     public async Task<ActionResult> GetRestaurantRatingsById([BindRequired] int restaurantId)
     {
-        var restaurant = await _context.Restaurants.FirstOrDefaultAsync(el => el.Id == restaurantId);
+        var restaurant = await _context.Restaurants
+            .FirstOrDefaultAsync(el => el.Id == restaurantId);
         if (restaurant == null) return BadRequest(ApiErrorResponse.Response(
             "error",
             "Restaurant not found"
         ));
 
-        var restaurantRatings = await _context.RestaurantRatings.Where(el => el.RestaurantId == restaurantId).ToListAsync();
+        var restaurantRatings = await _context.RestaurantRatings
+            .Include(rec => rec.Ratings)
+            .FirstOrDefaultAsync(el => el.RestaurantId == restaurant.Id);
+        if (restaurantRatings == null) return BadRequest(ApiErrorResponse.Response(
+            "error",
+            "Restaurant rating not found"
+        ));
 
         var restaurantRatingsDto = restaurantRatings.MapRestaurantRatingsToDto(restaurant);
 
-        return Ok(ApiSuccessResponse<IEnumerable<RestaurantRatingsDto>>.Response(
+        return Ok(ApiSuccessResponse<RestaurantRatingsDto>.Response(
             "success",
-            "Recipe ratings fetched successfully",
+            "Restaurant ratings fetched successfully",
             restaurantRatingsDto
         ));
     }
@@ -68,23 +82,24 @@ public class RestaurantRatingsController : BaseApiController
             "Restaurant not found"
         ));
 
-        var restaurantRatings = await _context.RestaurantRatings.Where(el => el.RestaurantId == restaurantId).ToListAsync();
-        restaurantRatings ??= new List<RestaurantRating>();
+        var restaurantRatings = await _context.RestaurantRatings.FirstOrDefaultAsync(el => el.RestaurantId == restaurant.Id);
+        restaurantRatings ??= new RestaurantRatings();
 
-        restaurantRatings.Add(new RestaurantRating
+        restaurantRatings.AddRating(new Rating
         {
+            UserId = GetUserId(),
             RatingNum = ratingDto.RatingNum,
             Comment = ratingDto.Comment,
         });
 
-        restaurant.Rating = Math.Round(restaurantRatings.Average(rating => rating.RatingNum), 1);
         restaurant.RestaurantRatings = restaurantRatings;
+        restaurant.RatingNum = Math.Round(restaurantRatings.Ratings.Average(rating => rating.RatingNum), 1);
 
         _context.Restaurants.Update(restaurant);
         var result = _context.SaveChangesAsync();
-        var response = ApiSuccessResponse<IEnumerable<RestaurantRatingsDto>>.Response(
+        var response = ApiSuccessResponse<RestaurantRatingsDto>.Response(
             "success",
-            "Restaurant rating added successfully",
+            "Restaurant rating has been added successfully",
             restaurantRatings.MapRestaurantRatingsToDto(restaurant)
         );
         if (result != null) return CreatedAtRoute("restaurantRating", response);
@@ -94,6 +109,52 @@ public class RestaurantRatingsController : BaseApiController
             "Problem adding Restaurant Rating"
         ));
     }
-}
 
-// TODO: Return Ratings for Recipe and Restaurant as PagedList
+
+    [Authorize]
+    [HttpPost("remove")]
+    public async Task<ActionResult> Remove([BindRequired][FromQuery] int restaurantId)
+    {
+        var restaurant = await _context.Restaurants.FirstOrDefaultAsync(el => el.Id == restaurantId);
+        if (restaurant == null) return NotFound(ApiErrorResponse.Response(
+            "error",
+            "Restaurant not found"
+        ));
+
+        var restaurantRatings = await _context.RestaurantRatings.FirstOrDefaultAsync(el => el.RestaurantId == restaurant.Id);
+        if (restaurantRatings == null) return BadRequest(ApiErrorResponse.Response(
+            "error",
+            "Restaurant rating not found"
+        ));
+
+        var userId = GetUserId();
+        var userRating = restaurantRatings.Ratings.FirstOrDefault(rating => rating.UserId == userId);
+        if (userRating == null) return NotFound(ApiErrorResponse.Response(
+            "error",
+            "User rating not found"
+        ));
+
+        restaurantRatings.RemoveRating(userId);
+        var result = await _context.SaveChangesAsync() > 0;
+        if (result)
+        {
+            return Ok(
+                ApiSuccessResponse<RestaurantRatingsDto>.Response(
+                    "success",
+                    "Restaurant rating has been removed successfully",
+                    restaurantRatings.MapRestaurantRatingsToDto(restaurant)
+                )
+            );
+        }
+
+        return BadRequest(ApiErrorResponse.Response(
+            "error",
+            "Problem removing restaurant rating"
+        ));
+    }
+    private string GetUserId()
+    {
+        var userIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
+        return userIdClaim.Value;
+    }
+}

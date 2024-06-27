@@ -9,8 +9,8 @@ public class Recipe
    public int CookTime { get; set; }
    public DateTime DateAdded { get; set; }
    public string Origin { get; set; }
-   public double Rating { get; set; }
-   public List<RecipeRating> RecipeRatings { get; set; }
+   public double RatingNum { get; set; }
+   public RecipeRatings RecipeRatings { get; set; }
    public required string Category { get; set; }
    public Boolean Featured { get; set; } = false;
 }

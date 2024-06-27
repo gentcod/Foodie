@@ -27,11 +27,9 @@ public class CookieBookmarksController : BaseApiController
             "No bookmarks found"
         ));
 
-        IEnumerable<Bookmarks> enumerable = [bookmarks];
-        var bookmarksResult = enumerable.AsQueryable();
-        var data = bookmarksResult.MapBookmarksToDto();
+        var data = bookmarks.MapBookmarksToDto();
 
-        var response = ApiSuccessResponse<IQueryable<BookmarksDto>>.Response(
+        var response = ApiSuccessResponse<BookmarksDto>.Response(
             "success",
             "Bookmarks have been fetched successfully",
             data
@@ -58,9 +56,7 @@ public class CookieBookmarksController : BaseApiController
          )
       );
       
-      IEnumerable<Bookmarks> enumerable = [bookmarks];
-      var bookmarksResult = enumerable.AsQueryable();
-      var data = bookmarksResult.MapBookmarksToDto();
+      var data = bookmarks.MapBookmarksToDto();
 
       return CreatedAtRoute("GetBookmark", data);
    }
@@ -85,11 +81,9 @@ public class CookieBookmarksController : BaseApiController
          )
       );
       
-      IEnumerable<Bookmarks> enumerable = [bookmarks];
-      var bookmarksResult = enumerable.AsQueryable();
-      var data = bookmarksResult.MapBookmarksToDto();
+      var data = bookmarks.MapBookmarksToDto();
       return Ok(
-         ApiSuccessResponse<IQueryable<BookmarksDto>>.Response(
+         ApiSuccessResponse<BookmarksDto>.Response(
             "success",
             "Bookmark has been added successfully",
             data
@@ -109,7 +103,6 @@ public class CookieBookmarksController : BaseApiController
          Response.Cookies.Delete("userId");
          return null;
       }
-
 
       var bookmarkStr = Request.Cookies["bookmarks"];
       if (bookmarkStr == null) return null;

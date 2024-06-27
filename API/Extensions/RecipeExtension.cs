@@ -54,7 +54,7 @@ public static class RecipeExtension
          ImageSrc = rec.ImageSrc,
          CookTime = $"{rec.CookTime} mins",
          Origin = rec.Origin,
-         Rating = rec.Rating,
+         RatingNum = rec.RatingNum,
          Category = rec.Category,
          Featured = rec.Featured,
       });
@@ -72,7 +72,7 @@ public static class RecipeExtension
          CookTime = $"{recipe.CookTime} mins",
          DateAdded = recipe.DateAdded.ToString("dddd, dd MMMM yyyy"),
          Origin = recipe.Origin,
-         Rating = recipe.Rating,
+         RatingNum = recipe.RatingNum,
          Category = recipe.Category,
          Featured = recipe.Featured,
       };

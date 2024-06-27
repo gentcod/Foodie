@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Authorization;
 using API.RequestHelpers;
+using System.Security.Claims;
 
 namespace API.Controllers;
 public class RecipeRatingsController : BaseApiController
@@ -18,33 +19,24 @@ public class RecipeRatingsController : BaseApiController
 
     }
 
-    [HttpGet(Name = "recipeRating")] //It returns all the individual recipe ratings
-    public async Task<ActionResult> GetRecipeRatings()
+    [HttpGet(Name = "recipeRating")]
+    public async Task<ActionResult> GetRecipeRatings([FromQuery] PaginationParams paginationParams)
     {
-        var recipes = await _context.Recipes.ToListAsync();
-        var recipesRatings = await _context.RecipeRatings.ToListAsync();
+        var query = _context.RecipeRatings.Include(r => r.Recipe).AsQueryable();
+        var recipesRatingsDto = query.MapRecipesRatingsToDto();
 
-        var recipesRatingsDto = recipesRatings.MapRecipesRatingsToDto(recipes);
+        var paginatedResponse = await PagedList<ListedRecipeRatingsDto>.ToPagedList(
+            recipesRatingsDto, 
+            paginationParams.PageNumber, 
+            paginationParams.PageSize
+        );
 
-        return Ok(ApiSuccessResponse<IEnumerable<RecipeRatingsDto>>.Response(
+        Response.AddPaginationHeader(paginatedResponse.MetaData);
+        
+        return Ok(ApiSuccessResponse<PagedList<ListedRecipeRatingsDto>>.Response(
             "success",
             "Recipes ratings fetched successfully",
-            recipesRatingsDto
-        ));
-    }
-
-    [HttpGet("agg", Name = "agg")] //It returns an aggregated recipe list w
-    public async Task<ActionResult> GetRecipesAgg()
-    {
-        var recipes = await _context.Recipes.ToListAsync();
-        var recipesRatings = await _context.RecipeRatings.ToListAsync();
-
-        var recipesRatingsDto = recipesRatings.MapRecipesRatingsAggregatorToDto(recipes);
-
-        return Ok(ApiSuccessResponse<IEnumerable<RecipeRatingsDto>>.Response(
-            "success",
-            "Aggregated recipes ratings fetched successfully",
-            recipesRatingsDto
+            paginatedResponse
         ));
     }
 
@@ -57,11 +49,17 @@ public class RecipeRatingsController : BaseApiController
             "Recipe not found"
         ));
 
-        var recipeRatings = await _context.RecipeRatings.Where(el => el.RecipeId == recipeId).ToListAsync();
+        var recipeRatings = await _context.RecipeRatings
+            .Include(rec => rec.Ratings)
+            .FirstOrDefaultAsync(el => el.RecipeId == recipeId);
+        if (recipeRatings == null) return BadRequest(ApiErrorResponse.Response(
+            "error",
+            "Recipe rating not found"
+        ));
 
         var recipeRatingsDto = recipeRatings.MapRecipeRatingsToDto(recipe);
 
-        return Ok(ApiSuccessResponse<IEnumerable<RecipeRatingsDto>>.Response(
+        return Ok(ApiSuccessResponse<RecipeRatingsDto>.Response(
             "success",
             "Recipe ratings fetched successfully",
             recipeRatingsDto
@@ -83,32 +81,82 @@ public class RecipeRatingsController : BaseApiController
             "Recipe not found"
         ));
 
-        var recipeRatings = await _context.RecipeRatings.Where(el => el.RecipeId == recipeId).ToListAsync();
-        if (recipeRatings == null) recipeRatings ??= new List<RecipeRating>();
+        var recipeRatings = await _context.RecipeRatings
+            .FirstOrDefaultAsync(el => el.RecipeId == recipeId)
+    ;
+        recipeRatings ??= new RecipeRatings();
 
-        recipeRatings.Add(new RecipeRating
+        recipeRatings.AddRating(new Rating
         {
+            UserId = GetUserId(),
             RatingNum = ratingDto.RatingNum,
             Comment = ratingDto.Comment,
         });
 
         recipe.RecipeRatings = recipeRatings;
-        recipe.Rating = Math.Round(recipeRatings.Average(rating => rating.RatingNum), 1); ;
+        recipe.RatingNum = recipeRatings.Ratings.Average(rating => rating.RatingNum);
 
         _context.Recipes.Update(recipe);
         var result = _context.SaveChangesAsync();
-        var response = ApiSuccessResponse<IEnumerable<RecipeRatingsDto>>.Response(
+        var response = ApiSuccessResponse<RecipeRatingsDto>.Response(
             "success",
-            "Recipe rating added successfully",
-            recipeRatings.MapRecipeRatingsToDto(recipe)
+            "Recipe rating has been added successfully",
+            recipeRatings.MapRecipeRatingsToDto(recipe!)
         );
         if (result != null) return CreatedAtRoute("recipeRating", response);
 
         return BadRequest(ApiErrorResponse.Response(
             "error",
-            "Problem adding Recipe Rating"
+            "Problem adding recipe rating"
         ));
     }
-}
 
-// TODO: Return Ratings for Recipe and Restaurant as PagedList
+    [Authorize]
+    [HttpPost("remove")]
+    public async Task<ActionResult> Remove([BindRequired][FromQuery] int recipeId)
+    {
+        var recipe = await _context.Recipes.FirstOrDefaultAsync(el => el.Id == recipeId);
+        if (recipe == null) return NotFound(ApiErrorResponse.Response(
+            "error",
+            "Recipe not found"
+        ));
+
+        var recipeRatings = await _context.RecipeRatings.FirstOrDefaultAsync(el => el.RecipeId == recipe.Id);
+        if (recipeRatings == null) return BadRequest(ApiErrorResponse.Response(
+            "error",
+            "Recipe rating not found"
+        ));
+
+        var userId = GetUserId();
+        var userRating = recipeRatings.Ratings.FirstOrDefault(rating => rating.UserId == userId);
+        if (userRating == null) return NotFound(ApiErrorResponse.Response(
+            "error",
+            "User rating not found"
+        ));
+
+        recipeRatings.RemoveRating(userId);
+        var result = await _context.SaveChangesAsync() > 0;
+        if (result)
+        {
+            return Ok(
+                ApiSuccessResponse<RecipeRatingsDto>.Response(
+                    "success",
+                    "Recipe rating has been removed successfully",
+                    recipeRatings.MapRecipeRatingsToDto(recipe!)
+                )
+            );
+        }
+
+        return BadRequest(ApiErrorResponse.Response(
+            "error",
+            "Problem removing recipe rating"
+        ));
+    }
+
+    private string GetUserId()
+    {
+        var userIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
+        return userIdClaim.Value;
+    }
+
+}

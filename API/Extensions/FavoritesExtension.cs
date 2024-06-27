@@ -4,30 +4,30 @@ using API.Models;
 namespace API.Extensions;
 public static class FavoritesExtension
 {
-    public static IQueryable<FavoritesDto> MapFavoritesToDto(this IQueryable<Favorites> favorites)
+    public static FavoritesDto MapFavoritesToDto(this Favorites favorites)
     {
-        return favorites.Select(fav => new FavoritesDto
+        return new FavoritesDto
         {
-            Id = fav.Id,
-            UserId = fav.UserId,
-            TotalFavRecipes = fav.TotalFavRecipes,
-            TotalFavRestaurants = fav.TotalFavRestaurants,
-            Recipes = fav.Recipes != null ? 
-            fav.Recipes.Select(rec => new EmbeddedDto
+            Id = favorites.Id,
+            UserId = favorites.UserId,
+            TotalFavRecipes = favorites.TotalFavRecipes,
+            TotalFavRestaurants = favorites.TotalFavRestaurants,
+            Recipes = favorites.Recipes != null ? 
+            favorites.Recipes.Select(rec => new EmbeddedDto
             {
                 Id = rec.RecipeId,
                 Name = rec.Recipe.Name,
                 ImageSrc = rec.Recipe.ImageSrc,
             }).ToList()
             : new List<EmbeddedDto>(),
-            Restaurants = fav.Restaurants != null ?
-            fav.Restaurants.Select(rec => new EmbeddedDto
+            Restaurants = favorites.Restaurants != null ?
+            favorites.Restaurants.Select(rec => new EmbeddedDto
             {
                 Id = rec.RestaurantId,
                 Name = rec.Restaurant.Name,
-                ImageSrc = rec.Restaurant.ImgSrc,
+                ImageSrc = rec.Restaurant.ImageSrc,
             }).ToList()
             : new List<EmbeddedDto>(),
-        });
+        };
     }
 }

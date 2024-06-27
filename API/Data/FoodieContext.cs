@@ -15,8 +15,8 @@ namespace API.Data
         public DbSet<Bookmarks> Bookmarks { get; set; }
         public DbSet<Favorites> Favorites { get; set; }
         public DbSet<Bearing> Bearing { get; set; }
-        public DbSet<RecipeRating> RecipeRatings { get; set; }
-        public DbSet<RestaurantRating> RestaurantRatings { get; set; }
+        public DbSet<RecipeRatings> RecipeRatings { get; set; }
+        public DbSet<RestaurantRatings> RestaurantRatings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
