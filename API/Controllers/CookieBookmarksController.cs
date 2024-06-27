@@ -124,14 +124,14 @@ public class CookieBookmarksController : BaseApiController
       var bookmark = new Bookmarks { };
       var cookieOptions = new CookieOptions { IsEssential = true, Expires = DateTime.Now.AddDays(7) };
 
-
+      _ = Guid.TryParse(userId, out var validId);
       if (string.IsNullOrEmpty(userId))
       {
          var userIdName = Guid.NewGuid().ToString();
          Response.Cookies.Append("userId", userIdName, cookieOptions);
       }
 
-      bookmark.UserId = userId;
+      bookmark.UserId = validId;
       var bookmarkStr = JsonConvert.SerializeObject(bookmark);
       Response.Cookies.Append("bookmarks", bookmarkStr, cookieOptions);
       return bookmark;

@@ -69,8 +69,15 @@ public class RestaurantRatingsController : BaseApiController
 
     [Authorize]
     [HttpPost("add")]
-    public async Task<ActionResult<Restaurant>> AddRating(RatingDto ratingDto, [BindRequired][FromQuery] int restaurantId)
+    public async Task<ActionResult> AddRating([BindRequired]RatingDto ratingDto, [BindRequired][FromQuery] int restaurantId)
     {
+        _ = Guid.TryParse(GetUserId(), out var userId);
+        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
+        if (user == null) return NotFound(ApiErrorResponse.Response(
+            "error",
+            "User account not found"
+        ));
+
         if (ratingDto.RatingNum < 1 || ratingDto.RatingNum > 5) return BadRequest(ApiErrorResponse.Response(
             "error",
             "Rating number is out of range"
@@ -82,27 +89,42 @@ public class RestaurantRatingsController : BaseApiController
             "Restaurant not found"
         ));
 
-        var restaurantRatings = await _context.RestaurantRatings.FirstOrDefaultAsync(el => el.RestaurantId == restaurant.Id);
-        restaurantRatings ??= new RestaurantRatings();
+        var restaurantRatings = await _context.RestaurantRatings
+            .Include(el => el.Ratings)
+            .FirstOrDefaultAsync(el => el.RestaurantId == restaurantId);
 
+        if (restaurantRatings != null && restaurantRatings.Ratings != null)
+        {
+            var existingRating = restaurantRatings.Ratings.FirstOrDefault(el => el.UserId == userId);
+            if (existingRating != null && restaurantRatings.RestaurantId == restaurantId) return BadRequest(ApiErrorResponse.Response(
+                    "error",
+                    "Restaurant rating has been previously added"
+                ));
+        }
+
+        restaurantRatings ??= new RestaurantRatings();      
         restaurantRatings.AddRating(new Rating
         {
-            UserId = GetUserId(),
+            User = user,
             RatingNum = ratingDto.RatingNum,
             Comment = ratingDto.Comment,
         });
 
         restaurant.RestaurantRatings = restaurantRatings;
-        restaurant.RatingNum = Math.Round(restaurantRatings.Ratings.Average(rating => rating.RatingNum), 1);
+        var newRatingNum = restaurantRatings.Ratings.Average(rating => rating.RatingNum);
+        restaurant.RatingNum = newRatingNum;
 
         _context.Restaurants.Update(restaurant);
-        var result = _context.SaveChangesAsync();
-        var response = ApiSuccessResponse<RestaurantRatingsDto>.Response(
-            "success",
-            "Restaurant rating has been added successfully",
-            restaurantRatings.MapRestaurantRatingsToDto(restaurant)
-        );
-        if (result != null) return CreatedAtRoute("restaurantRating", response);
+        var result = await _context.SaveChangesAsync() > 0;
+        if (result) 
+        {
+            var response = ApiSuccessResponse<RestaurantRatingsDto>.Response(
+                "success",
+                "Restaurant rating has been added successfully",
+                restaurantRatings.MapRestaurantRatingsToDto(restaurant)
+            );
+            return CreatedAtRoute("restaurantRating", response);
+        }
 
         return BadRequest(ApiErrorResponse.Response(
             "error",
@@ -115,26 +137,48 @@ public class RestaurantRatingsController : BaseApiController
     [HttpPost("remove")]
     public async Task<ActionResult> Remove([BindRequired][FromQuery] int restaurantId)
     {
+        _ = Guid.TryParse(GetUserId(), out var userId);
+        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
+        if (user == null) return NotFound(ApiErrorResponse.Response(
+            "error",
+            "User account not found"
+        ));
+
         var restaurant = await _context.Restaurants.FirstOrDefaultAsync(el => el.Id == restaurantId);
         if (restaurant == null) return NotFound(ApiErrorResponse.Response(
             "error",
             "Restaurant not found"
         ));
 
-        var restaurantRatings = await _context.RestaurantRatings.FirstOrDefaultAsync(el => el.RestaurantId == restaurant.Id);
+        var restaurantRatings = await _context.RestaurantRatings
+            .Include(el => el.Ratings)
+            .FirstOrDefaultAsync(el => el.RestaurantId == restaurant.Id);
         if (restaurantRatings == null) return BadRequest(ApiErrorResponse.Response(
             "error",
             "Restaurant rating not found"
         ));
 
-        var userId = GetUserId();
-        var userRating = restaurantRatings.Ratings.FirstOrDefault(rating => rating.UserId == userId);
-        if (userRating == null) return NotFound(ApiErrorResponse.Response(
-            "error",
-            "User rating not found"
-        ));
+        if (restaurantRatings.Ratings != null)
+        {
+            var existingRating = restaurantRatings.Ratings.FirstOrDefault(el => el.UserId == userId);
+            if (existingRating == null) return NotFound(ApiErrorResponse.Response(
+                    "error",
+                    "User rating not found"
+                ));
+        }
 
         restaurantRatings.RemoveRating(userId);
+
+        double newRatingNum = restaurantRatings.Ratings.Any() ? 
+            restaurantRatings.Ratings.Average(rating => rating.RatingNum)
+            :0;
+        restaurant.RatingNum = newRatingNum;
+        restaurant.RestaurantRatings = restaurantRatings;
+
+        var removedRating = await _context.Ratings.FirstOrDefaultAsync(el => el.UserId == userId);
+
+        _context.Restaurants.Update(restaurant);
+        _context.Ratings.Remove(removedRating);
         var result = await _context.SaveChangesAsync() > 0;
         if (result)
         {

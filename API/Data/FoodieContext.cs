@@ -14,9 +14,13 @@ namespace API.Data
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Bookmarks> Bookmarks { get; set; }
         public DbSet<Favorites> Favorites { get; set; }
-        public DbSet<Bearing> Bearing { get; set; }
+        public DbSet<Bearing> Bearings { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
         public DbSet<RecipeRatings> RecipeRatings { get; set; }
         public DbSet<RestaurantRatings> RestaurantRatings { get; set; }
+#pragma warning disable CS0114 // Member hides inherited member; missing override keyword
+        public DbSet<User> Users { get; set; }
+#pragma warning restore CS0114 // Member hides inherited member; missing override keyword
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

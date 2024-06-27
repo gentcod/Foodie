@@ -8,16 +8,13 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Authorization;
 using API.RequestHelpers;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Controllers;
-public class RecipeRatingsController : BaseApiController
+public class RecipeRatingsController(FoodieContext context, UserManager<User> userManager) : BaseApiController
 {
-    private readonly FoodieContext _context;
-    public RecipeRatingsController(FoodieContext context)
-    {
-        _context = context;
-
-    }
+    private readonly FoodieContext _context = context;
+    private readonly UserManager<User> _userManager = userManager;
 
     [HttpGet(Name = "recipeRating")]
     public async Task<ActionResult> GetRecipeRatings([FromQuery] PaginationParams paginationParams)
@@ -26,13 +23,13 @@ public class RecipeRatingsController : BaseApiController
         var recipesRatingsDto = query.MapRecipesRatingsToDto();
 
         var paginatedResponse = await PagedList<ListedRecipeRatingsDto>.ToPagedList(
-            recipesRatingsDto, 
-            paginationParams.PageNumber, 
+            recipesRatingsDto,
+            paginationParams.PageNumber,
             paginationParams.PageSize
         );
 
         Response.AddPaginationHeader(paginatedResponse.MetaData);
-        
+
         return Ok(ApiSuccessResponse<PagedList<ListedRecipeRatingsDto>>.Response(
             "success",
             "Recipes ratings fetched successfully",
@@ -68,8 +65,15 @@ public class RecipeRatingsController : BaseApiController
 
     [Authorize]
     [HttpPost("add")]
-    public async Task<ActionResult<RecipeRatingsDto>> AddRating(RatingDto ratingDto, [BindRequired][FromQuery] int recipeId)
+    public async Task<ActionResult> AddRating([BindRequired] RatingDto ratingDto, [BindRequired][FromQuery] int recipeId)
     {
+        _ = Guid.TryParse(GetUserId(), out var userId);
+        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
+        if (user == null) return NotFound(ApiErrorResponse.Response(
+            "error",
+            "User account not found"
+        ));
+
         if (ratingDto.RatingNum < 1 || ratingDto.RatingNum > 5) return BadRequest(ApiErrorResponse.Response(
             "error",
             "Rating number is out of range"
@@ -82,28 +86,40 @@ public class RecipeRatingsController : BaseApiController
         ));
 
         var recipeRatings = await _context.RecipeRatings
-            .FirstOrDefaultAsync(el => el.RecipeId == recipeId)
-    ;
-        recipeRatings ??= new RecipeRatings();
+            .Include(el => el.Ratings)
+            .FirstOrDefaultAsync(el => el.RecipeId == recipeId);
 
+        if (recipeRatings != null && recipeRatings.Ratings != null)
+        {
+            var existingRating = recipeRatings.Ratings.FirstOrDefault(el => el.UserId == userId);
+            if (existingRating != null && recipeRatings.RecipeId == recipeId) return BadRequest(ApiErrorResponse.Response(
+                    "error",
+                    "Recipe rating has been previously added"
+                ));
+        }
+
+        recipeRatings ??= new RecipeRatings();
         recipeRatings.AddRating(new Rating
         {
-            UserId = GetUserId(),
+            User = user,
             RatingNum = ratingDto.RatingNum,
             Comment = ratingDto.Comment,
         });
 
         recipe.RecipeRatings = recipeRatings;
-        recipe.RatingNum = recipeRatings.Ratings.Average(rating => rating.RatingNum);
+        var newRatingNum = recipeRatings.Ratings.Average(rating => rating.RatingNum);
+        recipe.RatingNum = newRatingNum;
 
-        _context.Recipes.Update(recipe);
-        var result = _context.SaveChangesAsync();
-        var response = ApiSuccessResponse<RecipeRatingsDto>.Response(
-            "success",
-            "Recipe rating has been added successfully",
-            recipeRatings.MapRecipeRatingsToDto(recipe!)
-        );
-        if (result != null) return CreatedAtRoute("recipeRating", response);
+        var result = await _context.SaveChangesAsync() > 0;
+        if (result)
+        {
+            var response = ApiSuccessResponse<RecipeRatingsDto>.Response(
+                "success",
+                "Recipe rating has been added successfully",
+                recipeRatings.MapRecipeRatingsToDto(recipe!)
+            );
+            return CreatedAtRoute("recipeRating", response);
+        }
 
         return BadRequest(ApiErrorResponse.Response(
             "error",
@@ -115,26 +131,48 @@ public class RecipeRatingsController : BaseApiController
     [HttpPost("remove")]
     public async Task<ActionResult> Remove([BindRequired][FromQuery] int recipeId)
     {
+        _ = Guid.TryParse(GetUserId(), out var userId);
+        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
+        if (user == null) return NotFound(ApiErrorResponse.Response(
+            "error",
+            "User account not found"
+        ));
+
         var recipe = await _context.Recipes.FirstOrDefaultAsync(el => el.Id == recipeId);
         if (recipe == null) return NotFound(ApiErrorResponse.Response(
             "error",
             "Recipe not found"
         ));
 
-        var recipeRatings = await _context.RecipeRatings.FirstOrDefaultAsync(el => el.RecipeId == recipe.Id);
+        var recipeRatings = await _context.RecipeRatings
+            .Include(el => el.Ratings)
+            .FirstOrDefaultAsync(el => el.RecipeId == recipe.Id);
         if (recipeRatings == null) return BadRequest(ApiErrorResponse.Response(
             "error",
             "Recipe rating not found"
         ));
 
-        var userId = GetUserId();
-        var userRating = recipeRatings.Ratings.FirstOrDefault(rating => rating.UserId == userId);
-        if (userRating == null) return NotFound(ApiErrorResponse.Response(
-            "error",
-            "User rating not found"
-        ));
+        if (recipeRatings.Ratings != null)
+        {
+            var existingRating = recipeRatings.Ratings.FirstOrDefault(el => el.UserId == userId);
+            if (existingRating == null) return NotFound(ApiErrorResponse.Response(
+                    "error",
+                    "User rating not found"
+                ));
+        }
 
         recipeRatings.RemoveRating(userId);
+
+        double newRatingNum = recipeRatings.Ratings.Any() ? 
+            recipeRatings.Ratings.Average(rating => rating.RatingNum)
+            :0;
+        recipe.RatingNum = newRatingNum;
+        recipe.RecipeRatings = recipeRatings;
+
+        var removedRating = await _context.Ratings.FirstOrDefaultAsync(el => el.UserId == userId);
+
+        _context.Recipes.Update(recipe);
+        _context.Ratings.Remove(removedRating);
         var result = await _context.SaveChangesAsync() > 0;
         if (result)
         {

@@ -29,7 +29,7 @@ public static class RecipeRatingsExtension
             recipe.RecipeRatings.Ratings.Select(rating => new RecipeRatingDto
             {
                 RatingId = rating.Id,
-                UserId = rating.UserId,
+                UserId = rating.UserId.ToString(),
                 RatingNum = rating.RatingNum,
                 Comment = rating.Comment,
             }).ToList()

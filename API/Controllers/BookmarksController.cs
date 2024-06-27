@@ -44,8 +44,16 @@ public class BookmarksController : BaseApiController
     [HttpPost("add")]
     public async Task<ActionResult> Add([BindRequired][FromQuery] BookmarkParams bookmarkParam)
     {
+        _ = Guid.TryParse(GetUserId(), out var userId);
+        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
+        if (user == null) return NotFound(ApiErrorResponse.Response(
+            "error",
+            "User not found"
+        ));
+
         var bookmarks = await RetrieveBookmarks(GetUserId());
         bookmarks ??= CreateBookmarks(GetUserId());
+
 
         var recipe = await _context.Recipes.FindAsync(bookmarkParam.RecipeId);
         if (recipe == null) return BadRequest(ApiErrorResponse.Response(
@@ -87,6 +95,13 @@ public class BookmarksController : BaseApiController
     [HttpPost("remove")]
     public async Task<ActionResult> Remove([BindRequired][FromQuery] BookmarkParams bookmarkParam)
     {
+         _ = Guid.TryParse(GetUserId(), out var userId);
+        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
+        if (user == null) return NotFound(ApiErrorResponse.Response(
+            "error",
+            "User not found"
+        ));
+
         Bookmarks bookmarks = await RetrieveBookmarks(GetUserId());
 
         if (bookmarks == null) return NotFound(ApiErrorResponse.Response(
@@ -133,15 +148,17 @@ public class BookmarksController : BaseApiController
 
     private async Task<Bookmarks> RetrieveBookmarks(string userId)
     {
+        _ = Guid.TryParse(userId, out var validId);
         return await _context.Bookmarks
                 .Include(b => b.Recipes)
                 .ThenInclude(r => r.Recipe)
-                .FirstOrDefaultAsync(bookmark => bookmark.UserId == userId);
+                .FirstOrDefaultAsync(bookmark => bookmark.UserId == validId);
     }
 
     private Bookmarks CreateBookmarks(string userId)
     {
-        var bookmark = new Bookmarks { UserId = userId };
+         _ = Guid.TryParse(userId, out var validId);
+        var bookmark = new Bookmarks { UserId = validId };
         _context.Bookmarks.Add(bookmark);
         return bookmark;
     }

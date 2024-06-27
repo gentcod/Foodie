@@ -70,7 +70,7 @@ public class AccountController(FoodieContext context, UserManager<User> userMana
 
         var user = new User
         {
-            UserId = Guid.NewGuid().ToString(),
+            UserId = Guid.NewGuid(),
             UserName = userSignupDto.Username,
             Name = $"{userSignupDto.FirstName} {userSignupDto.LastName}",
             Email = userSignupDto.Email,

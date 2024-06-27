@@ -44,7 +44,7 @@ namespace API.Data.Migrations
                     b.HasIndex("RestaurantId")
                         .IsUnique();
 
-                    b.ToTable("Bearing");
+                    b.ToTable("Bearings");
                 });
 
             modelBuilder.Entity("API.Models.Bookmarks", b =>
@@ -58,8 +58,8 @@ namespace API.Data.Migrations
                     b.Property<int>("TotalBookmarks")
                         .HasColumnType("integer");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -80,8 +80,8 @@ namespace API.Data.Migrations
                     b.Property<int>("TotalFavRestaurants")
                         .HasColumnType("integer");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -108,8 +108,8 @@ namespace API.Data.Migrations
                     b.Property<int?>("RestaurantRatingsId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.Property<int?>("UserId1")
                         .HasColumnType("integer");
@@ -122,7 +122,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("UserId1");
 
-                    b.ToTable("Rating");
+                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("API.Models.Recipe", b =>
@@ -406,8 +406,8 @@ namespace API.Data.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)

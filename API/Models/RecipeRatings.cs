@@ -12,12 +12,9 @@ public class RecipeRatings
     {
         Ratings ??= [];
 
-        var existingRating = Ratings.FirstOrDefault(el => el.UserId == rating.UserId);
-        if (existingRating != null) return;
-
         Ratings.Add(new Rating
         {
-            UserId = rating.UserId,
+            UserId = rating.User.UserId,
             RatingNum = rating.RatingNum,
             Comment = rating.Comment,
         });
@@ -25,7 +22,7 @@ public class RecipeRatings
         TotalRatings = Ratings.Count;
     }
 
-    public void RemoveRating(string userId)
+    public void RemoveRating(Guid userId)
     {
         var rating = Ratings.FirstOrDefault(el => el.UserId == userId);
         if (rating == null) return;
