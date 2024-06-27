@@ -8,16 +8,11 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 
 namespace API.Controllers;
-public class CookieBookmarksController : BaseApiController
+public class CookieBookmarksController(FoodieContext context) : BaseApiController
 {
-   private readonly FoodieContext _context;
+   private readonly FoodieContext _context = context;
 
-   public CookieBookmarksController(FoodieContext context)
-   {
-      _context = context;
-   }
-
-   [HttpGet(Name = "GetCookieBookmark")]
+    [HttpGet(Name = "GetCookieBookmark")]
    public ActionResult GetCookiesBookMarks()
    {
       Bookmarks bookmarks = RetrieveCookiesBookmarks(GetUserId());
@@ -125,16 +120,15 @@ public class CookieBookmarksController : BaseApiController
       var cookieOptions = new CookieOptions { IsEssential = true, Expires = DateTime.Now.AddDays(7) };
 
       _ = Guid.TryParse(userId, out var validId);
+      var bookUserId = string.IsNullOrEmpty(userId) ? Guid.NewGuid() : validId;
       if (string.IsNullOrEmpty(userId))
       {
-         var userIdName = Guid.NewGuid().ToString();
-         Response.Cookies.Append("userId", userIdName, cookieOptions);
+         Response.Cookies.Append("userId", bookUserId.ToString(), cookieOptions);
       }
 
-      bookmark.UserId = validId;
+      bookmark.UserId = bookUserId;
       var bookmarkStr = JsonConvert.SerializeObject(bookmark);
       Response.Cookies.Append("bookmarks", bookmarkStr, cookieOptions);
       return bookmark;
-
    }
 }

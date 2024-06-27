@@ -1,6 +1,5 @@
 using API.DTOs;
 using API.Models;
-using API.Models.References;
 
 namespace API.Extensions;
 public static class BookmarksExtension

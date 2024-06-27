@@ -12,15 +12,9 @@ using System.Security.Claims;
 namespace API.Controllers;
 
 [Authorize]
-public class BookmarksController : BaseApiController
+public class BookmarksController(FoodieContext context) : BaseApiController
 {
-    private readonly FoodieContext _context;
-
-    public BookmarksController(FoodieContext context)
-    {
-        _context = context;
-    }
-
+    private readonly FoodieContext _context = context;
 
     [HttpGet(Name = "GetBookmark")]
     public async Task<ActionResult> GetBookMark()

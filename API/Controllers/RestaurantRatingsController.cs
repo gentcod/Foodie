@@ -10,14 +10,9 @@ using API.RequestHelpers;
 using System.Security.Claims;
 
 namespace API.Controllers;
-public class RestaurantRatingsController : BaseApiController
+public class RestaurantRatingsController(FoodieContext context) : BaseApiController
 {
-    private readonly FoodieContext _context;
-    public RestaurantRatingsController(FoodieContext context)
-    {
-        _context = context;
-
-    }
+    private readonly FoodieContext _context = context;
 
     [HttpGet(Name = "restaurantRating")]
     public async Task<ActionResult> GetRestaurantRatings([FromQuery] PaginationParams paginationParams)

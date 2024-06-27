@@ -4,12 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
-   public class FoodieContext : IdentityDbContext<User, Role, int>
+   public class FoodieContext(DbContextOptions options) : IdentityDbContext<User, Role, int>(options)
     {
-        public FoodieContext(DbContextOptions options) : base(options)
-        {
-        }
-
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Bookmarks> Bookmarks { get; set; }

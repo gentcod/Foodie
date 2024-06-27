@@ -8,13 +8,11 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Authorization;
 using API.RequestHelpers;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
 
 namespace API.Controllers;
-public class RecipeRatingsController(FoodieContext context, UserManager<User> userManager) : BaseApiController
+public class RecipeRatingsController(FoodieContext context) : BaseApiController
 {
     private readonly FoodieContext _context = context;
-    private readonly UserManager<User> _userManager = userManager;
 
     [HttpGet(Name = "recipeRating")]
     public async Task<ActionResult> GetRecipeRatings([FromQuery] PaginationParams paginationParams)

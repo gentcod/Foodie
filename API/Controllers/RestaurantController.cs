@@ -7,13 +7,9 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using API.RequestHelpers;
 
 namespace API.Controllers;
-public class RestaurantController : BaseApiController
+public class RestaurantController(FoodieContext context) : BaseApiController
 {
-    private readonly FoodieContext _context;
-    public RestaurantController(FoodieContext context)
-    {
-        _context = context;
-    }
+    private readonly FoodieContext _context = context;
 
     [HttpGet(Name = "GetRestaurants")]
     public async Task<ActionResult> GetRestaurants([FromQuery]PaginationParams paginationParams)

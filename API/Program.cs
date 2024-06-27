@@ -1,6 +1,4 @@
-using System.Net;
 using System.Text;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Data;
 using API.Middleware;
@@ -8,13 +6,12 @@ using API.Models;
 using API.Token;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-var sqlliteConnString = builder.Configuration.GetConnectionString("DefaultConnection");
+var sqlliteConnString = builder.Configuration.GetConnectionString("SQLiteConnection");
 var pgConnectionString = builder.Configuration.GetConnectionString("PostgresConnection");
 
 // Add services to the container.
@@ -51,15 +48,10 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-//string connString;
-//if (builder.Environment.IsDevelopment()) connString = pgConnectionString;
-//else connString = builder.Configuration.GetConnectionString("DefaultConnection");
-string connString = pgConnectionString;
-
 builder.Services.AddDbContext<FoodieContext>(opt =>
 {
     // opt.UseSqlite(sqlliteConnString);
-    opt.UseNpgsql(connString);
+    opt.UseNpgsql(pgConnectionString);
 });
 builder.Services.AddCors();
 builder.Services.AddIdentityCore<User>(opt =>
@@ -104,7 +96,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors(opt =>
 {
-    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
+    string clientUrl;
+    if (builder.Environment.IsDevelopment()) clientUrl = builder.Configuration["ClientUrl:Dev"];
+    else clientUrl = builder.Configuration["ClientUrl:Prod"];
+    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins(clientUrl);
 });
 
 app.UseHttpsRedirection();
@@ -113,16 +108,9 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers();
+app.UseMiddleware<AuthMiddleware>();
 
-// app.MapWhen(context => context.Request.Path.StartsWithSegments("/api/v1/bookmarks"),
-//     selectedRouteApp =>
-//     {
-//         selectedRouteApp.UseMiddleware<AuthMiddleware>();
-//         selectedRouteApp.UseEndpoints(endpoints => endpoints.MapControllers());
-//         // You can add more middleware or configure pipeline for selected routes here
-//     }
-// );
+app.MapControllers();
 
 var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<FoodieContext>();

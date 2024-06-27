@@ -1,5 +1,4 @@
 namespace API.DTOs;
-
 public class BookmarksDto
 {
     public int Id { get; set; }
