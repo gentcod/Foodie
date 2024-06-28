@@ -9,7 +9,7 @@ public static class FavoritesExtension
         return new FavoritesDto
         {
             Id = favorites.Id,
-            UserId = favorites.UserId,
+            UserId = favorites.UserId.ToString(),
             TotalFavRecipes = favorites.TotalFavRecipes,
             TotalFavRestaurants = favorites.TotalFavRestaurants,
             Recipes = favorites.Recipes != null ? 

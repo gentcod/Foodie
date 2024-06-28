@@ -8,16 +8,11 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 
 namespace API.Controllers;
-public class CookieBookmarksController : BaseApiController
+public class CookieBookmarksController(FoodieContext context) : BaseApiController
 {
-   private readonly FoodieContext _context;
+   private readonly FoodieContext _context = context;
 
-   public CookieBookmarksController(FoodieContext context)
-   {
-      _context = context;
-   }
-
-   [HttpGet(Name = "GetCookieBookmark")]
+    [HttpGet(Name = "GetCookieBookmark")]
    public ActionResult GetCookiesBookMarks()
    {
       Bookmarks bookmarks = RetrieveCookiesBookmarks(GetUserId());
@@ -46,6 +41,15 @@ public class CookieBookmarksController : BaseApiController
 
       var recipe = await _context.Recipes.FindAsync(bookmarkParam.RecipeId);
       if (recipe == null) return NotFound();
+
+      if (bookmarks.Recipes != null)
+      {
+         var existingBookmark = bookmarks.Recipes.FirstOrDefault(rec => rec.RecipeId == recipe.Id);
+         if (existingBookmark != null) return BadRequest(ApiErrorResponse.Response(
+               "error",
+               "Recipe has been previously bookmarked"
+         ));
+      }
 
       bookmarks.AddBookmark(recipe);
       var cookieBookmark = UpdateCookiesBookmark(bookmarks);
@@ -124,17 +128,16 @@ public class CookieBookmarksController : BaseApiController
       var bookmark = new Bookmarks { };
       var cookieOptions = new CookieOptions { IsEssential = true, Expires = DateTime.Now.AddDays(7) };
 
-
+      _ = Guid.TryParse(userId, out var validId);
+      var bookUserId = string.IsNullOrEmpty(userId) ? Guid.NewGuid() : validId;
       if (string.IsNullOrEmpty(userId))
       {
-         var userIdName = Guid.NewGuid().ToString();
-         Response.Cookies.Append("userId", userIdName, cookieOptions);
+         Response.Cookies.Append("userId", bookUserId.ToString(), cookieOptions);
       }
 
-      bookmark.UserId = userId;
+      bookmark.UserId = bookUserId;
       var bookmarkStr = JsonConvert.SerializeObject(bookmark);
       Response.Cookies.Append("bookmarks", bookmarkStr, cookieOptions);
       return bookmark;
-
    }
 }

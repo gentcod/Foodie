@@ -2,51 +2,50 @@ using API.Models;
 using API.HelperFunctions;
 using Microsoft.AspNetCore.Identity;
 
-namespace API.Data
+namespace API.Data;
+public static class DbInitializer
 {
-    public static class DbInitializer
+    public static async Task Initialize(FoodieContext context, UserManager<User> userManager)
     {
-       public static async Task Initialize(FoodieContext context, UserManager<User> userManager)
-       {
-            
-            if (!userManager.Users.Any()) {
-                var user = new User
-                {
-                    UserId = Guid.NewGuid().ToString(),
-                    UserName = "bob",
-                    Email = "bob@test.com"
-                };
 
-                await userManager.CreateAsync(user, "Pa$$w0rd");
-                await userManager.AddToRoleAsync(user, "Member");
-                
-                var admin = new User
-                {
-                    UserId = Guid.NewGuid().ToString(),
-                    UserName = "gentcodAdmin",
-                    Email = "admin@gmail.com",
-                };
+        if (!userManager.Users.Any())
+        {
+            var user = new User
+            {
+                UserId = Guid.NewGuid(),
+                UserName = "bob",
+                Email = "bob@test.com"
+            };
 
-                await userManager.CreateAsync(admin, "Pa$$w0rd");
-                await userManager.AddToRolesAsync(admin, ["Member", "Admin"]);
-            }
+            await userManager.CreateAsync(user, "Pa$$w0rd");
+            await userManager.AddToRoleAsync(user, "Member");
 
-            if (context.Recipes.Any()) return;
+            var admin = new User
+            {
+                UserId = Guid.NewGuid(),
+                UserName = "gentcodAdmin",
+                Email = "admin@gmail.com",
+            };
 
-            var retrievedDataRecipes = new DevDataRecipes();
-            
-            var recipes = retrievedDataRecipes.RetrievedRecipes;
+            await userManager.CreateAsync(admin, "Pa$$w0rd");
+            await userManager.AddToRolesAsync(admin, ["Member", "Admin"]);
+        }
 
-            if (context.Restaurants.Any()) return;
+        if (context.Recipes.Any()) return;
 
-            var retrievedDataRestaurants = new DevDataRestaurants();
+        var retrievedDataRecipes = new DevDataRecipes();
 
-            var restaurants = retrievedDataRestaurants.RetrievedRestaurants;
+        var recipes = retrievedDataRecipes.RetrievedRecipes;
 
-            context.Recipes.AddRange(recipes);
-            context.Restaurants.AddRange(restaurants);
-            context.SaveChanges();
-       }
+        if (context.Restaurants.Any()) return;
+
+        var retrievedDataRestaurants = new DevDataRestaurants();
+
+        var restaurants = retrievedDataRestaurants.RetrievedRestaurants;
+
+        context.Recipes.AddRange(recipes);
+        context.Restaurants.AddRange(restaurants);
+        context.SaveChanges();
     }
-
 }
+

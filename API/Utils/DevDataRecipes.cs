@@ -3,7 +3,7 @@ using API.Models;
 
 namespace API.HelperFunctions;
 /// <summary>
-/// This class helps to read a stream of data from a json file with fields that match the Recipe Object. It returns a list of Recipe Objects
+/// DevDataRecipes helps to read a stream of data from a json file with fields that match the Recipe Object. It returns a list of Recipe Objects
 /// </summary>
 public class DevDataRecipes
 {
@@ -14,9 +14,9 @@ public class DevDataRecipes
       var sepChar = Path.DirectorySeparatorChar;
       string path = $"dev-data{sepChar}recipes.json";
 
-      List<Recipe> source = new List<Recipe>();
+      List<Recipe> source = [];
 
-      using (StreamReader r = new StreamReader(path))
+      using (StreamReader r = new(path))
       {
          string json = r.ReadToEnd();
 

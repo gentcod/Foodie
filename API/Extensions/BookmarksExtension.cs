@@ -1,6 +1,5 @@
 using API.DTOs;
 using API.Models;
-using API.Models.References;
 
 namespace API.Extensions;
 public static class BookmarksExtension
@@ -9,7 +8,7 @@ public static class BookmarksExtension
     {
         return  new BookmarksDto
         {
-            UserId = bookmarks.UserId,
+            UserId = bookmarks.UserId.ToString(),
             TotalBookmarks = bookmarks.TotalBookmarks,
             Recipes = bookmarks.Recipes.Select(rec => new EmbeddedDto
             {

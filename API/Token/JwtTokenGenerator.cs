@@ -17,7 +17,7 @@ public class JwtTokenGenerator(UserManager<User> userManager, IConfiguration con
         var claims = new List<Claim>
             {
                 new(ClaimTypes.Email, user.Email),
-                new(ClaimTypes.NameIdentifier, user.UserId),
+                new(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                 new(ClaimTypes.Expiration, DateTime.Now.AddHours(12).ToString()),
             };
 

@@ -38,6 +38,13 @@ public class FavoritesController(FoodieContext context) : BaseApiController
    [HttpPost("add/recipe")]
    public async Task<ActionResult<Favorites>> AddNewFavoriteRecipe([BindRequired][FromQuery] FavoriteRecipeParams favRecParams)
    {
+      _ = Guid.TryParse(GetUserId(), out var userId);
+      var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
+      if (user == null) return NotFound(ApiErrorResponse.Response(
+         "error",
+         "User not found"
+      ));
+
       var favorites = await InitializeFavorites(GetUserId());
 
       var recipe = await _context.Recipes.FindAsync(favRecParams.RecipeId);
@@ -56,8 +63,8 @@ public class FavoritesController(FoodieContext context) : BaseApiController
       }
 
       favorites.AddFavoriteRecipe(recipe);
-      var result = _context.SaveChangesAsync();
-      if (result != null)
+      var result = await _context.SaveChangesAsync() > 0;
+      if (result)
       {
          var data = favorites.MapFavoritesToDto();
 
@@ -78,6 +85,12 @@ public class FavoritesController(FoodieContext context) : BaseApiController
    [HttpPost("add/restaurant")]
    public async Task<ActionResult> AddNewFavoriteRestaurant([BindRequired][FromQuery] FavoriteRestaurantParams favResParams)
    {
+      _ = Guid.TryParse(GetUserId(), out var userId);
+      var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
+      if (user == null) return NotFound(ApiErrorResponse.Response(
+         "error",
+         "User not found"
+      ));
       var favorites = await InitializeFavorites(GetUserId());
 
       var restaurant = await _context.Restaurants.FindAsync(favResParams.RestaurantId);
@@ -97,8 +110,8 @@ public class FavoritesController(FoodieContext context) : BaseApiController
 
       favorites.AddFavoriteRestaurant(restaurant);
 
-      var result = _context.SaveChangesAsync();
-      if (result != null)
+      var result = await _context.SaveChangesAsync() > 0;
+      if (result)
       {
          var data = favorites.MapFavoritesToDto();
 
@@ -120,6 +133,12 @@ public class FavoritesController(FoodieContext context) : BaseApiController
    [HttpPost("remove/recipe")]
    public async Task<ActionResult> RemoveRecipe([BindRequired][FromQuery] FavoriteRecipeParams favRecParams)
    {
+      _ = Guid.TryParse(GetUserId(), out var userId);
+      var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
+      if (user == null) return NotFound(ApiErrorResponse.Response(
+         "error",
+         "User not found"
+      ));
       var favorites = await RetrieveFavorites(GetUserId());
 
       if (favorites == null) return NotFound(ApiErrorResponse.Response(
@@ -161,6 +180,12 @@ public class FavoritesController(FoodieContext context) : BaseApiController
    [HttpPost("remove/restaurant")]
    public async Task<ActionResult> RemoveRestaurant([BindRequired][FromQuery] FavoriteRestaurantParams favResParams)
    {
+      _ = Guid.TryParse(GetUserId(), out var userId);
+      var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
+      if (user == null) return NotFound(ApiErrorResponse.Response(
+         "error",
+         "User not found"
+      ));
       var favorites = await RetrieveFavorites(GetUserId());
 
       if (favorites == null) return NotFound(ApiErrorResponse.Response(
@@ -213,17 +238,19 @@ public class FavoritesController(FoodieContext context) : BaseApiController
 
    private async Task<Favorites> RetrieveFavorites(string userId)
    {
+      _ = Guid.TryParse(userId, out var validId);
       return await _context.Favorites
                .Include(b => b.Recipes)
                .ThenInclude(r => r.Recipe)
                .Include(f => f.Restaurants)
                .ThenInclude(r => r.Restaurant)
-               .FirstOrDefaultAsync(rec => rec.UserId == userId);
+               .FirstOrDefaultAsync(rec => rec.UserId == validId);
    }
 
    private Favorites CreateFavorites(string userId)
    {
-      var favorites = new Favorites { UserId = userId };
+      _ = Guid.TryParse(userId, out var validId);
+      var favorites = new Favorites { UserId = validId };
       _context.Favorites.Add(favorites);
       return favorites;
    }

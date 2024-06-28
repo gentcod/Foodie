@@ -3,7 +3,7 @@ using API.Models;
 
 namespace API.HelperFunctions;
 /// <summary>
-/// This class helps to read a stream of data from a json file with fields that match the Restaurant Object. It returns a list of Restaurant Objects
+/// DevDataRestaurants helps to read a stream of data from a json file with fields that match the Restaurant Object. It returns a list of Restaurant Objects
 /// </summary>
 public class DevDataRestaurants
 {
@@ -14,9 +14,9 @@ public class DevDataRestaurants
       var sepChar = Path.DirectorySeparatorChar;
       string path = $"dev-data{sepChar}restaurants.json";
 
-      List<Restaurant> source = new List<Restaurant>();
+      List<Restaurant> source = [];
 
-      using (StreamReader r = new StreamReader(path))
+      using (StreamReader r = new(path))
       {
          string json = r.ReadToEnd();
 

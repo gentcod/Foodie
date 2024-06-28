@@ -6,16 +6,16 @@ public class Favorites
     public int Id { get; set; }
     public int TotalFavRecipes { get; set; }
     public int TotalFavRestaurants { get; set; }
-    public string UserId { get; set; }
+    
+    public Guid UserId { get; set; }
+    public User User { get; set; }
+
     public List<FavoriteRecipe> Recipes { get; set; }
     public List<FavoriteRestaurant> Restaurants { get; set; }
 
     public void AddFavoriteRecipe(Recipe recipe)
     {
-        if (Recipes == null) Recipes = new List<FavoriteRecipe>();
-
-        var favorite = Recipes.FirstOrDefault(el => el.RecipeId == recipe.Id);
-        if (favorite != null) return;
+        Recipes ??= [];
 
         Recipes.Add(new FavoriteRecipe
         {
@@ -38,10 +38,7 @@ public class Favorites
 
     public void AddFavoriteRestaurant(Restaurant restaurant)
     {
-        if (Restaurants == null) Restaurants = new List<FavoriteRestaurant>();
-
-        var bookmark = Restaurants.FirstOrDefault(el => el.RestaurantId == restaurant.Id);
-        if (bookmark != null) return;
+        Restaurants ??= [];
 
         Restaurants.Add(new FavoriteRestaurant
         {

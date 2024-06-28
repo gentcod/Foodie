@@ -1,5 +1,4 @@
 namespace API.DTOs;
-
 public class FavoritesDto
 {
     public int Id { get; set; }
