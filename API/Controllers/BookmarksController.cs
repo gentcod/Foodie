@@ -35,8 +35,8 @@ public class BookmarksController(FoodieContext context) : BaseApiController
         ));
     }
 
-    [HttpPost("add")]
-    public async Task<ActionResult> Add([BindRequired][FromQuery] BookmarkParams bookmarkParam)
+    [HttpPost("add/{recipeId}")]
+    public async Task<ActionResult> Add([BindRequired][FromRoute] int recipeId)
     {
         _ = Guid.TryParse(GetUserId(), out var userId);
         var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
@@ -49,7 +49,7 @@ public class BookmarksController(FoodieContext context) : BaseApiController
         bookmarks ??= CreateBookmarks(GetUserId());
 
 
-        var recipe = await _context.Recipes.FindAsync(bookmarkParam.RecipeId);
+        var recipe = await _context.Recipes.FindAsync(recipeId);
         if (recipe == null) return BadRequest(ApiErrorResponse.Response(
             "error",
             "Recipe not found"
@@ -86,8 +86,8 @@ public class BookmarksController(FoodieContext context) : BaseApiController
         );
     }
 
-    [HttpPost("remove")]
-    public async Task<ActionResult> Remove([BindRequired][FromQuery] BookmarkParams bookmarkParam)
+    [HttpDelete("remove/{recipeId}")]
+    public async Task<ActionResult> Remove([BindRequired][FromRoute] int recipeId)
     {
          _ = Guid.TryParse(GetUserId(), out var userId);
         var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
@@ -103,7 +103,7 @@ public class BookmarksController(FoodieContext context) : BaseApiController
             "No bookmarks found"
         ));
 
-        var recipe = bookmarks.Recipes.FirstOrDefault(rec => rec.RecipeId == bookmarkParam.RecipeId);
+        var recipe = bookmarks.Recipes.FirstOrDefault(rec => rec.RecipeId == recipeId);
         if (recipe == null) return NotFound(
             ApiErrorResponse.Response(
                 "error",
@@ -111,7 +111,7 @@ public class BookmarksController(FoodieContext context) : BaseApiController
             )
         );
 
-        bookmarks.RemoveBookmark(bookmarkParam.RecipeId);
+        bookmarks.RemoveBookmark(recipeId);
         var result = await _context.SaveChangesAsync() > 0;
         if (result)
         {

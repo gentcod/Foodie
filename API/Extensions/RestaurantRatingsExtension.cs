@@ -26,7 +26,7 @@ public static class RestaurantRatingsExtension
             RatingNum = restaurant.RatingNum,
             TotalRatings = restaurantRatings.TotalRatings,
             Ratings = restaurantRatings.Ratings != null ?
-            restaurantRatings.Ratings.Select(rating => new RestaurantRatingDto
+            restaurantRatings.Ratings.Select(rating => new RatingResponseDto
             {
                 RatingId = rating.Id,
                 UserId = rating.UserId.ToString(),

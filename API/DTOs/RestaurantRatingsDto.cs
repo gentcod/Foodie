@@ -7,5 +7,5 @@ public class RestaurantRatingsDto
     public double RatingNum { get; set; }
     public int TotalRatings { get; set; }
 
-    public List<RestaurantRatingDto> Ratings { get; set; }
+    public List<RatingResponseDto> Ratings { get; set; }
 }
