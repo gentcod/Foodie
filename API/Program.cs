@@ -108,7 +108,7 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseMiddleware<AuthMiddleware>();
+// app.UseMiddleware<AuthMiddleware>();
 
 app.MapControllers();
 

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(FoodieContext))]
-    [Migration("20240627123927_InitMigration")]
+    [Migration("20240628050101_InitMigration")]
     partial class InitMigration
     {
         /// <inheritdoc />
@@ -66,6 +66,8 @@ namespace API.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Bookmarks");
                 });
 
@@ -87,6 +89,8 @@ namespace API.Data.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Favorites");
                 });
@@ -114,16 +118,13 @@ namespace API.Data.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("RecipeRatingsId");
 
                     b.HasIndex("RestaurantRatingsId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Ratings");
                 });
@@ -248,9 +249,6 @@ namespace API.Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("FavoritesId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("FavoritesNum")
                         .HasColumnType("integer");
 
                     b.Property<int>("RestaurantId")
@@ -540,6 +538,30 @@ namespace API.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("API.Models.Bookmarks", b =>
+                {
+                    b.HasOne("API.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("API.Models.Favorites", b =>
+                {
+                    b.HasOne("API.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("API.Models.Rating", b =>
                 {
                     b.HasOne("API.Models.RecipeRatings", null)
@@ -552,7 +574,10 @@ namespace API.Data.Migrations
 
                     b.HasOne("API.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

@@ -42,6 +42,15 @@ public class CookieBookmarksController(FoodieContext context) : BaseApiControlle
       var recipe = await _context.Recipes.FindAsync(bookmarkParam.RecipeId);
       if (recipe == null) return NotFound();
 
+      if (bookmarks.Recipes != null)
+      {
+         var existingBookmark = bookmarks.Recipes.FirstOrDefault(rec => rec.RecipeId == recipe.Id);
+         if (existingBookmark != null) return BadRequest(ApiErrorResponse.Response(
+               "error",
+               "Recipe has been previously bookmarked"
+         ));
+      }
+
       bookmarks.AddBookmark(recipe);
       var cookieBookmark = UpdateCookiesBookmark(bookmarks);
       if (cookieBookmark == null) return BadRequest(

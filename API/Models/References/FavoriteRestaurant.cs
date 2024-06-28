@@ -3,8 +3,6 @@ public class FavoriteRestaurant
 {
    public int Id { get; set; }
 
-   public int FavoritesNum { get; set; }
-
    public int RestaurantId { get; set; }
    public Restaurant Restaurant { get; set; }
 

@@ -48,9 +48,9 @@ public class RestaurantRatingsController(FoodieContext context) : BaseApiControl
         var restaurantRatings = await _context.RestaurantRatings
             .Include(rec => rec.Ratings)
             .FirstOrDefaultAsync(el => el.RestaurantId == restaurant.Id);
-        if (restaurantRatings == null) return BadRequest(ApiErrorResponse.Response(
+        if (restaurantRatings == null || !restaurantRatings.Ratings.Any()) return BadRequest(ApiErrorResponse.Response(
             "error",
-            "Restaurant rating not found"
+            "Restaurant ratings not found"
         ));
 
         var restaurantRatingsDto = restaurantRatings.MapRestaurantRatingsToDto(restaurant);
@@ -162,15 +162,13 @@ public class RestaurantRatingsController(FoodieContext context) : BaseApiControl
                 ));
         }
 
-        restaurantRatings.RemoveRating(userId);
+        var removedRating = restaurantRatings.RemoveRating(userId);
 
         double newRatingNum = restaurantRatings.Ratings.Any() ? 
             restaurantRatings.Ratings.Average(rating => rating.RatingNum)
             :0;
         restaurant.RatingNum = newRatingNum;
         restaurant.RestaurantRatings = restaurantRatings;
-
-        var removedRating = await _context.Ratings.FirstOrDefaultAsync(el => el.UserId == userId);
 
         _context.Restaurants.Update(restaurant);
         _context.Ratings.Remove(removedRating);

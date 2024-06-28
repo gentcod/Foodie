@@ -22,12 +22,13 @@ public class RecipeRatings
         TotalRatings = Ratings.Count;
     }
 
-    public void RemoveRating(Guid userId)
+    public Rating RemoveRating(Guid userId)
     {
         var rating = Ratings.FirstOrDefault(el => el.UserId == userId);
-        if (rating == null) return;
+        if (rating == null) return null;
 
         Ratings.Remove(rating);
         TotalRatings = Ratings.Count;
+        return rating;
     }
 }

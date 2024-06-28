@@ -29,6 +29,27 @@ namespace API.Data
                     new Role {Id = 1, Name = "Member", NormalizedName = "MEMBER" },
                     new Role {Id = 2, Name = "Admin", NormalizedName = "ADMIN" }
                 );
+
+            builder.Entity<Rating>()
+                .HasOne(r => r.User)
+                .WithMany()
+                .HasForeignKey(r => r.UserId)
+                .HasPrincipalKey(u => u.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Favorites>()
+                .HasOne(r => r.User)
+                .WithMany()
+                .HasForeignKey(r => r.UserId)
+                .HasPrincipalKey(u => u.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Bookmarks>()
+                .HasOne(r => r.User)
+                .WithMany()
+                .HasForeignKey(r => r.UserId)
+                .HasPrincipalKey(u => u.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

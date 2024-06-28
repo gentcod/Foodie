@@ -47,9 +47,9 @@ public class RecipeRatingsController(FoodieContext context) : BaseApiController
         var recipeRatings = await _context.RecipeRatings
             .Include(rec => rec.Ratings)
             .FirstOrDefaultAsync(el => el.RecipeId == recipeId);
-        if (recipeRatings == null) return BadRequest(ApiErrorResponse.Response(
+        if (recipeRatings == null || !recipeRatings.Ratings.Any()) return BadRequest(ApiErrorResponse.Response(
             "error",
-            "Recipe rating not found"
+            "Recipe ratings not found"
         ));
 
         var recipeRatingsDto = recipeRatings.MapRecipeRatingsToDto(recipe);
@@ -159,15 +159,13 @@ public class RecipeRatingsController(FoodieContext context) : BaseApiController
                 ));
         }
 
-        recipeRatings.RemoveRating(userId);
+        var removedRating = recipeRatings.RemoveRating(userId);
 
         double newRatingNum = recipeRatings.Ratings.Any() ? 
             recipeRatings.Ratings.Average(rating => rating.RatingNum)
             :0;
         recipe.RatingNum = newRatingNum;
         recipe.RecipeRatings = recipeRatings;
-
-        var removedRating = await _context.Ratings.FirstOrDefaultAsync(el => el.UserId == userId);
 
         _context.Recipes.Update(recipe);
         _context.Ratings.Remove(removedRating);
@@ -178,7 +176,7 @@ public class RecipeRatingsController(FoodieContext context) : BaseApiController
                 ApiSuccessResponse<RecipeRatingsDto>.Response(
                     "success",
                     "Recipe rating has been removed successfully",
-                    recipeRatings.MapRecipeRatingsToDto(recipe!)
+                    recipeRatings.MapRecipeRatingsToDto(recipe)
                 )
             );
         }

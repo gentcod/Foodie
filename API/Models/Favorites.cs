@@ -6,7 +6,10 @@ public class Favorites
     public int Id { get; set; }
     public int TotalFavRecipes { get; set; }
     public int TotalFavRestaurants { get; set; }
+    
     public Guid UserId { get; set; }
+    public User User { get; set; }
+
     public List<FavoriteRecipe> Recipes { get; set; }
     public List<FavoriteRestaurant> Restaurants { get; set; }
 

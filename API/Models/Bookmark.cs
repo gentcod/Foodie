@@ -7,6 +7,8 @@ public class Bookmarks
     public int TotalBookmarks { get; set; }
 
     public Guid UserId { get; set; }
+    public User User { get; set; }
+
     public List<BookmarkItem> Recipes { get; set; }
 
     public void AddBookmark(Recipe recipe)
