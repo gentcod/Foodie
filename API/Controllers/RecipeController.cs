@@ -51,7 +51,7 @@ public class RecipeController(FoodieContext context) : BaseApiController
    }
 
    [HttpGet("{recipeId}")]
-   public async Task<ActionResult> GetRecipeById([BindRequired] int recipeId)
+   public async Task<ActionResult> GetRecipeById([BindRequired][FromRoute] int recipeId)
    {
       var recipe = await _context.Recipes.FirstOrDefaultAsync(rec => rec.Id == recipeId);
 

@@ -29,7 +29,7 @@ public class RestaurantController(FoodieContext context) : BaseApiController
     }
 
     [HttpGet("{restaurantId}")]
-    public async Task<ActionResult> GetRestaurantById([BindRequired] int restaurantId)
+    public async Task<ActionResult> GetRestaurantById([BindRequired][FromRoute] int restaurantId)
     {
         var restaurant = await _context.Restaurants.Include(el => el.Geolocation)
               .FirstOrDefaultAsync(res => res.Id == restaurantId);

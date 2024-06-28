@@ -33,13 +33,13 @@ public class CookieBookmarksController(FoodieContext context) : BaseApiControlle
         return Ok(response);
    }
 
-   [HttpPost("add")]
-   public async Task<ActionResult> Add([BindRequired][FromQuery] BookmarkParams bookmarkParam)
+   [HttpPost("add/{recipeId}")]
+   public async Task<ActionResult> Add([BindRequired][FromRoute] int recipeId)
    {
       var bookmarks = RetrieveCookiesBookmarks(GetUserId());
       bookmarks ??= CreateCookiesBookmarks(GetUserId());
 
-      var recipe = await _context.Recipes.FindAsync(bookmarkParam.RecipeId);
+      var recipe = await _context.Recipes.FindAsync(recipeId);
       if (recipe == null) return NotFound();
 
       if (bookmarks.Recipes != null)
@@ -65,8 +65,8 @@ public class CookieBookmarksController(FoodieContext context) : BaseApiControlle
       return CreatedAtRoute("GetBookmark", data);
    }
 
-   [HttpPost("remove")]
-   public ActionResult Remove([BindRequired][FromQuery] BookmarkParams bookmarkParam)
+   [HttpDelete("remove/{recipeId}")]
+   public ActionResult Remove([BindRequired][FromRoute] int recipeId)
    {
       Bookmarks bookmarks = RetrieveCookiesBookmarks(GetUserId());
 
@@ -75,7 +75,7 @@ public class CookieBookmarksController(FoodieContext context) : BaseApiControlle
          "No bookmarks found"
       ));
 
-      bookmarks.RemoveBookmark(bookmarkParam.RecipeId);
+      bookmarks.RemoveBookmark(recipeId);
 
       var cookieBookmark = UpdateCookiesBookmark(bookmarks);
       if (cookieBookmark == null) return BadRequest(

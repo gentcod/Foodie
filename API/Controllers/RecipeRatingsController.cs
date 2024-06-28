@@ -62,8 +62,8 @@ public class RecipeRatingsController(FoodieContext context) : BaseApiController
     }
 
     [Authorize]
-    [HttpPost("add")]
-    public async Task<ActionResult> AddRating([BindRequired] RatingDto ratingDto, [BindRequired][FromQuery] int recipeId)
+    [HttpPost("add/{recipeId}")]
+    public async Task<ActionResult> AddRating([BindRequired] RatingDto ratingDto, [BindRequired][FromRoute] int recipeId)
     {
         _ = Guid.TryParse(GetUserId(), out var userId);
         var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
@@ -126,8 +126,8 @@ public class RecipeRatingsController(FoodieContext context) : BaseApiController
     }
 
     [Authorize]
-    [HttpPost("remove")]
-    public async Task<ActionResult> Remove([BindRequired][FromQuery] int recipeId)
+    [HttpDelete("remove/{recipeId}")]
+    public async Task<ActionResult> Remove([BindRequired][FromRoute] int recipeId)
     {
         _ = Guid.TryParse(GetUserId(), out var userId);
         var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
