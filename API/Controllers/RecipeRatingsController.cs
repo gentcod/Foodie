@@ -10,7 +10,9 @@ using API.RequestHelpers;
 using System.Security.Claims;
 
 namespace API.Controllers;
-public class RecipeRatingsController(FoodieContext context) : BaseApiController
+[Route("api/v1/recipes/ratings")]
+[ApiController]
+public class RecipeRatingsController(FoodieContext context) : ControllerBase
 {
     private readonly FoodieContext _context = context;
 
@@ -36,7 +38,7 @@ public class RecipeRatingsController(FoodieContext context) : BaseApiController
     }
 
     [HttpGet("{recipeId}")]
-    public async Task<ActionResult> GetRecipeRatingById([BindRequired] int recipeId)
+    public async Task<ActionResult> GetRecipeRatingById([BindRequired][FromRoute] int recipeId)
     {
         var recipe = await _context.Recipes.FirstOrDefaultAsync(el => el.Id == recipeId);
         if (recipe == null) return BadRequest(ApiErrorResponse.Response(

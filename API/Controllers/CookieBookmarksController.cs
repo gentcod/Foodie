@@ -51,7 +51,9 @@ public class CookieBookmarksController(FoodieContext context) : BaseApiControlle
          ));
       }
 
-      bookmarks.AddBookmark(recipe);
+      var errResp = bookmarks.AddBookmark(recipe);
+      if (errResp != null) return BadRequest(errResp);
+      
       var cookieBookmark = UpdateCookiesBookmark(bookmarks);
       if (cookieBookmark == null) return BadRequest(
          ApiErrorResponse.Response(

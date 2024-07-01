@@ -1,8 +1,10 @@
 using API.Models.References;
+using API.RequestHelpers;
 
 namespace API.Models;
 public class Favorites
 {
+    private const int maxFav = 10;
     public int Id { get; set; }
     public int TotalFavRecipes { get; set; }
     public int TotalFavRestaurants { get; set; }
@@ -13,8 +15,12 @@ public class Favorites
     public List<FavoriteRecipe> Recipes { get; set; }
     public List<FavoriteRestaurant> Restaurants { get; set; }
 
-    public void AddFavoriteRecipe(Recipe recipe)
+    public ApiErrorResponse AddFavoriteRecipe(Recipe recipe)
     {
+        if (TotalFavRecipes >= maxFav / 2) return ApiErrorResponse.Response(
+            "error",
+            "You have added maximum number of recipes to favorites. Remove an existing recipe then try again"
+        );
         Recipes ??= [];
 
         Recipes.Add(new FavoriteRecipe
@@ -25,6 +31,7 @@ public class Favorites
         });
 
         TotalFavRecipes = Recipes.Count;
+        return null;
     }
 
     public void RemoveFavoriteRecipe(int recipeId)
@@ -36,8 +43,12 @@ public class Favorites
         TotalFavRecipes = Recipes.Count;
     }
 
-    public void AddFavoriteRestaurant(Restaurant restaurant)
+    public ApiErrorResponse AddFavoriteRestaurant(Restaurant restaurant)
     {
+        if (TotalFavRestaurants >= maxFav / 2) return ApiErrorResponse.Response(
+            "error",
+            "You have added maximum number of restaurants to favorites. Remove an existing restaurant then try again"
+        );
         Restaurants ??= [];
 
         Restaurants.Add(new FavoriteRestaurant
@@ -48,6 +59,7 @@ public class Favorites
         });
 
         TotalFavRestaurants = Restaurants.Count;
+        return null;
     }
 
     public void RemoveFavoriteRestaurant(int restaurantId)

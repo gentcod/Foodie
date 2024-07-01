@@ -64,7 +64,9 @@ public class BookmarksController(FoodieContext context) : BaseApiController
             ));
         }
 
-        bookmarks.AddBookmark(recipe);
+        var errResp = bookmarks.AddBookmark(recipe);
+        if (errResp != null) return BadRequest(errResp);
+
         var result = await _context.SaveChangesAsync() > 0;
         if (result)
         {

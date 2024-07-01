@@ -7,7 +7,7 @@ using API.DTOs;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace API.Controllers;
-public class RecipeController(FoodieContext context) : BaseApiController
+public class RecipesController(FoodieContext context) : BaseApiController
 {
    private readonly FoodieContext _context = context;
 

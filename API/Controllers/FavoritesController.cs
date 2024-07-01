@@ -62,7 +62,9 @@ public class FavoritesController(FoodieContext context) : BaseApiController
          ));
       }
 
-      favorites.AddFavoriteRecipe(recipe);
+      var errResp = favorites.AddFavoriteRecipe(recipe);
+      if (errResp != null) return BadRequest(errResp);
+
       var result = await _context.SaveChangesAsync() > 0;
       if (result)
       {
@@ -108,7 +110,8 @@ public class FavoritesController(FoodieContext context) : BaseApiController
          ));
       }
 
-      favorites.AddFavoriteRestaurant(restaurant);
+      var errResp = favorites.AddFavoriteRestaurant(restaurant);
+      if (errResp != null) return BadRequest(errResp);
 
       var result = await _context.SaveChangesAsync() > 0;
       if (result)
