@@ -1,8 +1,10 @@
 using API.Models.References;
+using API.RequestHelpers;
 
 namespace API.Models;
 public class Bookmarks
 {
+    private const int maxBookmarks = 10;
     public int Id { get; set; }
     public int TotalBookmarks { get; set; }
 
@@ -11,8 +13,12 @@ public class Bookmarks
 
     public List<BookmarkItem> Recipes { get; set; }
 
-    public void AddBookmark(Recipe recipe)
+    public ApiErrorResponse AddBookmark(Recipe recipe)
     {
+        if (TotalBookmarks >= maxBookmarks) return ApiErrorResponse.Response(
+            "error",
+            "You have added maximum number of bookmarks. Remove an existing bookmark then try again"
+        );
         Recipes ??= [];
 
         Recipes.Add(new BookmarkItem
@@ -23,6 +29,7 @@ public class Bookmarks
         });
 
         TotalBookmarks = Recipes.Count;
+        return null;
     }
 
     public void RemoveBookmark(int recipeId)

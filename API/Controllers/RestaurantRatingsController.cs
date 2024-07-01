@@ -10,7 +10,9 @@ using API.RequestHelpers;
 using System.Security.Claims;
 
 namespace API.Controllers;
-public class RestaurantRatingsController(FoodieContext context) : BaseApiController
+[ApiController]
+[Route("api/v1/restaurants/ratings")]
+public class RestaurantRatingsController(FoodieContext context) : ControllerBase
 {
     private readonly FoodieContext _context = context;
 

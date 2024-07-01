@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using API.RequestHelpers;
 
 namespace API.Controllers;
-public class RestaurantController(FoodieContext context) : BaseApiController
+public class RestaurantsController(FoodieContext context) : BaseApiController
 {
     private readonly FoodieContext _context = context;
 
@@ -23,7 +23,7 @@ public class RestaurantController(FoodieContext context) : BaseApiController
 
         return Ok(ApiSuccessResponse<PagedList<RestaurantDto>>.Response(
             "success",
-            "Recipes fetched successfully",
+            "Restaurants fetched successfully",
             paginatedResponse
         ));
     }
