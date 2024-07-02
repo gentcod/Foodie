@@ -67,8 +67,7 @@ public class RecipeRatingsController(FoodieContext context) : ControllerBase
     [HttpPost("add/{recipeId}")]
     public async Task<ActionResult> AddRating([BindRequired] RatingDto ratingDto, [BindRequired][FromRoute] int recipeId)
     {
-        _ = Guid.TryParse(GetUserId(), out var userId);
-        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
+        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == GetUserId());
         if (user == null) return NotFound(ApiErrorResponse.Response(
             "error",
             "User account not found"
@@ -91,7 +90,7 @@ public class RecipeRatingsController(FoodieContext context) : ControllerBase
 
         if (recipeRatings != null && recipeRatings.Ratings != null)
         {
-            var existingRating = recipeRatings.Ratings.FirstOrDefault(el => el.UserId == userId);
+            var existingRating = recipeRatings.Ratings.FirstOrDefault(el => el.UserId == GetUserId());
             if (existingRating != null && recipeRatings.RecipeId == recipeId) return BadRequest(ApiErrorResponse.Response(
                     "error",
                     "Recipe rating has been previously added"
@@ -131,8 +130,7 @@ public class RecipeRatingsController(FoodieContext context) : ControllerBase
     [HttpDelete("remove/{recipeId}")]
     public async Task<ActionResult> Remove([BindRequired][FromRoute] int recipeId)
     {
-        _ = Guid.TryParse(GetUserId(), out var userId);
-        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
+        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == GetUserId());
         if (user == null) return NotFound(ApiErrorResponse.Response(
             "error",
             "User account not found"
@@ -154,14 +152,14 @@ public class RecipeRatingsController(FoodieContext context) : ControllerBase
 
         if (recipeRatings.Ratings != null)
         {
-            var existingRating = recipeRatings.Ratings.FirstOrDefault(el => el.UserId == userId);
+            var existingRating = recipeRatings.Ratings.FirstOrDefault(el => el.UserId == GetUserId());
             if (existingRating == null) return NotFound(ApiErrorResponse.Response(
                     "error",
                     "User rating not found"
                 ));
         }
 
-        var removedRating = recipeRatings.RemoveRating(userId);
+        var removedRating = recipeRatings.RemoveRating(GetUserId());
 
         double newRatingNum = recipeRatings.Ratings.Any() ? 
             recipeRatings.Ratings.Average(rating => rating.RatingNum)
@@ -189,10 +187,11 @@ public class RecipeRatingsController(FoodieContext context) : ControllerBase
         ));
     }
 
-    private string GetUserId()
+    private Guid GetUserId()
     {
         var userIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
-        return userIdClaim.Value;
+        _ = Guid.TryParse(userIdClaim.Value, out var userId);
+        return userId;
     }
 
 }

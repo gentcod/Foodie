@@ -1,8 +1,11 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using API.Data;
 using API.DTOs;
 using API.Models;
 using API.RequestHelpers;
 using API.Token;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,8 +36,8 @@ public class AccountController(FoodieContext context, UserManager<User> userMana
         var userDto = new UserDto
         {
             Username = user.UserName,
-            Name = user.Name,
             Email = user.Email,
+            FullName = $"{user.FirstName} {user.LastName} {user.MiddleName}",
         };
 
         var data = new
@@ -70,9 +73,11 @@ public class AccountController(FoodieContext context, UserManager<User> userMana
         var user = new User
         {
             UserId = Guid.NewGuid(),
-            UserName = userSignupDto.Username,
-            Name = $"{userSignupDto.FirstName} {userSignupDto.LastName}",
             Email = userSignupDto.Email,
+            UserName = userSignupDto.Username,
+            FirstName = userSignupDto.FirstName,
+            LastName = userSignupDto.LastName,
+            MiddleName = userSignupDto.MiddleName,
         };
 
         var result = await _userManager.CreateAsync(user, userSignupDto.Password);
@@ -88,5 +93,40 @@ public class AccountController(FoodieContext context, UserManager<User> userMana
             "Account created successfully",
             null
         ));
+    }
+
+    [Authorize]
+    [HttpGet("profile")]
+    public async Task<ActionResult> GetProfie()
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == GetUserId());
+        var bookmarks = await _context.Bookmarks.FirstOrDefaultAsync(bookmark => bookmark.UserId == GetUserId());
+        var favorites = await _context.Favorites.FirstOrDefaultAsync(bookmark => bookmark.UserId == GetUserId());
+
+        var profileDto = new UserProfileDto
+        {
+            Username = user.UserName,
+            Email = user.Email,
+            FullName = $"{user.FirstName} {user.LastName} {user.MiddleName}",
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            MiddleName = user.MiddleName,
+            TotalBookmarks = bookmarks != null ? bookmarks.TotalBookmarks : 0,
+            TotalFavRecipes = favorites != null ? favorites.TotalFavRecipes : 0,
+            TotalFavRestaurants = favorites != null ? favorites.TotalFavRestaurants : 0,
+        };
+
+        return Ok(ApiSuccessResponse<UserProfileDto>.Response(
+            "success",
+            "Profile fetched successfully",
+            profileDto
+        ));
+    }
+
+    private Guid GetUserId()
+    {
+        var userIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
+        _ = Guid.TryParse(userIdClaim.Value, out var userId);
+        return userId;
     }
 }

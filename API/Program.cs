@@ -77,7 +77,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<JwtTokenGenerator>();
-// builder.Services.AddTransient<AuthMiddleware>();
 
 var app = builder.Build();
 
@@ -108,7 +107,7 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-// app.UseMiddleware<AuthMiddleware>();
+app.UseMiddleware<AuthMiddleware>();
 
 app.MapControllers();
 

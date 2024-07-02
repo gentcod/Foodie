@@ -38,8 +38,7 @@ public class BookmarksController(FoodieContext context) : BaseApiController
     [HttpPost("add/{recipeId}")]
     public async Task<ActionResult> Add([BindRequired][FromRoute] int recipeId)
     {
-        _ = Guid.TryParse(GetUserId(), out var userId);
-        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
+        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == GetUserId());
         if (user == null) return NotFound(ApiErrorResponse.Response(
             "error",
             "User not found"
@@ -91,8 +90,7 @@ public class BookmarksController(FoodieContext context) : BaseApiController
     [HttpDelete("remove/{recipeId}")]
     public async Task<ActionResult> Remove([BindRequired][FromRoute] int recipeId)
     {
-         _ = Guid.TryParse(GetUserId(), out var userId);
-        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
+        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == GetUserId());
         if (user == null) return NotFound(ApiErrorResponse.Response(
             "error",
             "User not found"
@@ -136,25 +134,24 @@ public class BookmarksController(FoodieContext context) : BaseApiController
         );
     }
 
-    private string GetUserId()
+    private Guid GetUserId()
     {
         var userIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
-        return userIdClaim.Value;
+         _ = Guid.TryParse(userIdClaim.Value, out var userId);
+        return userId;
     }
 
-    private async Task<Bookmarks> RetrieveBookmarks(string userId)
+    private async Task<Bookmarks> RetrieveBookmarks(Guid userId)
     {
-        _ = Guid.TryParse(userId, out var validId);
         return await _context.Bookmarks
                 .Include(b => b.Recipes)
                 .ThenInclude(r => r.Recipe)
-                .FirstOrDefaultAsync(bookmark => bookmark.UserId == validId);
+                .FirstOrDefaultAsync(bookmark => bookmark.UserId == userId);
     }
 
-    private Bookmarks CreateBookmarks(string userId)
+    private Bookmarks CreateBookmarks(Guid userId)
     {
-         _ = Guid.TryParse(userId, out var validId);
-        var bookmark = new Bookmarks { UserId = validId };
+        var bookmark = new Bookmarks { UserId = userId };
         _context.Bookmarks.Add(bookmark);
         return bookmark;
     }

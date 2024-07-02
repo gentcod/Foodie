@@ -68,8 +68,7 @@ public class RestaurantRatingsController(FoodieContext context) : ControllerBase
     [HttpPost("add/{restaurantId}")]
     public async Task<ActionResult> AddRating([BindRequired]RatingDto ratingDto, [BindRequired][FromRoute] int restaurantId)
     {
-        _ = Guid.TryParse(GetUserId(), out var userId);
-        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
+        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == GetUserId());
         if (user == null) return NotFound(ApiErrorResponse.Response(
             "error",
             "User account not found"
@@ -92,7 +91,7 @@ public class RestaurantRatingsController(FoodieContext context) : ControllerBase
 
         if (restaurantRatings != null && restaurantRatings.Ratings != null)
         {
-            var existingRating = restaurantRatings.Ratings.FirstOrDefault(el => el.UserId == userId);
+            var existingRating = restaurantRatings.Ratings.FirstOrDefault(el => el.UserId == GetUserId());
             if (existingRating != null && restaurantRatings.RestaurantId == restaurantId) return BadRequest(ApiErrorResponse.Response(
                     "error",
                     "Restaurant rating has been previously added"
@@ -134,8 +133,7 @@ public class RestaurantRatingsController(FoodieContext context) : ControllerBase
     [HttpDelete("remove/{restaurantId}")]
     public async Task<ActionResult> Remove([BindRequired][FromRoute] int restaurantId)
     {
-        _ = Guid.TryParse(GetUserId(), out var userId);
-        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == userId);
+        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == GetUserId());
         if (user == null) return NotFound(ApiErrorResponse.Response(
             "error",
             "User account not found"
@@ -157,14 +155,14 @@ public class RestaurantRatingsController(FoodieContext context) : ControllerBase
 
         if (restaurantRatings.Ratings != null)
         {
-            var existingRating = restaurantRatings.Ratings.FirstOrDefault(el => el.UserId == userId);
+            var existingRating = restaurantRatings.Ratings.FirstOrDefault(el => el.UserId == GetUserId());
             if (existingRating == null) return NotFound(ApiErrorResponse.Response(
                     "error",
                     "User rating not found"
                 ));
         }
 
-        var removedRating = restaurantRatings.RemoveRating(userId);
+        var removedRating = restaurantRatings.RemoveRating(GetUserId());
 
         double newRatingNum = restaurantRatings.Ratings.Any() ? 
             restaurantRatings.Ratings.Average(rating => rating.RatingNum)
@@ -191,9 +189,11 @@ public class RestaurantRatingsController(FoodieContext context) : ControllerBase
             "Problem removing restaurant rating"
         ));
     }
-    private string GetUserId()
+    
+    private Guid GetUserId()
     {
         var userIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
-        return userIdClaim.Value;
+        _ = Guid.TryParse(userIdClaim.Value, out var userId);
+        return userId;
     }
 }
