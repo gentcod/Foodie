@@ -12,7 +12,7 @@ public class CookieBookmarksController(FoodieContext context) : BaseApiControlle
 {
    private readonly FoodieContext _context = context;
 
-    [HttpGet(Name = "GetCookieBookmark")]
+   [HttpGet(Name = "GetCookieBookmark")]
    public ActionResult GetCookiesBookMarks()
    {
       Bookmarks bookmarks = RetrieveCookiesBookmarks(GetUserId());
@@ -22,15 +22,15 @@ public class CookieBookmarksController(FoodieContext context) : BaseApiControlle
             "No bookmarks found"
         ));
 
-        var data = bookmarks.MapBookmarksToDto();
+      var data = bookmarks.MapBookmarksToDto();
 
-        var response = ApiSuccessResponse<BookmarksDto>.Response(
-            "success",
-            "Bookmarks have been fetched successfully",
-            data
-        );
+      var response = ApiSuccessResponse<BookmarksDto>.Response(
+          "success",
+          "Bookmarks have been fetched successfully",
+          data
+      );
 
-        return Ok(response);
+      return Ok(response);
    }
 
    [HttpPost("add/{recipeId}")]
@@ -53,7 +53,7 @@ public class CookieBookmarksController(FoodieContext context) : BaseApiControlle
 
       var errResp = bookmarks.AddBookmark(recipe);
       if (errResp != null) return BadRequest(errResp);
-      
+
       var cookieBookmark = UpdateCookiesBookmark(bookmarks);
       if (cookieBookmark == null) return BadRequest(
          ApiErrorResponse.Response(
@@ -61,10 +61,15 @@ public class CookieBookmarksController(FoodieContext context) : BaseApiControlle
             "Problem adding bookmark"
          )
       );
-      
+
       var data = bookmarks.MapBookmarksToDto();
 
-      return CreatedAtRoute("GetBookmark", data);
+      return CreatedAtRoute("GetBookmark", ApiSuccessResponse<BookmarksDto>.Response(
+            "success",
+            "Bookmark has been added successfully",
+            data
+         )
+      );
    }
 
    [HttpDelete("remove/{recipeId}")]
@@ -86,16 +91,16 @@ public class CookieBookmarksController(FoodieContext context) : BaseApiControlle
             "Problem removing bookmark"
          )
       );
-      
+
       var data = bookmarks.MapBookmarksToDto();
       return Ok(
          ApiSuccessResponse<BookmarksDto>.Response(
             "success",
-            "Bookmark has been added successfully",
+            "Bookmark has been remove successfully",
             data
          )
       );
-    }
+   }
 
    private string GetUserId()
    {

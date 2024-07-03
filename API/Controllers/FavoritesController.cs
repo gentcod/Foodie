@@ -35,7 +35,7 @@ public class FavoritesController(FoodieContext context) : BaseApiController
       ));
    }
 
-   [HttpPost("add/recipe/{recipeId}")]
+   [HttpPost("recipes/add/{recipeId}")]
    public async Task<ActionResult<Favorites>> AddNewFavoriteRecipe([BindRequired][FromRoute] int recipeId)
    {
       var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == GetUserId());
@@ -83,7 +83,7 @@ public class FavoritesController(FoodieContext context) : BaseApiController
       ));
    }
 
-   [HttpPost("add/restaurant/{restaurantId}")]
+   [HttpPost("restaurants/add/{restaurantId}")]
    public async Task<ActionResult> AddNewFavoriteRestaurant([BindRequired][FromRoute] int restaurantId)
    {
       var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == GetUserId());
@@ -131,7 +131,7 @@ public class FavoritesController(FoodieContext context) : BaseApiController
    }
 
 
-   [HttpDelete("remove/recipe/{recipeId}")]
+   [HttpDelete("recipes/remove/{recipeId}")]
    public async Task<ActionResult> RemoveRecipe([BindRequired][FromRoute] int recipeId)
    {
       var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == GetUserId());
@@ -177,7 +177,7 @@ public class FavoritesController(FoodieContext context) : BaseApiController
       );
    }
 
-   [HttpDelete("remove/restaurant/{restaurantId}")]
+   [HttpDelete("restaurants/remove/{restaurantId}")]
    public async Task<ActionResult> RemoveRestaurant([BindRequired][FromRoute] int restaurantId)
    {
       var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == GetUserId());
