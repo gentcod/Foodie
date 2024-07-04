@@ -123,6 +123,23 @@ public class AccountController(FoodieContext context, UserManager<User> userMana
         ));
     }
 
+    [Authorize]
+    [HttpGet("session")]
+    public async Task<ActionResult> CheckSession()
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(el => el.UserId == GetUserId());
+        if (user != null) return Ok(ApiSuccessResponse<object>.Response(
+            "success",
+            "User is authenticated",
+            null
+        ));
+
+        return Unauthorized(ApiErrorResponse.Response(
+            "error",
+            "User account does not exist"
+        ));
+    }
+
     private Guid GetUserId()
     {
         var userIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);

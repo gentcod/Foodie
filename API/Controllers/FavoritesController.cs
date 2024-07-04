@@ -163,7 +163,7 @@ public class FavoritesController(FoodieContext context) : BaseApiController
          return Ok(
          ApiSuccessResponse<FavoritesDto>.Response(
              "success",
-             "Favorite has been removed successfully",
+             "Recipe has been removed from Favorites successfully",
              data
          )
      );
@@ -209,7 +209,7 @@ public class FavoritesController(FoodieContext context) : BaseApiController
          return Ok(
          ApiSuccessResponse<FavoritesDto>.Response(
              "success",
-             "Favorite has been removed successfully",
+             "Restaurant has been removed from Favorites successfully",
              data
          )
      );

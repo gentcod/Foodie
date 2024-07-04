@@ -53,7 +53,19 @@ builder.Services.AddDbContext<FoodieContext>(opt =>
     // opt.UseSqlite(sqlliteConnString);
     opt.UseNpgsql(pgConnectionString);
 });
-builder.Services.AddCors();
+
+string clientUrl = builder.Configuration["ClientUrl"];
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        name: "AllowClient",
+        policy =>
+        {
+            policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins(clientUrl);
+        }
+    );
+});
+
 builder.Services.AddIdentityCore<User>(opt =>
 {
     opt.User.RequireUniqueEmail = true;
@@ -93,13 +105,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseCors(opt =>
-{
-    string clientUrl;
-    if (builder.Environment.IsDevelopment()) clientUrl = builder.Configuration["ClientUrl:Dev"];
-    else clientUrl = builder.Configuration["ClientUrl:Prod"];
-    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins(clientUrl);
-});
+app.UseCors("AllowClient");
 
 app.UseHttpsRedirection();
 
