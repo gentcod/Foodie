@@ -19,7 +19,7 @@ public class RecipeRatingsController(FoodieContext context) : ControllerBase
     [HttpGet(Name = "recipeRating")]
     public async Task<ActionResult> GetRecipeRatings([FromQuery] PaginationParams paginationParams)
     {
-        var query = _context.RecipeRatings.Include(r => r.Recipe).AsQueryable();
+        var query = _context.RecipeRatings.Include(r => r.Recipe).Where(rat => rat.TotalRatings > 0).AsQueryable();
         var recipesRatingsDto = query.MapRecipesRatingsToDto();
 
         var paginatedResponse = await PagedList<ListedRecipeRatingsDto>.ToPagedList(
