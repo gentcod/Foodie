@@ -9,8 +9,9 @@ appsettings*
 dev-data/
 # Stryker output folder used for mutation testing
 /StrykerOutput
+*.db
 
-*docker-compose.yaml
+docker-compose*.yaml
 
 # User-specific files
 *.rsuser

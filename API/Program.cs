@@ -95,6 +95,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
 
+app.UseStatusCodePages(async context =>
+{
+    context.HttpContext.Response.ContentType = "application/json";
+    await AuthMiddleware.InvokeAsync(context.HttpContext);
+});
+
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -113,7 +119,6 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseMiddleware<AuthMiddleware>();
 
 app.MapControllers();
 

@@ -3,35 +3,39 @@ using System.Text.Json;
 using API.RequestHelpers;
 
 namespace API.Middleware;
-public class AuthMiddleware(RequestDelegate next)
+public static class AuthMiddleware
 {
-    private readonly RequestDelegate _next = next;
-    public async Task InvokeAsync(HttpContext context)
+    public static async Task InvokeAsync(HttpContext context)
     {
-        
+
         if (context.Response.StatusCode == (int)HttpStatusCode.Forbidden)
         {
-            context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
             var response = ApiErrorResponse.Response(
                 "error",
                 "You are not authorized to perform this action"
             );
-            var options = GetOptions();
-            var json = JsonSerializer.Serialize(response, options);
+            var json = JsonSerializer.Serialize(response, GetOptions());
             await context.Response.WriteAsync(json);
         }
-        else if (context.Response.StatusCode == (int)HttpStatusCode.Unauthorized)
+        if (context.Response.StatusCode == (int)HttpStatusCode.Unauthorized)
         {
-            context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             var response = ApiErrorResponse.Response(
                 "error",
                 "Please login to perform this action"
             );
-            var options = GetOptions();
-            var json = JsonSerializer.Serialize(response, options);
+            var json = JsonSerializer.Serialize(response, GetOptions());
             await context.Response.WriteAsync(json);
         }
-        await _next(context);
+        if (context.Response.StatusCode == (int)HttpStatusCode.NotFound)
+        {
+            // context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+            var response = ApiErrorResponse.Response(
+                "error",
+                "This route doesn't exist on the server"
+            );
+            var json = JsonSerializer.Serialize(response, GetOptions());
+            await context.Response.WriteAsync(json);
+        }
     }
 
     private static JsonSerializerOptions GetOptions()
